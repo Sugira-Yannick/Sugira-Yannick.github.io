@@ -1,262 +1,156 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YANNICK SUGIRA | Technicien Systèmes Réseaux</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init();
-</script>
-<style>
-        :root {
-            --primary: #2563eb;
-            --primary-light: #3b82f6;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --gray: #94a3b8;
-            --card-bg: #ffffff;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            padding: 4rem 0 6rem;
-            text-align: center;
-            position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-        }
-        
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255,255,255,0.2);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 1rem 0 0.5rem;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
-        
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: -3rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            padding: 2rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .skill-tag {
-            display: inline-block;
-            background: #e0e7ff;
-            color: var(--primary);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-        
-        .timeline-item {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            background: var(--primary);
-        }
-        
-        .timeline-dot {
-            position: absolute;
-            left: -8px;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--primary);
-        }
-        
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 0;
-            margin-top: 4rem;
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            header {
-                padding: 3rem 0 5rem;
-                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yannick Suppirà - Technicien Systèmes Réseaux</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f6f8fa;
+      color: #111;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: #1f2937;
+    }
+    header p {
+      font-size: 1rem;
+      color: #4b5563;
+    }
+    section {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #1d4ed8;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul li::before {
+      content: "▸ ";
+      color: #3b82f6;
+    }
+    .contact, .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9rem;
+    }
+    .highlight {
+      font-weight: 600;
+      color: #111827;
+    }
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media(max-width: 768px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <img src="https://via.placeholder.com/150" alt="Photo profil" class="profile-img">
-            <h1>Yannick Suppirà</h1>
-            <h2>Technicien Systèmes & Réseaux</h2>
-        </div>
-    </header>
+  <header>
+    <h1>Yannick Suppirà</h1>
+    <p><strong>Technicien Systèmes Réseaux</strong><br>📍 Lille | 📞 07 44 12 96 70 | ✉ sugirayannick@yahoo.fr</p>
+    <p>🚀 Disponibilité immédiate</p>
+  </header>
 
-    <main class="container">
-        <div class="card-grid">
-            <div class="card">
-                <h3><i class="fas fa-user"></i> Profil</h3>
-                <p>Technicien systèmes et réseaux passionné par la résolution de problèmes et l'optimisation des infrastructures IT. Diplômé d'un bac+2 et certifié CCNA.</p>
-                <div style="margin-top: 1rem;">
-                    <span class="skill-tag"><i class="fas fa-check"></i> Disponible immédiatement</span>
-                    <span class="skill-tag"><i class="fas fa-map-marker-alt"></i> Lille, France</span>
-                </div>
-            </div>
+  <section>
+    <h2>🎯 Profil</h2>
+    <p>Technicien systèmes et réseaux passionné par la résolution de problèmes et l'optimisation des infrastructures IT. Diplômé d'un bac+2 et certifié CCNA. Expertise en administration système, virtualisation et sécurité réseau. À la recherche d'un nouveau défi pour moderniser les infrastructures informatiques.</p>
+  </section>
 
-            <div class="card">
-                <h3><i class="fas fa-tools"></i> Compétences</h3>
-                <div>
-                    <span class="skill-tag">Windows</span>
-                    <span class="skill-tag">Linux</span>
-                    <span class="skill-tag">Routage</span>
-                    <span class="skill-tag">Virtualisation</span>
-                    <span class="skill-tag">Active Directory</span>
-                    <span class="skill-tag">ServiceNow</span>
-                    <span class="skill-tag">Sécurité</span>
-                    <span class="skill-tag">Cloud</span>
-                </div>
-            </div>
-        </div>
+  <section>
+    <h2>🛠️ Compétences Techniques</h2>
+    <div class="two-cols">
+      <div>
+        <p><span class="highlight">Systèmes :</span></p>
+        <ul><li>Windows Server</li><li>Linux</li><li>Active Directory</li></ul>
+        <p><span class="highlight">Réseaux :</span></p>
+        <ul><li>Routage Cisco</li><li>VLAN</li><li>VPN</li><li>Téléphonie IP</li></ul>
+      </div>
+      <div>
+        <p><span class="highlight">Virtualisation & Cloud :</span></p>
+        <ul><li>VMware</li><li>Hyper-V</li><li>Azure Fundamentals</li></ul>
+        <p><span class="highlight">Outils :</span></p>
+        <ul><li>ServiceNow</li><li>Wireshark</li><li>PowerShell</li></ul>
+      </div>
+    </div>
+  </section>
 
-        <div class="card-grid" style="margin-top: 1.5rem;">
-            <div class="card">
-                <h3><i class="fas fa-briefcase"></i> Expérience</h3>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h4>Technicien HelpDesk N1</h4>
-                    <p><strong>Econocom</strong> | Août 2024 - Fév 2025</p>
-                    <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
-                        <li>Identifier et analyser les incidents</li>
-                        <li>Résoudre les incidents auprès des utilisateurs</li>
-                        <li>Garantir la qualité de service</li>
-                    </ul>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h4>Technicien de configuration</h4>
-                    <p><strong>Ingram Micro</strong> | Oct - Déc 2018</p>
-                    <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
-                        <li>Déploiement de systèmes d'exploitation</li>
-                        <li>Administration systèmes et applications</li>
-                    </ul>
-                </div>
-            </div>
+  <section>
+    <h2>💼 Expérience Professionnelle</h2>
+    <p><strong>Technicien HelpDesk N1</strong><br><em>Econocom - Villeneuve-d'Ascq | Août 2024 - Février 2025</em><br>✓ Résolution des incidents niveau 1 (95% résolus en <2h)<br>✓ Support pour 300+ utilisateurs<br>✓ Documentation technique</p>
+    <br>
+    <p><strong>Technicien de Configuration</strong><br><em>Ingram Micro - Lomme | Oct - Déc 2018</em><br>✓ Déploiement d'OS et applications<br>✓ Administration de serveurs Cisco<br>✓ Mises à niveau systèmes</p>
+  </section>
 
-            <div class="card">
-                <h3><i class="fas fa-graduation-cap"></i> Formations</h3>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h4>Titre Professionnel Bac+2</h4>
-                    <p><strong>Technicien systèmes réseaux</strong></p>
-                    <p>AFC1 Villeneuve d'Ascq | 2023</p>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h4>CCNA Introduction au réseau</h4>
-                    <p><strong>Cisco Network Academy</strong></p>
-                    <p>Certifié Février 2024</p>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h4>Bac Informatique</h4>
-                    <p><strong>Apade Kigali, Rwanda</strong></p>
-                    <p>2005 - 2008</p>
-                </div>
-            </div>
-        </div>
-    </main>
+  <section>
+    <h2>🎓 Formations & Certifications</h2>
+    <ul>
+      <li><strong>Titre Pro Bac+2</strong> – Technicien systèmes réseaux | AFC1 Villeneuve d'Ascq | 2023</li>
+      <li>CCNA Cisco (2024)</li>
+      <li>CCP1 : Assistance utilisateurs</li>
+      <li>CCP2 : Infrastructure centralisée</li>
+      <li>CCP3 : Infrastructure distribuée</li>
+      <li>Bac Informatique – Apade Kigali, Rwanda | 2008</li>
+    </ul>
+  </section>
 
-    <footer>
-        <div class="container">
-            <h3>Contactez-moi</h3>
-            <p style="margin: 1rem 0;"><i class="fas fa-phone"></i> 07 44 12 96 70</p>
-            <p style="margin: 1rem 0;"><i class="fas fa-envelope"></i> sugirayannick@yahoo.fr</p>
-            <p style="margin: 1rem 0;"><i class="fas fa-map-marker-alt"></i> 59000 Lille, France</p>
-            
-            <div style="margin-top: 2rem;">
-                <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
-                <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-github"></i></a>
-                <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fas fa-file-pdf"></i></a>
-            </div>
-        </div>
-    </footer>
+  <section>
+    <h2>🌟 Savoir-être</h2>
+    <ul>
+      <li>Rigueur et précision technique</li>
+      <li>Autonomie et autodidacte</li>
+      <li>Adaptation aux urgences IT</li>
+      <li>Pédagogie utilisateur</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🌍 Langues</h2>
+    <ul>
+      <li>Français : Langue maternelle</li>
+      <li>Anglais : Technique (C2)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🚀 Centres d'intérêt</h2>
+    <ul>
+      <li>Tests de sécurité informatique</li>
+      <li>Veille technologique réseaux</li>
+      <li>Homelab virtuel</li>
+      <li>Sports et voyages</li>
+    </ul>
+  </section>
+
+  <div class="footer">
+    <p>© 2025 Yannick Suppirà • Portfolio créé avec ❤️</p>
+  </div>
 </body>
 </html>
