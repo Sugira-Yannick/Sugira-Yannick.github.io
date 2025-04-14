@@ -502,7 +502,7 @@
             <a href="#" class="cta-button">Commencer maintenant <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="offer-image">
-            <img src="3.jpg" alt="Mettez en avant votre parcours">
+            <img src="https://github.com/Sugira-Yannick/Sugira-Yannick.github.io/blob/main/3.jpg" alt="Mettez en avant votre parcours">
         </div>
     </div>
 
