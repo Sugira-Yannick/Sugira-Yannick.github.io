@@ -1,20 +1,134 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Parcours Pro</title>
-    <style>
-        body {
-            font-family: sans-serif; /* Police de caractères par défaut */
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9; /* Couleur de fond générale */
-            color: #333; /* Couleur de texte par défaut */
-            line-height: 1.6;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Parcours Pro</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .portfolio-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            height: 100vh;
+            background-color: #ffffff;
+            padding-top: 50px;
         }
 
-        /* Section supérieure bleue */
+        .portfolio-slider {
+            display: flex;
+            transition: transform 1s ease-in-out;
+            width: 300%; /* 3 items displayed */
+        }
+
+        .portfolio-item {
+            width: 33.33%; /* Changer selon le nombre d'éléments */
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0.9;
+        }
+
+        .portfolio-item img {
+            width: 250px; /* Largeur plus grande */
+            height: 250px; /* Hauteur égale à la largeur pour un carré parfait */
+            border-radius: 10px; /* Arrondir légèrement les coins */
+            object-fit: cover; /* Remplir l'espace sans déformer l'image */
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item img:hover {
+            transform: scale(1.1); /* Effet zoom au survol */
+        }
+
+        .portfolio-item h3 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .company-name {
+            font-size: 1.2rem;
+            color: #00aaff; /* Bleu clair */
+            margin-bottom: 5px;
+        }
+
+        .period {
+            font-size: 1.1rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #555;
+            text-align: center;
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            border: none;
+            padding: 10px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .nav-arrow.left {
+            left: 20px;
+        }
+
+        .nav-arrow.right {
+            right: 20px;
+        }
+
+        .progress-dots {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #4caf50;
+    }
+
+    @media (max-width: 768px) {
+      .portfolio-item img {
+        width: 200px;
+        height: 200px;
+      }
+    }
+    
+      /* Section supérieure bleue */
         .top-section {
             background-color: #003366; /* Bleu foncé */
             color: white;
@@ -106,10 +220,12 @@
             margin-bottom: 15px;
             border-bottom: 2px solid #003366;
             padding-bottom: 5px;
+          
         }
 
         .experience-item, .education-item {
             margin-bottom: 20px;
+          
         }
 
         .experience-item h3, .education-item h3 {
@@ -289,18 +405,12 @@
 
         /* Pied de page */
         footer {
-            background-color: #f0f8ff;
+            background-color: #f0f0f0;
             padding: 20px;
             text-align: center;
             color: #777;
             font-size: 0.9em;
             border-top: 1px solid #eee;
-        }
-
-        footer hr {
-            width: 100%;
-            border: 10px solid black; /* Couleur de la ligne de séparation changée en noir */
-            margin-bottom: 1rem;
         }
 
         footer .social-icons a {
@@ -365,11 +475,13 @@
             .offer-text .cta-button {
                 font-size: 1em;
             }
-        }
-    </style>
+            
+       }
+  </style>
 </head>
 <body>
-    <div class="top-section">
+
+  <div class="top-section">
         <div class="top-left">
             <h1>Construisez votre parcours professionnel avec Mon Parcours Pro</h1>
             <p>Explorez des outils et des ressources pour développer vos compétences et atteindre vos objectifs de carrière.</p>
@@ -380,7 +492,7 @@
         </div>
     </div>
 
-    <div class="cv-section">
+  <div class="cv-section">
         <div class="personal-info">
             <img src="2.jpg" alt="Photo de profil de Sugira Yannick">
             <div>
@@ -389,19 +501,52 @@
             </div>
         </div>
 
-        <div class="section-title">Expérience Professionnelle</div>
-        <div class="experience-item">
-            <h3>Développeur Front-end</h3>
-            <p class="date">2020 - Présent | Entreprise XYZ</p>
-            <p>Conception et développement d'interfaces utilisateur interactives et responsives en utilisant HTML, CSS et JavaScript. Participation à l'amélioration de l'expérience utilisateur et à l'optimisation des performances.</p>
-        </div>
-        <div class="experience-item">
-            <h3>Stagiaire Développement Web</h3>
-            <p class="date">2019 | Agence ABC</p>
-            <p>Participation au développement de sites web et d'applications web sous la supervision de développeurs seniors. Apprentissage des méthodologies de développement agile.</p>
-        </div>
+    
+  <h2 style="text-align: center; font-size: 2em; color: #003366; margin-top: 40px;"> Expérience Professionnelle </h2>
 
-        <div class="section-title">Formation</div>
+  <div class="portfolio-container">
+    <button class="nav-arrow left">&#8592;</button>
+
+    <div class="portfolio-slider">
+      <!-- Expérience 1 -->
+      <div class="portfolio-item">
+        <img src="7.jpg" alt="Développeur Front-end" />
+        <h3>Assistance Utilisateurs</h3>
+        <div class="company-name">ECONOCOM</div>
+        <div class="period">Août 2024 - Février 2025</div>
+        <p class="description">Conception d'interfaces utilisateur modernes en HTML, CSS, JavaScript pour améliorer l'expérience utilisateur.</p>
+      </div>
+
+      <!-- Expérience 2 -->
+      <div class="portfolio-item">
+        <img src="8.jpg" alt="Technicien configuration" />
+        <h3>Technicien de configuration</h3>
+        <div class="company-name">INGRAM MICRO</div>
+        <div class="period">Octobre 2018 - Décembre 2018</div>
+        <p class="description">Développement d'applications interactives avec une attention à la performance, usage de frameworks modernes.</p>
+      </div>
+
+      <!-- Expérience 3 -->
+      <div class="portfolio-item">
+        <img src="9.jpg" alt="Stage Réseau" />
+        <h3>Stage Technicien Système Réseau</h3>
+        <div class="company-name">GT2S</div>
+        <div class="period">Mars 2020 - Mai 2021</div>
+        <p class="description">Création d'API RESTful avec Node.js, gestion MongoDB, conception de backends sécurisés et scalables.</p>
+      </div>
+    </div>
+
+    <button class="nav-arrow right">&#8594;</button>
+
+    <!-- Progress Dots déplacés ici -->
+    <div class="progress-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+    <div class="section-title">Formation</div>
         <div class="education-item">
             <h3>Master en Informatique</h3>
             <p class="date">2017 - 2019 | Université de Lyon</p>
@@ -411,6 +556,8 @@
             <h3>Licence en Sciences Informatiques</h3>
             <p class="date">2014 - 2017 | Université de Grenoble</p>
         </div>
+        
+    
 
         <div class="section-title">Projets</div>
         <div class="project-item">
@@ -427,8 +574,8 @@
         <div class="section-title">Réseaux Sociaux</div>
         <p class="social-links"><a href="#">LinkedIn</a> | <a href="#">GitHub</a> | <a href="#">Twitter</a></p>
     </div>
-
-    <div class="skills-section">
+    
+  <div class="skills-section">
         <h2>Compétences</h2>
         <div class="skills-list">
             <div class="skill-item">
@@ -532,6 +679,39 @@
         </div>
     </footer>
 
-    <script src="https://kit.fontawesome.com/your_fontawesome_kit.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/your_fontawesome_kit.js" crossorigin="anonymous"></script>  
+
+  <script>
+    const slider = document.querySelector('.portfolio-slider');
+    const dots = document.querySelectorAll('.dot');
+    const leftArrow = document.querySelector('.nav-arrow.left');
+    const rightArrow = document.querySelector('.nav-arrow.right');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    let currentIndex = 0;
+
+    function updateSlider() {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    leftArrow.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+      }
+    });
+
+    rightArrow.addEventListener('click', () => {
+      if (currentIndex < portfolioItems.length - 1) {
+        currentIndex++;
+        updateSlider();
+      }
+    });
+
+    updateSlider();
+  </script>
+
 </body>
 </html>
