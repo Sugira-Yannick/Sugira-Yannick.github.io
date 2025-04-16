@@ -84,7 +84,7 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      height: 60vh;
+      height: 105vh;
       background-color: #ffffff;
       padding-top: 50px;
     }
@@ -127,8 +127,9 @@
 
     .company-name {
       font-size: 1.2rem;
-      color: #00aaff;
+      color: #5eead4;
       margin-bottom: 5px;
+      margin-left: 50px;
     }
 
     .period {
@@ -140,7 +141,8 @@
     .description {
       font-size: 1rem;
       color: #555;
-      text-align: center;
+      text-align: left;
+      line-height: 1; 
     }
 
     .nav-arrow {
@@ -172,6 +174,27 @@
       width: 100%;
       gap: 10px;
     }
+    
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      background-color: #0d1c22;
+      color: #5eead4;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+     }
+
+     .tag:hover {
+       background-color: #555;
+     }
+
 
     .dot {
       width: 10px;
@@ -313,18 +336,20 @@
       font-size: 1.2em;
       margin-top: 0;
       margin-bottom: 5px;
-      color: #333;
+      color: #000000;
     }
 
     .education-item .date {
-      color: #777;
+      color: #FFFFFF;
       font-style: italic;
       margin-bottom: 5px;
+      
+      
     }
 
     .education-item p {
       margin-bottom: 10px;
-      color: #555;
+      color: #FFFFFF;
     }
 
     .project-item {
@@ -563,31 +588,65 @@
         <div class="portfolio-slider">
           <!-- Expérience 1 -->
           <div class="portfolio-item">
+           <div class="tags">
             <img src="helpdesk.jpg" alt="Assistance Utilisateurs" />
             <h1>Assistance Utilisateurs</h1>
             <div class="company-name">ECONOCOM</div>
             <div class="period">Août 2024 - Février 2025</div>
-            <p class="description">Conception d'interfaces utilisateur modernes en HTML, CSS, JavaScript pour améliorer l'expérience utilisateur.</p>
+            <ul>
+            <li><p class="description">Accueil et support utilisateurs (téléphone et ticketing).</p></li>
+            <li><p class="description">Qualification et traitement des sollicitations.</p></li>
+            <li><p class="description">Résolution d'incidents N1/N2 (logiciels & systèmes).</p></li>
+            <li><p class="description">Gestion des comptes AD et droits d’accès.</p></li>
+            <li><p class="description">Installation de logiciels, applicatifs et mises à jour.</p></li>
+            <li><p class="description">Conseil utilisateur & accompagnement technique.</p></li>
+            <li><p class="description">Suivi qualité de service et satisfaction client.</p></li>
+             <span class="tag">ServiceNow</span> <span class="tag">VPN</span> <span class="tag">AD</span> 
+            </ul>
+            </div>
           </div>
 
           <!-- Expérience 2 -->
           <div class="portfolio-item">
+           <div class="tags">
             <img src="Tech-Configuration.jpg" alt="Technicien configuration" />
             <h1>Technicien de configuration</h1>
             <div class="company-name">INGRAM MICRO</div>
             <div class="period">Octobre 2018 - Décembre 2018</div>
-            <p class="description">Développement d'applications interactives avec une attention à la performance, usage de frameworks modernes.</p>
+           <ul>
+            <li><p class="description">Déploiement de systèmes d'exploitation.</p></li>
+            <li><p class="description">Administration systèmes et applications.</p></li>
+            <li><p class="description">Configuration de serveurs Cisco selon cahier des charges client.</p></li>
+            <li><p class="description">Mise à jour des IOS et sauvegarde des configurations.</p></li>
+            <li><p class="description">Vérification des configurations et validation fonctionnelle.</p></li>
+            <li><p class="description">Reconditionnement des équipements post-intervention pour retour client.</p></li>
+            <li><p class="description">Garantir la qualité et la satisfaction des utilisateurs.</p></li>
+            <span class="tag">Windows</span> <span class="tag">Cisco</span> 
+            </ul>
+            </div>
           </div>
 
           <!-- Expérience 3 -->
           <div class="portfolio-item">
+           <div class="tags">
             <img src="stage.jpg" alt="Stage Réseau" />
             <h1>Stage Technicien Système Réseau</h1>
             <div class="company-name">GT2S</div>
-            <div class="period">Mars 2020 - Mai 2021</div>
-            <p class="description">Développement d'applications interactives avec une attention à la performance, usage de frameworks modernes.</p>
+            <div class="period">Octobre 2018 - Décembre 2018</div>
+            <ul>
+            <li><p class="description">Infra sécurisée avec VPN et segmentation réseau.</p></li>
+            <li><p class="description">Déploiement de serveurs ESXi + stockage partagé.</p></li>
+            <li><p class="description">Migration P2V (15+ Postes) vers serveurs ESXI optimisé.</p></li>
+            <li><p class="description">Intégration auto de 200+ assets dans GLPI (FusionInventory).</p></li>
+            <li><p class="description">ACL et règles pare-feu pour accès NAS sécurisé.</p></li>
+            <li><p class="description">Diagnostic et résolution des incidents logiciels/matériels.</p></li>
+            <li><p class="description">Supervision du parc IT et interventions via Nagios (monitoring serveurs, applications et services réseau).</p></li>
+            <span class="tag">Pfsense</span> <span class="tag">ESXI</span> <span class="tag">VLAN</span> 
+            </ul>
           </div>
-        </div>
+          </div>
+        </div>               
+
         <button class="nav-arrow right">&#8594;</button>
         <div class="progress-dots">
           <div class="dot active"></div>
