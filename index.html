@@ -5,6 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mon Parcours Pro</title>
   <style>
+    /* Section avec un fond parallaxe */
+    .parallax {
+      background-image: url('Tech-Configuration.jpg');
+      height: 100vh;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    
+    .formation-parallax {
+      background-image: url('diplome1.jpg'); /* Remplace avec ton image */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      
+    }
+
+    .formation-container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      gap: 100px;
+      background-color: rgba(130, 130, 130, 0.45);
+      padding: 2rem;
+      border-radius: 10px;
+    }
+
+    .formation-title {
+      font-size: 1.5em;
+      color: black;
+      font-weight: bold;
+      width: 200px;
+      text-align: left;
+      margin-top: 230px; 
+    }
+
+    .formation-content {
+      flex-grow: 1;
+      line-height: 1.6;
+    }
+
+    .education-item {
+      margin-bottom: 40px;
+    }
+
+    .education-item h3 {
+      font-size: 1.5rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .education-item .date {
+      font-style: italic;
+      color: #ddd;
+    }
+    
+    
     body {
       font-family: sans-serif;
       margin: 0;
@@ -15,110 +79,110 @@
     }
 
     .portfolio-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            height: 70vh;
-            background-color: #ffffff;
-            padding-top: 50px;
-        }
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      height: 60vh;
+      background-color: #ffffff;
+      padding-top: 50px;
+    }
 
-        .portfolio-slider {
-            display: flex;
-            transition: transform 1s ease-in-out;
-            width: 300%; /* 3 items displayed */
-        }
+    .portfolio-slider {
+      display: flex;
+      transition: transform 1s ease-in-out;
+      width: 300%;
+    }
 
-        .portfolio-item {
-            width: 33.33%; /* Changer selon le nombre d'éléments */
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            opacity: 0.9;
-        }
+    .portfolio-item {
+      width: 33.33%;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      opacity: 0.9;
+    }
 
-        .portfolio-item img {
-            width: 250px; /* Largeur plus grande */
-            height: 250px; /* Hauteur égale à la largeur pour un carré parfait */
-            border-radius: 10px; /* Arrondir légèrement les coins */
-            object-fit: cover; /* Remplir l'espace sans déformer l'image */
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-        }
+    .portfolio-item img {
+      width: 250px;
+      height: 250px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
 
-        .portfolio-item img:hover {
-            transform: scale(1.1); /* Effet zoom au survol */
-        }
+    .portfolio-item img:hover {
+      transform: scale(1.1);
+    }
 
-        .portfolio-item h3 {
-            font-size: 1.8rem;
-            color: #333;
-            margin-bottom: 10px;
-        }
+    .portfolio-item h1 {
+      font-size: 1.0rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
 
-        .company-name {
-            font-size: 1.2rem;
-            color: #00aaff; /* Bleu clair */
-            margin-bottom: 5px;
-        }
+    .company-name {
+      font-size: 1.2rem;
+      color: #00aaff;
+      margin-bottom: 5px;
+    }
 
-        .period {
-            font-size: 1.1rem;
-            color: #777;
-            margin-bottom: 10px;
-        }
+    .period {
+      font-size: 1.1rem;
+      color: #777;
+      margin-bottom: 10px;
+    }
 
-        .description {
-            font-size: 1rem;
-            color: #555;
-            text-align: center;
-        }
+    .description {
+      font-size: 1rem;
+      color: #555;
+      text-align: center;
+    }
 
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.3);
-            border: none;
-            padding: 10px;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            border-radius: 50%;
-        }
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.3);
+      border: none;
+      padding: 10px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      border-radius: 50%;
+    }
 
-        .nav-arrow.left {
-            left: 20px;
-        }
+    .nav-arrow.left {
+      left: 5px;
+    }
 
-        .nav-arrow.right {
-            right: 20px;
-        }
+    .nav-arrow.right {
+      right: 5px;
+    }
 
-        .progress-dots {
-            position: absolute;
-            bottom: 20px;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            gap: 10px;
-        }
+    .progress-dots {
+      position: absolute;
+      bottom: 0px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      gap: 10px;
+    }
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            background-color: #ccc;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: #ccc;
+      border-radius: 50%;
+      transition: background-color 0.3s ease;
+    }
 
-        .dot.active {
-            background-color: #4caf50;
+    .dot.active {
+      background-color: #4caf50;
     }
 
     @media (max-width: 768px) {
@@ -126,470 +190,450 @@
         width: 200px;
         height: 200px;
       }
+      
+      .formation-container {
+        flex-direction: column;
+        gap: 30px;
+      }
+      
+      .formation-title {
+        margin-left: 0;
+        text-align: center;
+        width: 100%;
+      }
     }
     
-      /* Section supérieure bleue */
-        .top-section {
-            background-color: #003366; /* Bleu foncé */
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .top-section {
+      background-color: transparent;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+      height: 100vh;
+    }
 
-        .top-left {
-            max-width: 50%;
-            padding-right: 20px;
-        }
+    .top-left {
+      position: absolute;
+      top: 280px;
+      left: 80px;
+      max-width: 50%;
+      padding-right: 20px;
+    }
 
-        .top-left h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
+    .top-left h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #007bff;
+    }
 
-        .top-left p {
-            font-size: 1.1em;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
+    .top-left p {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 4px 8px;
+      color: #ffffff;
+      font-size: 1.1em;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
 
-        .top-left .cta-button {
-            background-color: #007bff; /* Bleu clair */
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-        }
+    .top-left .cta-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
 
-        .top-right {
-            max-width: 45%;
-        }
+    .top-right {
+      max-width: 45%;
+    }
 
-        .top-right img {
-            width: 100%;
-            height: 600px;
-            border-radius: 5px; /* Légers bords arrondis */
-        }
+    .top-right img {
+      width: 100%;
+      height: 600px;
+      border-radius: 5px;
+    }
 
-        /* Section CV principale */
-        .cv-section {
-            background-color: white;
-            padding: 30px;
-            margin: 20px auto;
-            max-width: 960px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Légère ombre */
-            border-radius: 5px;
-        }
+    .cv-section {
+      background-color: white;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 960px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
 
-        /* Informations personnelles */
-        .personal-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
+    .personal-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
 
-        .personal-info img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 20px;
-        }
+    .personal-info img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+      position: relative;
+      top: -210px;
+    }
 
-        .personal-info h2 {
-            font-size: 1.8em;
-            margin-bottom: 5px;
-        }
+    .personal-info h2 {
+      font-size: 1.8em;
+      margin-bottom: 5px;
+    }
 
-        .personal-info p {
-            color: #777;
-            margin: 0;
-        }
+    .personal-info p {
+      color: #777;
+      margin: 0;
+    }
 
-        /* Sections de contenu (Expérience, Formation, etc.) */
-        .section-title {
-            font-size: 1.5em;
-            color: #003366;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #003366;
-            padding-bottom: 5px;
-          
-        }
+    .section-title {
+      font-size: 1.5em;
+      color: #003366;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #003366;
+      padding-bottom: 5px;
+    }
 
-        .experience-item, .education-item {
-            margin-bottom: 20px;
-          
-        }
+    .experience-item, .education-item {
+      margin-bottom: 20px;
+      margin-top: 100px
+    }
+    
+    .education-item h3, .project-item h3 {
+      font-size: 1.2em;
+      margin-top: 0;
+      margin-bottom: 5px;
+      color: #333;
+    }
 
-        .experience-item h3, .education-item h3 {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+    .education-item .date {
+      color: #777;
+      font-style: italic;
+      margin-bottom: 5px;
+    }
 
-        .experience-item .date, .education-item .date {
-            color: #777;
-            font-style: italic;
-            margin-bottom: 5px;
-        }
+    .education-item p {
+      margin-bottom: 10px;
+      color: #555;
+    }
 
-        .experience-item p, .education-item p {
-            margin-bottom: 10px;
-        }
+    .project-item {
+      margin-bottom: 20px;
+      border-left: 3px solid #007bff;
+      padding-left: 15px;
+    }
 
-        /* Section Projets */
-        .project-item {
-            margin-bottom: 20px;
-            border-left: 3px solid #007bff; /* Bande bleue pour les projets */
-            padding-left: 15px;
-        }
+    .project-item h3 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+      color: #333;
+    }
 
-        .project-item h3 {
-            font-size: 1.2em;
-            margin-bottom: 5px;
-            color: #333;
-        }
+    .project-item p {
+      color: #555;
+      margin-bottom: 8px;
+    }
 
-        .project-item p {
-            color: #555;
-            margin-bottom: 8px;
-        }
+    .project-item a {
+      color: #007bff;
+      text-decoration: none;
+    }
 
-        .project-item a {
-            color: #007bff;
-            text-decoration: none;
-        }
+    .project-item a:hover {
+      text-decoration: underline;
+    }
 
-        .project-item a:hover {
-            text-decoration: underline;
-        }
+    .social-links {
+      margin-top: 20px;
+      text-align: center;
+    }
 
-        /* Section Réseaux Sociaux */
-        .social-links {
-            margin-top: 20px;
-            text-align: center;
-        }
+    .social-links a {
+      display: inline-block;
+      margin: 0 15px;
+      color: #555;
+      font-size: 1.1em;
+      text-decoration: none;
+    }
 
-        .social-links a {
-            display: inline-block;
-            margin: 0 15px;
-            color: #555;
-            font-size: 1.1em;
-            text-decoration: none;
-        }
+    .social-links a:hover {
+      color: #007bff;
+    }
 
-        .social-links a:hover {
-            color: #007bff;
-        }
+    .skills-section {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      border-top: 1px solid #eee;
+    }
 
-        /* Section Compétences */
-        .skills-section {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            border-top: 1px solid #eee;
-        }
+    .skills-section h2 {
+      font-size: 1.5em;
+      color: #003366;
+      margin-bottom: 15px;
+    }
 
-        .skills-section h2 {
-            font-size: 1.5em;
-            color: #003366;
-            margin-bottom: 15px;
-        }
+    .skills-list {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
 
-        .skills-list {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
+    .skill-item {
+      text-align: center;
+      margin: 15px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      width: calc(33% - 30px);
+      box-sizing: border-box;
+    }
 
-        .skill-item {
-            text-align: center;
-            margin: 15px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: calc(33% - 30px); /* Pour trois colonnes avec un peu d'espace */
-            box-sizing: border-box;
-        }
+    .skill-item h4 {
+      margin-bottom: 5px;
+      color: #555;
+    }
 
-        .skill-item h4 {
-            margin-bottom: 5px;
-            color: #555;
-        }
+    .skill-item p {
+      color: #777;
+      font-size: 0.9em;
+    }
 
-        .skill-item p {
-            color: #777;
-            font-size: 0.9em;
-        }
+    .offer-section {
+      background-color: #f0f8ff;
+      color: #2e8b57;
+      padding: 30px 20px;
+      margin-top: 30px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-        /* Section "Mettez en avant votre parcours dès aujourd'hui" */
-        .offer-section {
-            background-color: #f0f8ff; /* Couleur de fond bleu très clair */
-            color: #2e8b57; /* Couleur de texte vert moyen */
-            padding: 30px 20px;
-            margin-top: 30px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+    .offer-text {
+      max-width: 500px;
+      text-align: left;
+    }
 
-        .offer-text {
-            max-width: 500px;
-            text-align: left;
-        }
+    .offer-text h2 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
 
-        .offer-text h2 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-        }
+    .offer-text p {
+      font-size: 1.1em;
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
 
-        .offer-text p {
-            font-size: 1.1em;
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
+    .offer-text ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 15px;
+    }
 
-        .offer-text ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin-bottom: 15px;
-        }
+    .offer-text ul li {
+      margin-bottom: 8px;
+    }
 
-        .offer-text ul li {
-            margin-bottom: 8px;
-        }
+    .offer-text ul li::before {
+      content: "✅ ";
+      color: #2e8b57;
+      font-weight: bold;
+      margin-right: 8px;
+    }
 
-        .offer-text ul li::before {
-            content: "✅ "; /* Ajouter une coche verte */
-            color: #2e8b57;
-            font-weight: bold;
-            margin-right: 8px;
-        }
+    .offer-text .cta-button {
+      background-color: #007bff;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      font-size: 1.1em;
+    }
 
-        .offer-text .cta-button {
-            background-color: #007bff; /* Couleur du bouton "Commencer maintenant" */
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            font-size: 1.1em;
-        }
+    .offer-text .cta-button:hover {
+      background-color: #0056b3;
+    }
 
-        .offer-text .cta-button:hover {
-            background-color: #0056b3;
-        }
+    .offer-image {
+      max-width: 400px;
+      text-align: center;
+    }
 
-        .offer-image {
-            max-width: 400px;
-            text-align: center;
-        }
+    .offer-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .offer-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
+    footer {
+      background-color: #f0f0f0;
+      padding: 20px;
+      text-align: center;
+      color: #777;
+      font-size: 0.9em;
+      border-top: 1px solid #eee;
+    }
 
-        /* Pied de page */
-        footer {
-            background-color: #f0f0f0;
-            padding: 20px;
-            text-align: center;
-            color: #777;
-            font-size: 0.9em;
-            border-top: 1px solid #eee;
-        }
+    footer .social-icons a {
+      display: inline-block;
+      margin: 0 10px;
+      color: #555;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
 
-        footer .social-icons a {
-            display: inline-block;
-            margin: 0 10px;
-            color: #555;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-
-        /* Responsive Design (pour les petits écrans) */
-        @media (max-width: 768px) {
-            .top-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .top-left, .top-right {
-                max-width: 100%;
-                margin-bottom: 20px;
-            }
-
-            .personal-info {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .personal-info img {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-
-            .skills-list {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .skill-item {
-                width: 80%;
-                margin: 15px auto;
-            }
-
-            .offer-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .offer-text, .offer-image {
-                max-width: 100%;
-                margin-bottom: 20px;
-            }
-
-            .offer-text h2 {
-                font-size: 1.8em;
-            }
-
-            .offer-text p {
-                font-size: 1em;
-            }
-
-            .offer-text .cta-button {
-                font-size: 1em;
-            }
-            
-       }
+    .content {
+      height: 100vh;
+      background-color: white;
+      padding: 2rem;
+    }
   </style>
 </head>
 <body>
 
-  <div class="top-section">
-        <div class="top-left">
-            <h1>Bienvenue sur mon portfolio professionnel</h1>
-            <p>Technicien systèmes & réseaux passionné, je mets mes compétences en administration, sécurité, virtualisation et support utilisateur au service de la performance IT.
-À travers ce site, je vous invite à découvrir mon parcours, mes projets, et ma vision du métier : réactivité, fiabilité et satisfaction utilisateur.
-Recruteurs, partenaires ou curieux, bonne visite !</p>
-            <a href="#" class="cta-button">Découvrir les outils</a>
-        </div>
-        <div class="top-right">
-            <img src="Welcome.jpg" alt="Image de présentation">
-        </div>
-    </div>
-
-  <div class="cv-section">
-        <div class="personal-info">
-            <img src="à-propos.jpg" alt="Photo de profil de Sugira Yannick">
-            <div>
-                <h2>À PROPOS DE MOI</h2>
-                <p>Technicien Systèmes & Réseaux certifié CCNA, je mets mes compétences techniques et ma passion pour l’IT au service d’infrastructures performantes et sécurisées. 
-                  Mon expertise couvre l’administration système (Windows/Linux), la virtualisation, le routage Cisco et la gestion d’incidents en environnement helpdesk.
-
-Ma valeur ajoutée ?
- ✔ Résolution proactive – Diagnostic et correction rapide des pannes (expérience N1 chez Econocom).
- ✔ Infrastructures optimisées – Déploiement de systèmes, maintenance réseau et virtualisation (Ingram Micro).
- ✔ Sécurité & conformité – Sensibilisé aux bonnes pratiques cybersécurité (certification CCNA, tests de pentest en autodidacte).
- ✔ Support utilisateur – Pédagogie et écoute pour garantir leur satisfaction.
-
-Approche professionnelle
- Méthodique : J’analyse avant d’agir (scripts PowerShell/Bash, documentation rigoureuse).
- Évolutif : Je me forme en continu (cloud, automatisation).
- Collaboratif : J’aime partager mes connaissances en équipe.
-            </div>
-        </div>
-
-    
-  <h2 style="text-align: center; font-size: 2em; color: #003366; margin-top: 5px;"> Expérience Professionnelle </h2>
-
-  <div class="portfolio-container">
-    <button class="nav-arrow left">&#8592;</button>
-
-    <div class="portfolio-slider">
-      <!-- Expérience 1 -->
-      <div class="portfolio-item">
-        <img src="helpdesk.jpg" alt="Développeur Front-end" />
-        <h3>Assistance Utilisateurs</h3>
-        <div class="company-name">ECONOCOM</div>
-        <div class="period">Août 2024 - Février 2025</div>
-        <p class="description">Conception d'interfaces utilisateur modernes en HTML, CSS, JavaScript pour améliorer l'expérience utilisateur.</p>
+  <!-- Section parallaxe d'accueil -->
+  <div class="parallax">
+    <div class="top-section">
+      <div class="top-left">
+        <h1>Bienvenue sur mon portfolio professionnel</h1>
+        <p>Technicien systèmes & réseaux passionné, je mets mes compétences en administration, sécurité, virtualisation et support utilisateur au service de la performance IT. À travers ce site, je vous invite à découvrir mon parcours, mes projets, et ma vision du métier : réactivité, fiabilité et satisfaction utilisateur. Recruteurs, partenaires ou curieux, bonne visite !.</p>
+        <a href="#" class="cta-button">Mes Compétences</a>
       </div>
-
-      <!-- Expérience 2 -->
-      <div class="portfolio-item">
-        <img src="Tech-Configuration.jpg" alt="Technicien configuration" />
-        <h3>Technicien de configuration</h3>
-        <div class="company-name">INGRAM MICRO</div>
-        <div class="period">Octobre 2018 - Décembre 2018</div>
-        <p class="description">Développement d'applications interactives avec une attention à la performance, usage de frameworks modernes.</p>
-      </div>
-
-      <!-- Expérience 3 -->
-      <div class="portfolio-item">
-        <img src="stage.jpg" alt="Stage Réseau" />
-        <h3>Stage Technicien Système Réseau</h3>
-        <div class="company-name">GT2S</div>
-        <div class="period">Mars 2020 - Mai 2021</div>
-        <p class="description">Création d'API RESTful avec Node.js, gestion MongoDB, conception de backends sécurisés et scalables.</p>
-      </div>
-    </div>
-
-    <button class="nav-arrow right">&#8594;</button>
-
-    <!-- Progress Dots déplacés ici -->
-    <div class="progress-dots">
-      <div class="dot active"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
     </div>
   </div>
   
-    <div class="section-title">Formation</div>
-        <div class="education-item">
+  <!-- Section Stable non Parallax -->
+  <div class="content">
+    <div class="cv-section">
+      <div class="personal-info">
+        <img src="à-propos.jpg" alt="Photo de profil de Sugira Yannick">
+        <div>
+          <h2>À PROPOS DE MOI</h2>
+          <p>
+            Technicien Systèmes & Réseaux certifié <strong>CCNA</strong>, je mets mes compétences techniques et ma passion pour l'IT au service d'infrastructures performantes et sécurisées.
+          </p>
+          <p>Mon expertise couvre :</p>
+          <ul>
+            <li><strong>Administration système (Windows / Linux)</strong></li>
+            <li><strong>Réseaux</strong></li>
+            <li><strong>Sécurité</strong></li>
+            <li><strong>Téléphonie IP</strong></li>
+            <li><strong>Cloud et Virtualisation</strong></li>
+            <li><strong>Supervition et gestion de parc</strong></li>
+            <li><strong>Gestion d'incidents en environnement helpdesk</strong></li>
+          </ul>
+          <p>Ma valeur ajoutée :</p>
+          <ul>
+            <li><strong>✔ Résolution proactive</strong> – Diagnostic et correction rapide des pannes</li>
+            <li><strong>✔ Infrastructures optimisées</strong> – Déploiement de systèmes, maintenance réseau et virtualisation </li>
+            <li><strong>✔ Sécurité & conformité</strong> – Sensibilisé aux bonnes pratiques cybersécurité </li>
+            <li><strong>✔ Support utilisateur</strong> – Pédagogie et écoute pour garantir la satisfaction</li>
+          </ul>
+          <p>Approche professionnelle :</p>
+          <ul>
+            <li><strong>Méthodique</strong> : J'analyse avant d'agir (scripts PowerShell / Bash, documentation rigoureuse)</li>
+            <li><strong>Évolutif</strong> : Je me forme en continu (certifications)</li>
+            <li><strong>Collaboratif</strong> : J'aime partager mes connaissances en équipe</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 style="text-align: center; font-size: 2em; color: #003366; margin-top: 5px;"> Expérience Professionnelle </h2>
+
+      <div class="portfolio-container">
+        <button class="nav-arrow left">&#8592;</button>
+        <div class="portfolio-slider">
+          <!-- Expérience 1 -->
+          <div class="portfolio-item">
+            <img src="7.jpg" alt="Assistance Utilisateurs" />
+            <h1>Assistance Utilisateurs</h1>
+            <div class="company-name">ECONOCOM</div>
+            <div class="period">Août 2024 - Février 2025</div>
+            <p class="description">Conception d'interfaces utilisateur modernes en HTML, CSS, JavaScript pour améliorer l'expérience utilisateur.</p>
+          </div>
+
+          <!-- Expérience 2 -->
+          <div class="portfolio-item">
+            <img src="8.jpg" alt="Technicien configuration" />
+            <h1>Technicien de configuration</h1>
+            <div class="company-name">INGRAM MICRO</div>
+            <div class="period">Octobre 2018 - Décembre 2018</div>
+            <p class="description">Développement d'applications interactives avec une attention à la performance, usage de frameworks modernes.</p>
+          </div>
+
+          <!-- Expérience 3 -->
+          <div class="portfolio-item">
+            <img src="stage.jpg" alt="Stage Réseau" />
+            <h1>Stage Technicien Système Réseau</h1>
+            <div class="company-name">GT2S</div>
+            <div class="period">Mars 2020 - Mai 2021</div>
+            <p class="description">Développement d'applications interactives avec une attention à la performance, usage de frameworks modernes.</p>
+          </div>
+        </div>
+        <button class="nav-arrow right">&#8594;</button>
+        <div class="progress-dots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Nouvelle section Formation en parallaxe -->
+    <div class="formation-parallax">
+      <div class="formation-container">
+        <div class="formation-title">Formation</div>
+        <div class="formation-content">
+          <div class="education-item">
             <h3>Master en Informatique</h3>
             <p class="date">2017 - 2019 | Université de Lyon</p>
             <p>Spécialisation en développement web et mobile.</p>
-        </div>
-        <div class="education-item">
+          </div>
+          <div class="education-item">
             <h3>Licence en Sciences Informatiques</h3>
             <p class="date">2014 - 2017 | Université de Grenoble</p>
+          </div>
         </div>
-        
-    
-
-        <div class="section-title">Projets</div>
-        <div class="project-item">
-            <h3>Portfolio Personnel</h3>
-            <p>Développement d'un site web personnel pour présenter mes projets et mes compétences.</p>
-            <p><a href="#">Voir le projet</a></p>
-        </div>
-        <div class="project-item">
-            <h3>Application Web de Gestion de Tâches</h3>
-            <p>Création d'une application web pour organiser et suivre les tâches quotidiennes.</p>
-            <p><a href="#">Voir le projet</a></p>
-        </div>
-
-        <div class="section-title">Réseaux Sociaux</div>
-        <p class="social-links"><a href="#">LinkedIn</a> | <a href="#">GitHub</a> | <a href="#">Twitter</a></p>
+      </div>
     </div>
     
-  <div class="skills-section">
+    <!-- Suite du contenu dans cv-section -->
+    <div class="cv-section">
+      <div class="section-title">Projets</div>
+      <div class="project-item">
+        <h3>Portfolio Personnel</h3>
+        <p>Développement d'un site web personnel pour présenter mes projets et mes compétences.</p>
+        <p><a href="#">Voir le projet</a></p>
+      </div>
+      <div class="project-item">
+        <h3>Application Web de Gestion de Tâches</h3>
+        <p>Création d'une application web pour organiser et suivre les tâches quotidiennes.</p>
+        <p><a href="#">Voir le projet</a></p>
+      </div>
+
+      <div class="section-title">Réseaux Sociaux</div>
+      <p class="social-links"><a href="#">LinkedIn</a> | <a href="#">GitHub</a> | <a href="#">Twitter</a></p>
+    </div>
+    
+    <div class="skills-section">
         <h2>Compétences</h2>
         <div class="skills-list">
             <div class="skill-item">
@@ -657,45 +701,39 @@ Approche professionnelle
     </div>
 
     <div class="offer-section">
-        <div class="offer-text">
-            <h2>Mettez en avant votre parcours dès aujourd'hui</h2>
-            <p>Avec Mon Parcours Pro, valorisez vos compétences et expériences professionnelles pour atteindre vos objectifs.</p>
-            <ul>
-                <li>✅ Design intuitif</li>
-                <li>✅ Facilité d'utilisation</li>
-                <li>✅ Adapté à tous les secteurs</li>
-                <li>✅ Mise en valeur personnalisée</li>
-            </ul>
-            <a href="#" class="cta-button">Commencer maintenant <i class="fas fa-arrow-right"></i></a>
-        </div>
-        <div class="offer-image">
-            <img src="3.jpg" alt="Mettez en avant votre parcours">
-        </div>
+      <div class="offer-text">
+        <h2>Mettez en avant votre parcours dès aujourd'hui</h2>
+        <p>Avec Mon Parcours Pro, valorisez vos compétences et expériences professionnelles pour atteindre vos objectifs.</p>
+        <ul>
+          <li>✅ Design intuitif</li>
+          <li>✅ Facilité d'utilisation</li>
+          <li>✅ Adapté à tous les secteurs</li>
+          <li>✅ Mise en valeur personnalisée</li>
+        </ul>
+        <a href="#" class="cta-button">Commencer maintenant <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="offer-image">
+        <img src="3.jpg" alt="Mettez en avant votre parcours">
+      </div>
     </div>
 
     <footer>
-        <div class="container" style="display: flex; flex-direction: column; align-items: center;">
-            <hr style="width: 100%; border: 1px solid var(--gray); margin-bottom: 1rem;">
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
-                <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
-                <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-github"></i></a>
-            </div>
-            <p style="color: var(--gray); font-size: 0.8rem; margin-bottom: 1rem; text-align: center;">
-                © 🚀 Mon Parcours Pro 2023. Tous droits réservés. Construisez votre avenir professionnel avec nous.
-            </p>
-            <div style="display: flex; gap: 1.5rem; margin-bottom: 1rem;">
-                <a href="#" style="color: white; font-size: 0.9rem;">À propos</a>
-                <a href="#" style="color: white; font-size: 0.9rem;">FAQ</a>
-                <a href="#" style="color: white; font-size: 0.9rem;">Ressources</a>
-                <a href="#" style="color: white; font-size: 0.9rem;">Liens utiles</a>
-            </div>
+      <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+        <hr style="width: 100%; border: 1px solid var(--gray); margin-bottom: 1rem;">
+        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+          <a href="#" style="color: blue; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
+          <a href="#" style="color: blue; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color: blue; font-size: 1.2rem;"><i class="fab fa-github"></i></a>
         </div>
+        <p style="color: var(--gray); font-size: 0.8rem; margin-bottom: 1rem; text-align: center;">
+          ©Sugira Yannick 2025. Tous droits réservés.
+        </p>
+      </div>
     </footer>
-
-    <script src="https://kit.fontawesome.com/your_fontawesome_kit.js" crossorigin="anonymous"></script>  
+  </div>
 
   <script>
+    // JavaScript pour le slider
     const slider = document.querySelector('.portfolio-slider');
     const dots = document.querySelectorAll('.dot');
     const leftArrow = document.querySelector('.nav-arrow.left');
@@ -725,7 +763,20 @@ Approche professionnelle
     });
 
     updateSlider();
-  </script>
+    
+  window.addEventListener("scroll", function () {
+      const section = document.querySelector(".formation-parallax");
+      if (!section) return;
 
+      const scroll = window.pageYOffset;
+      const offset = section.offsetTop;
+      const height = section.offsetHeight;
+
+      if (scroll + window.innerHeight > offset && scroll < offset + height) {
+        const distance = scroll - offset;
+        section.style.backgroundPosition = `center ${distance * 0.5}px`;
+      }
+    });
+  </script>
 </body>
 </html>
