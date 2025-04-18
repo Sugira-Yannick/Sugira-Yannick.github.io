@@ -8,10 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="preload" href="Tech-Configuration.jpg" as="image">
 
-
     
     <!-- Section Parallax -->
     <style>
+    
+     li::marker {
+  color: #03e9f4;
+}
+    
   .parallax-section {
     background-attachment: fixed;
     background-position: center;
@@ -254,8 +258,8 @@
   <!-- Contenu principal -->
   <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
     <!-- Titre avec effet glitch -->
-    <h1 class="cyber-glitch text-4xl md:text-6xl font-bold mb-6 text-white" data-text="SUGIRA YANNICK">
-      SUGIRA YANNICK
+    <h1 class="cyber-glitch text-4xl md:text-6xl font-bold mb-6 text-white" data-text="WELCOME">
+      WELCOME
     </h1>
     
     <!-- Sous-titre machine à écrire -->
@@ -265,7 +269,7 @@
     </div>
     
     <!-- Bouton néon -->
-  <a href="#about" class="neon-btn relative inline-block px-8 py-3 bg-transparent border-2 border-cyan-400 rounded-lg text-lg font-medium overflow-hidden">
+  <a href="#about" class="neon-btn relative inline-block px-8 py-3 bg-transparent border-2 border-cyan-400 rounded-lg text-lg font-medium overflow-hidden ">
       <span></span>
       <span></span>
       <span></span>
@@ -275,7 +279,7 @@
     
      <!-- Flèche de scroll -->
   <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 text-cyan-300 animate-bounce">
-    <i class="fas fa-chevron-down text-2xl"></i>
+    <i class="arrow bounce fa fa-chevron-down"></i>
   </a>
 </section>
   </div>
@@ -799,9 +803,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ===== EFFET CYBER (Machine à écrire) =====
   const cyberTexts = [
-    "TECHNICIEN SYSTÈMES & RÉSEAUX",
-    "EXPERT EN CYBERSÉCURITÉ",
-    "PASSIONNÉ D'INNOVATION"
+    "JE SUIS YANNICK,",
+    "TECHNICIEN SYSTÈMES & RÉSEAUX,",
+    "PASSIONNÉ PAR LES NOUVELLES TECHNOLOGIES."
+    
   ];
   let currentText = 0;
   let charIndex = 0;
