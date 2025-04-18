@@ -1,81 +1,92 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio Sugira Yannick</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="preload" href="Tech-Configuration.jpg" as="image">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Sugira Yannick</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="preload" href="Tech-Configuration.jpg" as="image">
 
-    
-    <!-- Section Parallax -->
-    <style>
-    
-     li::marker {
-  color: #03e9f4;
-}
-    
-  .parallax-section {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh;
-    transition: background-position 0.5s ease-out;
-  }
-  /* Désactive le parallax sur mobile pour éviter les bugs */
-  @media (max-width: 768px) {
-    .parallax-section {
-      background-attachment: scroll;
+  <style>
+    li::marker {
+      color: #03e9f4;
     }
-  }
-  
-   /* Effets Cyberpunk */
-  .cyber-glitch {
-    position: relative;
-  }
-  .cyber-glitch::before, .cyber-glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-  }
-  .cyber-glitch::before {
-    left: 2px;
-    text-shadow: -2px 0 #0ff;
-    clip: rect(44px, 450px, 56px, 0);
-    animation: glitch-effect-1 2s infinite linear alternate-reverse;
-  }
-  .cyber-glitch::after {
-    left: -2px;
-    text-shadow: -2px 0 #f0f;
-    clip: rect(44px, 450px, 56px, 0);
-    animation: glitch-effect-2 2s infinite linear alternate-reverse;
-  }
+    
+    /* Effets Cyberpunk */
+    .cyber-glitch {
+      position: relative;
+    }
+    .cyber-glitch::before, .cyber-glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+    .cyber-glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #0ff;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-effect-1 2s infinite linear alternate-reverse;
+    }
+    .cyber-glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 #f0f;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-effect-2 2s infinite linear alternate-reverse;
+    }
 
-  @keyframes glitch-effect-1 {
-    0% { clip: rect(33px, 450px, 66px, 0); }
-    20% { clip: rect(11px, 450px, 44px, 0); }
-    40% { clip: rect(55px, 450px, 33px, 0); }
-    60% { clip: rect(22px, 450px, 66px, 0); }
-    80% { clip: rect(44px, 450px, 77px, 0); }
-    100% { clip: rect(11px, 450px, 55px, 0); }
-  }
+    @keyframes glitch-effect-1 {
+      0% { clip: rect(33px, 450px, 66px, 0); }
+      20% { clip: rect(11px, 450px, 44px, 0); }
+      40% { clip: rect(55px, 450px, 33px, 0); }
+      60% { clip: rect(22px, 450px, 66px, 0); }
+      80% { clip: rect(44px, 450px, 77px, 0); }
+      100% { clip: rect(11px, 450px, 55px, 0); }
+    }
 
-  @keyframes glitch-effect-2 {
-    0% { clip: rect(77px, 450px, 22px, 0); }
-    20% { clip: rect(33px, 450px, 66px, 0); }
-    40% { clip: rect(11px, 450px, 44px, 0); }
-    60% { clip: rect(88px, 450px, 33px, 0); }
-    80% { clip: rect(55px, 450px, 22px, 0); }
-    100% { clip: rect(33px, 450px, 99px, 0); }
-  }
+    @keyframes glitch-effect-2 {
+      0% { clip: rect(77px, 450px, 22px, 0); }
+      20% { clip: rect(33px, 450px, 66px, 0); }
+      40% { clip: rect(11px, 450px, 44px, 0); }
+      60% { clip: rect(88px, 450px, 33px, 0); }
+      80% { clip: rect(55px, 450px, 22px, 0); }
+      100% { clip: rect(33px, 450px, 99px, 0); }
+    }
 
-  /* Réseau de particules */
+    /* Parallax */
+    .parallax-container {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      will-change: transform;
+    }
+    .parallax-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Désactive le parallax sur mobile */
+    @media (max-width: 768px) {
+      .parallax-bg {
+        position: absolute !important;
+        transform: none !important;
+      }
+    }
+   
+      /* Réseau de particules */
   .particle-network {
     position: absolute;
     width: 100%;
@@ -166,47 +177,8 @@
                 0 0 25px #03e9f4,
                 0 0 50px #03e9f4;
   }
-  
-  /* === EFFET PARALLAX SCROLL === */
-  .parallax-bg {
-    position: absolute;
-    height: 120%;
-    will-change: transform;
-    transition: transform 0.1s linear;
-  }
-  
-  /* === EFFETS CYBERPUNK === */
-  /* Glitch Text */
-  .cyber-glitch {
-    position: relative;
-    display: inline-block;
-  }
-  .cyber-glitch::before {
-    content: attr(data-text);
-    position: absolute;
-    left: 2px;
-    text-shadow: -2px 0 #0ff;
-    clip: rect(24px, 550px, 90px, 0);
-    animation: glitch-anim 2s infinite linear alternate-reverse;
-  }
-  @keyframes glitch-anim {
-    0% { clip: rect(32px, 550px, 76px, 0); }
-    20% { clip: rect(13px, 550px, 97px, 0); }
-    40% { clip: rect(54px, 550px, 29px, 0); }
-    60% { clip: rect(12px, 550px, 88px, 0); }
-    80% { clip: rect(65px, 550px, 53px, 0); }
-    100% { clip: rect(33px, 550px, 89px, 0); }
-  }
-
-  /* Machine à écrire */
-  .cyber-cursor {
-    animation: blink 0.9s infinite;
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
+   
+   
   /* Bouton néon */
   .neon-btn {
     border: 2px solid #0ff;
@@ -234,60 +206,99 @@
   .particle-network {
     position: absolute;
     overflow: hidden;
-  }
-  
+  } 
+   
+   
+   /* About White background Force */
+ #about {
+  width: 100% !important;
+  background: white !important;
+  position: relative !important;
+   
+}
+   
+   
+  </style>
+</head>
 
-  
-</style>
 
+                                             <!---------------------------------- BODY ---------------------------------->
 
-  </head>
-  <body class="bg-white text-gray-800">
+<body class="bg-white text-gray-800">
 
-    <!-- Section Parallax -->
-    <!-- Hero Section -->
-<section id="hero" class="h-screen relative overflow-hidden bg-gray-900">
-  <!-- Image de fond parallax -->
-  <div class="parallax-bg absolute inset-0 z-0">
-    <img src="votre-image.jpg" alt="Background" class="w-full h-full object-cover">
-  </div>
+  <!-- Section Hero  -->
   
-  <!-- Overlay + effets visuels -->
-  <div class="absolute inset-0 z-1 bg-black bg-opacity-50"></div>
-  <div class="particle-network absolute inset-0 z-2"></div>
+  <section id="hero" class="parallax-container">
   
-  <!-- Contenu principal -->
-  <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
-    <!-- Titre avec effet glitch -->
-    <h1 class="cyber-glitch text-4xl md:text-6xl font-bold mb-6 text-white" data-text="WELCOME">
-      WELCOME
-    </h1>
+    <!-- Image de fond parallax -->
     
-    <!-- Sous-titre machine à écrire -->
-    <div class="mb-8 h-10">
-      <p id="cyber-subtitle" class="text-xl md:text-2xl text-cyan-300 font-mono"></p>
-      <span class="cyber-cursor"></span>
+    <div class="parallax-bg">
+      <img src="Tech-Configuration.jpg" alt="Background" class="w-full h-full object-cover">
     </div>
     
-    <!-- Bouton néon -->
-  <a href="#about" class="neon-btn relative inline-block px-8 py-3 bg-transparent border-2 border-cyan-400 rounded-lg text-lg font-medium overflow-hidden ">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      EXPLORER MON PARCOURS
-    </a>
+    <!-- Overlay + effets visuels -->
     
-     <!-- Flèche de scroll -->
-  <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 text-cyan-300 animate-bounce">
-    <i class="arrow bounce fa fa-chevron-down"></i>
-  </a>
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="particle-network absolute inset-0"></div>
+    
+    <!-- Contenu principal -->
+    
+    <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
+      <!-- Titre avec effet glitch -->
+      <h1 class="cyber-glitch text-4xl md:text-6xl font-bold mb-6 text-white" data-text="WELCOME">
+        WELCOME
+      </h1>
+      
+      <!-- Sous-titre machine à écrire -->
+      
+      <div class="mb-8 h-10">
+        <p id="cyber-subtitle" class="text-xl md:text-2xl text-cyan-300 font-mono"></p>
+        <span class="cyber-cursor"></span>
+      </div>
+      
+      <!-- Bouton néon -->
+      
+      <a href="#about" class="neon-btn relative inline-block px-8 py-3 bg-transparent border-2 border-cyan-400 rounded-lg text-lg font-medium overflow-hidden">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        EXPLORER MON PARCOURS
+      </a>
+      
+      <!-- Flèche de scroll -->
+      
+      <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-cyan-300 animate-bounce">
+        <i class="arrow bounce fa fa-chevron-down"></i>
+      </a>
 
-  </div>
-</section>
 
-    <!-- Section À propos de moi -->
-    <section class="py-16 px-6 max-w-7xl mx-auto">
+    </div>
+  </section>
+  
+  
+                                     <!-------------------------------- LOGO  -----------------------------> 
+  
+ 
+ 
+ 
+ <!-- <div class="absolute top-0 left-8 w-16 h-16 z-10">
+      <img src="chemin/vers/logo.png" alt="Logo" class="w-full h-full object-contain">
+    </div> -->
+
+    
+ 
+ 
+ 
+ 
+ 
+ 
+                                       <!-------------------------------- Section À propos de moi ----------------------------->
+                                       
+
+
+     <section id="about" class="w-full bg-white py-16">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">                                   
       <div class="flex flex-col md:flex-row gap-10 items-start">
         <img src="Profile.jpg" alt="Photo de profil" class="w-full md:w-1/3 rounded-xl shadow-lg object-cover" />
         <div class="flex-1 space-y-4">
@@ -319,13 +330,19 @@
         </div>
       </div>
     </section>
-
-    <!-- Expériences Professionnelles -->
+  
+  
+  
+  
+                                         <!--------------------------- Expériences Professionnelles ------------------------------->
+   
     <section class="bg-gray-100 py-16 px-6">
       <div class="max-w-7xl mx-auto">
         <h2 class="text-center text-3xl font-bold text-blue-900 mb-12">Expériences Professionnelles</h2>
         <div class="grid md:grid-cols-3 gap-8">
+        
           <!-- Expérience 1 -->
+          
           <div class="bg-white rounded-xl shadow p-6 space-y-4">
             <img src="helpdesk.jpg" class="w-full h-60 object-cover rounded hover:scale-105 transition-transform" />
             <h3 class="text-xl font-bold">Assistance Utilisateurs</h3>
@@ -338,7 +355,10 @@
               <li><span class="italic">Technos :</span> ServiceNow, VPN, AD</li>
             </ul>
           </div>
+          
+          
           <!-- Expérience 2 -->
+          
           <div class="bg-white rounded-xl shadow p-6 space-y-4">
             <img src="Tech-Configuration.jpg" class="w-full h-60 object-cover rounded-md hover:scale-105 transition-transform" />
             <h3 class="text-xl font-bold">Technicien de configuration</h3>
@@ -350,7 +370,10 @@
               <li><span class="italic">Technos :</span> Windows, Cisco</li>
             </ul>
           </div>
+          
+          
           <!-- Expérience 3 -->
+          
           <div class="bg-white rounded-xl shadow p-6 space-y-4">
             <img src="stage.jpg" class="w-full h-60 object-cover rounded-md hover:scale-105 transition-transform" />
             <h3 class="text-xl font-bold">Stage Technicien Système Réseau</h3>
@@ -365,9 +388,17 @@
         </div>
       </div>
     </section>
+    
+    
+    
+    
+    
+                                                         <!-- (Section: Formations, Projets, Réseaux sociaux) -->
+     
+     
+     
+                                    <!---------------------------------- Section Formation ------------------------------>
 
-    <!-- (Suite: Formations, Projets, Réseaux sociaux, Compétences, Offre, Footer) -->
-<!-- Section Formation -->
 <section id="formation" class="py-16 px-6 bg-white">
   <div class="max-w-7xl mx-auto">
     <h2 class="text-3xl font-bold text-center text-blue-900 mb-12">
@@ -375,7 +406,10 @@
     </h2>
 
     <div class="grid md:grid-cols-2 gap-8">
+    
+    
       <!-- Carte Formation 1 -->
+      
       <div class="bg-gradient-to-br from-blue-50 to-gray-50 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
         <div class="p-6">
           <div class="flex items-start">
@@ -397,6 +431,7 @@
       </div>
 
       <!-- Carte Formation 2 -->
+      
       <div class="bg-gradient-to-br from-blue-50 to-gray-50 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
         <div class="p-6">
           <div class="flex items-start">
@@ -419,6 +454,7 @@
     </div>
 
     <!-- Timeline pour mobile -->
+    
     <div class="mt-12 md:hidden">
       <div class="border-l-2 border-blue-200 pl-6 space-y-8">
         <div class="relative">
@@ -440,13 +476,19 @@
 
 
 
-<!-- Section Projets -->
+
+
+
+                             <!---------------------------------- Section Projets ---------------------------------->
 
 <section id="projets" class="py-20 px-6 bg-gray-100 relative overflow-hidden">
+
   <!-- Fond dynamique -->
+  
   <div class="absolute inset-0 opacity-10">
     <div class="grid grid-cols-12 grid-rows-12 h-full">
       <div class="col-span-1 row-span-1 bg-blue-500 rounded-full animate-float"></div>
+      
       <!-- Répéter pour créer un motif dynamique -->
     </div>
   </div>
@@ -460,9 +502,16 @@
     </h2>
     <p class="text-xl text-center text-gray-600 mb-16 max-w-3xl mx-auto">Explorez mes projets phares avec <span class="text-blue-600 font-medium">interactivité</span></p>
 
+
     <!-- Container 3D -->
+    
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 perspective-1000">
+    
+    
+
+
       <!-- Projet 1 - Effet 3D -->
+      
       <div class="project-card transform-style-preserve-3d transition-all duration-500 hover:rotate-y-15">
         <div class="front bg-white rounded-xl shadow-2xl p-6 h-full flex flex-col">
           <div class="relative overflow-hidden rounded-lg h-48 mb-4">
@@ -492,7 +541,10 @@
         </div>
       </div>
 
-      <!-- Projet 2 - Holographique -->
+
+      <!---------------------------------------------- Projet 2 - Holographique ---------------------------------------->
+
+      
       <div class="project-card bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-transparent hover:border-blue-400 transition-all duration-300">
         <div class="h-full flex flex-col">
           <div class="relative">
@@ -523,7 +575,10 @@
         </div>
       </div>
 
+
+
       <!-- Projet 3 - Interactive -->
+      
       <div class="project-card bg-white rounded-xl shadow-2xl overflow-hidden group">
         <div class="h-full flex flex-col">
           <div class="h-48 relative overflow-hidden">
@@ -563,7 +618,10 @@
       </div>
     </div>
 
+
+
     <!-- Navigation projets -->
+    
     <div class="mt-16 flex justify-center space-x-4">
       <button class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition">
         <i class="fas fa-chevron-left"></i>
@@ -575,8 +633,11 @@
   </div>
 </section>
 
+
+
 <style>
   /* Animations custom */
+  
   .animate-float {
     animation: float 8s ease-in-out infinite;
   }
@@ -624,8 +685,16 @@
   }
 </style>
 
+
+
+
+                            <!------------------------ DEBUT SCRIPTS  ------------------------>
+ 
+
 <script>
-  // Animation 3D interactive
+
+  // ===== Animation 3D interactive =====
+  
   document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
@@ -643,7 +712,11 @@
     });
   });
 
-  // Carousel functionality
+
+
+
+  // ===== Carousel functionality =====
+  
   let currentProject = 0;
   const projects = document.querySelectorAll('.project-card');
   
@@ -659,8 +732,12 @@
       showProject(currentProject);
     });
   });
+
+
+
   
-    // Effet machine à écrire cyberpunk
+    // ===== Effet machine à écrire cyberpunk =====
+    
   const cyberTexts = [
     "TECHNICIEN SYSTÈMES & RÉSEAUX",
     "EXPERT EN CYBERSÉCURITÉ",
@@ -703,7 +780,10 @@
     setTimeout(cyberTypeWriter, speed);
   }
 
-  // Réseau de particules
+
+  // ===== Réseau de particules =====
+  
+  
   function initParticleNetwork() {
     const canvas = document.createElement('canvas');
     document.querySelector('.particle-network').appendChild(canvas);
@@ -714,7 +794,10 @@
     const particles = [];
     const particleCount = window.innerWidth < 768 ? 30 : 80;
     
-    // Création des particules
+    
+    
+    // ===== Création des particules =====
+    
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -726,11 +809,16 @@
       });
     }
     
-    // Animation des particules
+    
+    // ===== Animation des particules =====
+    
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Dessiner les connexions
+      
+      
+      // ===== Dessiner les connexions =====
+      
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -748,18 +836,26 @@
         }
       }
       
-      // Dessiner les particules
+      
+      // ===== Dessiner les particules =====
+      
       particles.forEach(p => {
         ctx.fillStyle = p.color;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
         
-        // Mouvement
+        
+        
+        // ===== Mouvement =====
+        
         p.x += p.speedX;
         p.y += p.speedY;
         
-        // Rebond sur les bords
+        
+        
+        // ===== Rebond sur les bords =====
+        
         if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
         if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
       });
@@ -770,12 +866,17 @@
     animateParticles();
   }
 
-  // Initialisation
+
+  // ===== Initialisation =====
+  
   document.addEventListener('DOMContentLoaded', () => {
     cyberTypeWriter();
     initParticleNetwork();
     
-    // Vérification des ancres
+    
+    
+    // ===== Vérification des ancres =====
+    
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -789,20 +890,35 @@
     });
   });
   
-  // Initialisation une fois la page chargée
-document.addEventListener('DOMContentLoaded', function() {
-  // ===== PARALLAX SCROLL =====
-  const parallaxBg = document.querySelector('.parallax-bg');
-  if (parallaxBg && window.innerWidth > 768) {
-    window.addEventListener('scroll', function() {
-      const scrollY = window.scrollY;
-      const heroHeight = document.getElementById('hero').offsetHeight;
-      const offset = Math.min(scrollY / heroHeight * 30, 30);
-      parallaxBg.style.transform = `translateY(-${offset}%)`;
-    });
-  }
 
-  // ===== EFFET CYBER (Machine à écrire) =====
+
+
+
+
+
+  // ===== Initialisation une fois la page chargée =====
+  
+document.addEventListener('DOMContentLoaded', function() {
+
+
+
+
+  // ===== PARALLAX SCROLL =====
+  
+    if (window.innerWidth > 768) {
+       const parallaxBg = document.querySelector('.parallax-bg img');
+       window.addEventListener('scroll', function() {
+       const scrollPosition = window.pageYOffset;
+       parallaxBg.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+  });
+}
+
+
+
+
+   // ===== EFFET CYBER (Machine à écrire) =====
+   
+   
   const cyberTexts = [
     "JE SUIS YANNICK,",
     "TECHNICIEN SYSTÈMES & RÉSEAUX,",
@@ -825,7 +941,8 @@ document.addEventListener('DOMContentLoaded', function() {
       charIndex++;
     }
 
-    // Gestion du cycle
+    // ===== Gestion du cycle =====
+    
     if (!isDeleting && charIndex === fullText.length) {
       isDeleting = true;
       setTimeout(typeWriter, 2000);
@@ -838,7 +955,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+
   // ===== RÉSEAU DE PARTICULES =====
+  
   function initParticles() {
     const canvas = document.createElement('canvas');
     const container = document.querySelector('.particle-network');
@@ -849,7 +968,9 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.height = container.offsetHeight;
     const ctx = canvas.getContext('2d');
     
+
     // Configuration des particules
+    
     const particles = [];
     for (let i = 0; i < 60; i++) {
       particles.push({
@@ -860,7 +981,10 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
     
+
+
     // Animation
+    
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
@@ -880,14 +1004,27 @@ document.addEventListener('DOMContentLoaded', function() {
     animate();
   }
 
+
   // Lancement des effets
+  
   typeWriter();
   initParticles();
 });
   
+  
+  
 </script>
 
-<!-- Section Réseaux Sociaux -->
+
+
+
+
+
+
+
+                                    <!------------------------------------ Section Réseaux Sociaux ---------------------------------->
+
+
 <section class="px-6 py-12 bg-white text-center" id="reseaux">
   <h2 class="text-3xl font-bold text-blue-900 mb-6">Réseaux Sociaux</h2>
   <p class="text-lg text-gray-700 mb-4">Retrouvez-moi sur les plateformes suivantes :</p>
@@ -897,7 +1034,15 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="#" class="hover:text-blue-800"><i class="fab fa-twitter"></i> Twitter</a>
   </div>
 </section>
-<!-- Section Compétences -->
+
+
+
+
+
+
+                            <!------------------------------- Section Compétences ------------------------->
+
+
 <section id="competences" class="py-16 px-6 bg-gray-50 text-gray-900">
   <div class="max-w-7xl mx-auto">
     <h2 class="text-center text-3xl font-bold text-blue-900 mb-10">Compétences</h2>
@@ -967,7 +1112,19 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<!-- Offre Section -->
+
+
+
+
+
+
+
+
+
+
+                                          <!----------------------------------- Offre Section ------------------------------->
+
+
 <section class="py-16 px-6 bg-white text-gray-900">
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
     <div>
@@ -988,7 +1145,15 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </section>
-<!-- Footer -->
+
+
+
+
+
+
+                                          <!-------------------------------------------- Footer -------------------------------------->
+
+
 <footer class="bg-gray-100 py-8 text-center text-sm text-gray-600">
   <div class="max-w-5xl mx-auto">
     <hr class="border-gray-300 mb-6" />
@@ -1000,3 +1165,5 @@ document.addEventListener('DOMContentLoaded', function() {
     <p>© Sugira Yannick 2025. Tous droits réservés.</p>
   </div>
 </footer>
+                                                           
+ 
