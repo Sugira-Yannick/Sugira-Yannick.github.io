@@ -195,7 +195,7 @@
 
   /* Machine à écrire */
   .cyber-cursor {
-    animation: blink 0.7s infinite;
+    animation: blink 0.9s infinite;
   }
   @keyframes blink {
     0%, 100% { opacity: 1; }
@@ -265,12 +265,19 @@
     </div>
     
     <!-- Bouton néon -->
-    <a href="#about" class="neon-btn relative inline-block px-8 py-3 rounded-lg text-white font-medium overflow-hidden">
-      <span class="relative z-10">
-        EXPLORER MON PARCOURS <i class="fas fa-arrow-right ml-2"></i>
-      </span>
-      <span class="neon-overlay absolute inset-0"></span>
+  <a href="#about" class="neon-btn relative inline-block px-8 py-3 bg-transparent border-2 border-cyan-400 rounded-lg text-lg font-medium overflow-hidden">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      EXPLORER MON PARCOURS
     </a>
+    
+     <!-- Flèche de scroll -->
+  <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 text-cyan-300 animate-bounce">
+    <i class="fas fa-chevron-down text-2xl"></i>
+  </a>
+</section>
   </div>
 </section>
 
