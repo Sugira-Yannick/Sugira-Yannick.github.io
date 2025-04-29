@@ -1326,40 +1326,48 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // ===== Navigation Active Menu =====
   
+
 document.addEventListener('DOMContentLoaded', function() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
 
-  function activateNavLink() {
-    let current = '';
-    
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      const scrollPosition = window.pageYOffset + (window.innerHeight / 3);
+  const observerOptions = {
+    root: null,
+    rootMargin: '-25% 0px -55% 0px', 
+    threshold: 0.01
+  };
+
+ 
+  const handleIntersection = (entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
       
-   
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        current = section.getAttribute('id');
+      if (navLink) {
+        navLink.classList.toggle('active', entry.isIntersecting);
+        
+        
+        if (entry.isIntersecting) {
+          console.log('Section active:', id, 
+                     'Position:', entry.boundingClientRect.y);
+        }
       }
     });
+  };
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      const href = link.getAttribute('href');
-      
-      
-      if (href === `#${current}` || (current === '' && href === '#hero')) {
-        link.classList.add('active');
-      }
-    });
+ 
+  const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+
+  document.querySelectorAll('section[id]').forEach(section => {
+    observer.observe(section);
+    console.log('Section observée:', section.id); // Log de vérification
+  });
+
+
+  const heroSection = document.getElementById('hero');
+  if (window.scrollY === 0 && heroSection) {
+    document.querySelector('.nav-link[href="#hero"]')?.classList.add('active');
   }
-
-  l
-  window.addEventListener('scroll', activateNavLink);
-  window.addEventListener('load', activateNavLink);
 });
-
 
 
 
