@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio Sugira Yannick</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" onload="this.media='all'">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="preload" href="Tech-Configuration.webp" as="image">
 
   <style>
+   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
     li::marker {
       color: #03e9f4;
     }
@@ -613,7 +615,7 @@
   <section id="hero" class="parallax-container">
     <!-- Image de fond parallax -->
     <div class="parallax-bg">
-      <img src="Tech-Configuration.webp" alt="Background" class="w-full h-full object-cover">
+      <img src="Tech-Configuration.webp" loading="lazy" alt="Background" class="w-full h-full object-cover">
     </div>
     
     <!-- Overlay + effets visuels -->
@@ -664,7 +666,7 @@
      <section id="about" class="w-full bg-white py-16">
      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">                                   
       <div class="flex flex-col md:flex-row gap-10 items-start">
-        <img src="Profile.webp" alt="Photo de profil" class="w-full md:w-1/3 rounded-xl shadow-lg object-cover" />
+        <img src="Profile.webp" loading="lazy" alt="Photo de profil" class="w-full md:w-1/3 rounded-xl shadow-lg object-cover" />
         <div class="flex-1 space-y-4">
           <h2 class="text-3xl font-bold text-blue-900">À PROPOS DE MOI</h2>
           <p>Technicien Systèmes & Réseaux certifié <strong>CCNA</strong>, je mets mes compétences techniques et ma passion pour l'IT au service d'infrastructures performantes et sécurisées.</p>
@@ -800,7 +802,7 @@
           <!-- Expérience 1 -->
           
           <div class="bg-white rounded-xl shadow p-6 space-y-4">
-            <img src="helpdesk.webp" class="w-full h-60 object-cover rounded hover:scale-105 transition-transform" />
+            <img src="helpdesk.webp" class="w-full h-60 object-cover rounded hover:scale-105 transition-transform" loading="lazy"/>
             <h3 class="text-xl font-bold">Assistance Utilisateurs</h3>
             <div class="text-sm text-gray-600">ECONOCOM | Août 2024 - Février 2025</div>
             <ul class="list-disc list-inside text-sm">
@@ -816,7 +818,7 @@
           <!-- Expérience 2 -->
           
           <div class="bg-white rounded-xl shadow p-6 space-y-4">
-            <img src="Tech-Configuration.webp" class="w-full h-60 object-cover rounded-md hover:scale-105 transition-transform" />
+            <img src="Tech-Configuration.webp" class="w-full h-60 object-cover rounded-md hover:scale-105 transition-transform" loading="lazy" />
             <h3 class="text-xl font-bold">Technicien de configuration</h3>
             <div class="text-sm text-gray-600">INGRAM MICRO | Octobre 2018 - Décembre 2018</div>
             <ul class="list-disc list-inside text-sm">
@@ -831,7 +833,7 @@
           <!-- Expérience 3 -->
           
           <div class="bg-white rounded-xl shadow p-6 space-y-4">
-            <img src="stage.webp" class="w-full h-60 object-cover rounded-md hover:scale-105 transition-transform" />
+            <img src="stage.webp" class="w-full h-60 object-cover rounded-md hover:scale-105 transition-transform" loading="lazy" />
             <h3 class="text-xl font-bold">Stage Technicien Système Réseau</h3>
             <div class="text-sm text-gray-600">GT2S | Octobre 2018 - Décembre 2018</div>
             <ul class="list-disc list-inside text-sm">
@@ -971,7 +973,7 @@
       <div class="project-card transform-style-preserve-3d transition-all duration-500 hover:rotate-y-15">
         <div class="front bg-white rounded-xl shadow-2xl p-6 h-full flex flex-col">
           <div class="relative overflow-hidden rounded-lg h-48 mb-4">
-            <img src="portfolio-screenshot.jpg" alt="Portfolio" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <img src="portfolio-screenshot.jpg" loading="lazy" alt="Portfolio" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
             <div class="absolute inset-0 bg-blue-900 opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
               <button class="text-white border-2 border-white px-4 py-2 rounded-full hover:bg-white hover:text-blue-900 transition">
                 Voir la démo
@@ -1038,7 +1040,7 @@
       <div class="project-card bg-white rounded-xl shadow-2xl overflow-hidden group">
         <div class="h-full flex flex-col">
           <div class="h-48 relative overflow-hidden">
-            <img src="network-dashboard.jpg" alt="Dashboard réseau" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <img src="network-dashboard.jpg" loading="lazy" alt="Dashboard réseau" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div class="text-center p-4">
                 <i class="fas fa-network-wired text-white text-4xl mb-3"></i>
