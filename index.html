@@ -13,7 +13,7 @@
       color: #03e9f4;
     }
     
-    /* ===== Effets Cyberpunk ===== */
+/* ===== Effets Cyberpunk ===== */
     
     .cyber-glitch {
       position: relative;
@@ -70,7 +70,96 @@
     }
         
 
-    /* ===== Parallax ===== */
+/* ===== Logo Cyberpunk ===== */
+    
+    .cyber-logo {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      width: 5rem;
+      height: 5rem;
+      z-index: 50;
+      filter: 
+        drop-shadow(0 0 5px #03e9f4)
+        drop-shadow(0 0 15px rgba(3, 233, 244, 0.5));
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+    .cyber-logo:hover {
+      transform: scale(1.15) rotate(-5deg);
+      filter: 
+        drop-shadow(0 0 10px #03e9f4)
+        drop-shadow(0 0 30px rgba(3, 233, 244, 0.8));
+    }
+    .logo-svg {
+      width: 100%;
+      height: 100%;
+      --neon-color: #03e9f4;
+      animation: logo-pulse 3s ease-in-out infinite;
+    }
+    @keyframes logo-pulse {
+      0%, 100% { opacity: 0.95; }
+      50% { opacity: 1; }
+    }
+    
+    .logo-svg text {
+      fill: url(#grad-holo);
+      animation: holo-scan 3s infinite linear;
+    }
+
+    @keyframes holo-scan {
+      0% { fill-opacity: 0.9; }
+      50% { fill-opacity: 1; }
+      100% { fill-opacity: 0.9; }
+    }
+
+/* ===== TYPOGRAPHIE LOGO ===== */
+
+.logo-signature {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.logo-subtitle {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+    
+/* =====  Logo de la nav =====  */
+
+.cyber-logo-nav {
+  width: 60px;
+  height: 60px;
+  display: block;
+  z-index: 60;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.logo-svg-nav {
+  width: 100%;
+  height: 100%;
+  --neon-color: #03e9f4;
+  animation: logo-pulse 3s ease-in-out infinite;
+}
+
+.cyber-logo-nav:hover {
+  transform: scale(1.1) rotate(-5deg);
+  filter: 
+    drop-shadow(0 0 5px #03e9f4)
+    drop-shadow(0 0 15px rgba(3, 233, 244, 0.5));
+}
+       
+
+/* ===== Parallax ===== */
+
     .parallax-container {
       position: relative;
       height: 100vh;
@@ -92,7 +181,7 @@
     }
     
           
-    /* ===== Désactive le parallax sur mobile ===== */
+/* ===== Désactive le parallax sur mobile ===== */
     
     @media (max-width: 768px) {
       .parallax-bg {
@@ -104,7 +193,7 @@
 
    
 
-    /* ===== Grille holographique ===== */
+/* ===== Grille holographique ===== */
     
     .hologrid {
       background: 
@@ -121,7 +210,7 @@
     
     
 
-    /* ===== Bouton néon unifié ===== */
+/* ===== Bouton néon unifié ===== */
     
     .neon-btn {
       color: #38bdf8;
@@ -210,54 +299,8 @@
       50% { opacity: 0; }
     }
 
-
-
-    /* ===== Logo Cyberpunk ===== */
-    
-    .cyber-logo {
-      position: absolute;
-      top: 2rem;
-      left: 2rem;
-      width: 5rem;
-      height: 5rem;
-      z-index: 50;
-      filter: 
-        drop-shadow(0 0 5px #03e9f4)
-        drop-shadow(0 0 15px rgba(3, 233, 244, 0.5));
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    }
-    .cyber-logo:hover {
-      transform: scale(1.15) rotate(-5deg);
-      filter: 
-        drop-shadow(0 0 10px #03e9f4)
-        drop-shadow(0 0 30px rgba(3, 233, 244, 0.8));
-    }
-    .logo-svg {
-      width: 100%;
-      height: 100%;
-      --neon-color: #03e9f4;
-      animation: logo-pulse 3s ease-in-out infinite;
-    }
-    @keyframes logo-pulse {
-      0%, 100% { opacity: 0.95; }
-      50% { opacity: 1; }
-    }
-    
-    .logo-svg text {
-      fill: url(#grad-holo);
-      animation: holo-scan 3s infinite linear;
-    }
-
-    @keyframes holo-scan {
-      0% { fill-opacity: 0.9; }
-      50% { fill-opacity: 1; }
-      100% { fill-opacity: 0.9; }
-    }
-
-
-
    
-/* ===== About White background Force ===== */
+/* ===== A-PROPOS White background ===== */
     
     #about {
       width: 100% !important;
@@ -265,22 +308,6 @@
       position: relative !important;
     }
     
-    
-    
-    
-    
-/* ===== Connet - Footer ===== */
-        
-
-
-.connect-section {
-  background: white;
-  color: #333;
-  position: relative;
-  padding-top: 80px;
-  min-height: 100vh;
-  overflow: hidden;
-}
 
 /* ===== STRUCTURE ===== */
 
@@ -317,32 +344,6 @@
   background: linear-gradient(90deg, transparent, #a5b4fc, transparent);
 }
 
-
-
-/* ===== TYPOGRAPHIE ===== */
-
-.logo-signature {
-  display: block;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #4f46e5, #7c3aed);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.logo-subtitle {
-  display: block;
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 5px;
-}
-
-
-
-/* ===== ÉLÉMENTS INTERACTIFS ===== */
-
 .footer-link {
   color: #555;
   text-decoration: none;
@@ -374,7 +375,6 @@
 }
 
 
-
 /* ===== ANIMATIONS ===== */
 
 @keyframes pulse {
@@ -399,7 +399,7 @@
 
 
 
-/* ===== COMPOSANTS SPÉCIFIQUES ===== */
+/* ===== COMPOSANTS SPÉCIFIQUES Réseaux Sociaux ===== */
 
 .connect-title {
   font-size: 3.5rem;
@@ -417,6 +417,14 @@
   margin: 2rem 0;
 }
 
+.connect-section {
+  background: white;
+  color: #333;
+  position: relative;
+  padding-top: 80px;
+  min-height: 100vh;
+  overflow: hidden;
+}
 
 
 /* ===== RESPONSIVE ===== */
@@ -477,7 +485,7 @@
   }
 }
 
-/* =====  Effet numéro discret =====  */
+/* =====  Effets numéro discret Aspirations =====  */
 
 .future-card div[class^="text-9xl"] {
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -490,7 +498,8 @@
     
     
     
-    /* =====  Navigation styles =====  */
+/* =====  Navigation styles =====  */
+    
 #main-nav {
     transition: all 0.5s ease;
     background-color: transparent;
@@ -547,31 +556,9 @@
     
 }
     
-    
-/* =====  Logo dans la nav =====  */
-.cyber-logo-nav {
-  width: 60px;
-  height: 60px;
-  display: block;
-  z-index: 60;
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-.logo-svg-nav {
-  width: 100%;
-  height: 100%;
-  --neon-color: #03e9f4;
-  animation: logo-pulse 3s ease-in-out infinite;
-}
-
-.cyber-logo-nav:hover {
-  transform: scale(1.1) rotate(-5deg);
-  filter: 
-    drop-shadow(0 0 5px #03e9f4)
-    drop-shadow(0 0 15px rgba(3, 233, 244, 0.5));
-}
 
 /* =====  Adaptation pour mobile =====  */
+
 @media (max-width: 768px) {
   .cyber-logo-nav {
     width: 50px;
@@ -579,7 +566,8 @@
   }
 }
 
-/* =====  Animation cohérente avec votre style existant =====  */
+/* =====  Animation =====  */
+
 @keyframes logo-pulse {
   0%, 100% { opacity: 0.9; }
   50% { opacity: 1; }
@@ -587,6 +575,7 @@
 
 
 /* =====  Menu mobile =====  */
+
 @media (max-width: 768px) {
   .hidden.md\\:flex {
     position: fixed;
@@ -625,35 +614,35 @@
    </style>
 </head>
 
+                                                         <!------------------------------ - - - - FIN CSS - - - - ----------------------------->
+                                                       
 
 
 
-
-
-                                                         <!-------------------------------- BODY ----------------------------->
+                                                           <!------------------------------ - - - - BODY - - - - ----------------------------->
 
 
 <body class="bg-white text-gray-800">
 
-
-
-
-
  <!-- Navigation -->
+ 
   <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-transparent">
     <div class="container mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
         <!-- Logo -->
+        
          <a href="#hero" class="cyber-logo-nav">
   <svg class="logo-svg-nav" viewBox="0 0 100 100">
     <defs>
-      <!-- Dégradé bleu-cyan identique à effet typing -->
+      <!-- Dégradé à effet typing -->
+      
       <linearGradient id="nav-logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#03e9f4"/> 
         <stop offset="100%" stop-color="#38bdf8"/>
       </linearGradient>
       
       <!-- Filtre de glow -->
+      
       <filter id="nav-glow" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="3" result="blur"/>
         <feComposite in="SourceGraphic" in2="blur" operator="over"/>
@@ -661,6 +650,7 @@
     </defs>
     
     <!-- Texte style typing effect -->
+    
     <text x="50" y="65" font-size="40" text-anchor="middle"
           fill="url(#nav-logo-gradient)"
           filter="url(#nav-glow)"
@@ -670,6 +660,7 @@
     </text>
     
     <!-- Ligne dynamique -->
+    
     <path d="M20,85 Q50,95 80,85" 
           stroke="url(#nav-logo-gradient)"
           stroke-opacity="0.8"
@@ -680,6 +671,7 @@
 </a>
         
         <!-- Liens de navigation -->
+        
         <div class="hidden md:flex space-x-8">
           <a href="#hero" class="nav-link">Accueil</a>
           <a href="#about" class="nav-link">À propos</a>
@@ -692,7 +684,8 @@
         </div>
         
         
-        <!-- Menu mobile (optionnel) -->
+        <!-- Menu mobile -->
+        
         <div class="md:hidden">
           <button class="text-white focus:outline-none">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -703,38 +696,51 @@
       </div>
     </div>
   </nav>
+  
+                                                     <!------------------------------ - - - - FIN BODY - - - - ----------------------------->
 
 
-                                                 <!-------------------------------- Section Hero ----------------------------->
+
+
+                                                 <!-------------------------------- - - - - Section Hero - - - - --------------------------------->
 
 
 
 
   <!-- Section Hero -->
+  
   <section id="hero" class="parallax-container">
+  
     <!-- Image de fond parallax -->
+    
     <div class="parallax-bg">
       <img src="Images/Tech-Configuration.webp" alt="Background" class="w-full h-full object-cover">
     </div>
     
     <!-- Overlay + effets visuels -->
+    
     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
     <div class="particle-network absolute inset-0"></div>
     
     <!-- Contenu principal -->
+    
     <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
+    
       <!-- Titre avec effet glitch -->
+      
       <h1 class="cyber-glitch text-4xl md:text-6xl font-bold mb-6 text-white" data-text="BIENVENUE">
         BIENVENUE
       </h1>
       
       <!-- Sous-titre machine à écrire -->
+      
       <div class="mb-8 h-10">
         <p id="cyber-subtitle" class="text-xl md:text-2xl text-cyan-300 font-mono"></p>
         <span class="cyber-cursor"></span>
       </div>
       
       <!-- Bouton néon -->
+      
       <a href="#about" class="neon-btn relative inline-block px-8 py-3 bg-transparent border-2 border-cyan-400 rounded-lg text-lg font-medium overflow-hidden">
         <span></span>
         <span></span>
@@ -744,6 +750,7 @@
       </a>
       
       <!-- Flèche de scroll -->
+      
       <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-cyan-300 animate-bounce">
         <i class="arrow bounce fa fa-chevron-down"></i>
       </a>
@@ -751,14 +758,14 @@
   </section>
   
   
-     
+                                        <!-------------------------------- - - - - FIN Section Hero - - - - --------------------------------->
  
  
  
  
  
  
-                                       <!-------------------------------- Section À propos de moi ----------------------------->
+                                       <!-------------------------------- - - - - Section À propos de moi - - - - ----------------------------->
                                        
 
 
@@ -797,15 +804,15 @@
     </section>
   
   
+                                           <!------------------------------- - - - - FIN À propos de moi - - - - --------------------------------->
   
-  
  
  
  
  
  
  
-                            <!------------------------------- Section Compétences ------------------------->
+                                         <!------------------------------- - - - - FIN Section Compétences - - - - --------------------------------->
 
 
 <section id="competences" class="py-16 px-6 bg-gray-50 text-gray-900">
@@ -859,7 +866,7 @@
       </div>
       <div class="bg-cyan-100 rounded-xl p-5 shadow transition-transform duration-300 hover:scale-105 hover:shadow-lg">
         <h4 class="font-semibold text-cyan-900 mb-2">📊 Supervision</h4>
-        <p>PRTG, Zabbix, Nagios, Grafana, SNMP, Logs</p>
+        <p>PRTG, Zabbix, Nagios, Grafana, SNMP, ELK</p>
       </div>
       <div class="bg-yellow-200 rounded-xl p-5 shadow transition-transform duration-300 hover:scale-105 hover:shadow-lg">
         <h4 class="font-semibold text-yellow-900 mb-2">🛣️ Routage</h4>
@@ -879,7 +886,7 @@
  
  
  
- 
+                                             <!--------------------------- - - - -  FIN Compétences - - - - ------------------------------->
  
  
 
@@ -891,7 +898,9 @@
  
  
  
-                                         <!--------------------------- Expériences Professionnelles ------------------------------->
+                                         <!--------------------------- - - - -  Expériences Professionnelles - - - - ------------------------------->
+                                         
+                                         
    
     <section id="experience" class="bg-gray-100 py-16 px-6">
       <div class="max-w-7xl mx-auto">
@@ -905,12 +914,12 @@
             <h3 class="text-xl font-bold">Assistance Utilisateurs</h3>
             <div class="text-sm text-gray-600"><strong>ECONOCOM</strong> | Août 2024 - Février 2025</div>
             <ul class="list-disc list-inside text-sm">
-              <li>Assistance technique quotidienne aux utilisateurs (proximité et à distance) pour assurer la continuité des services informatiques</li>
-              <li>Installation, configuration et maintenance des postes de travail, périphériques et équipements mobiles</li>
-              <li>Création, gestion et suppression des comptes utilisateurs via Active Directory avec attribution des droits d'accès</li>
-              <li>Suivi et gestion du parc informatique et des licences logicielles</li>
+              <li>Assistance technique quotidienne aux utilisateurs (à distance) pour assurer la continuité des services informatiques.</li>
+              <li>Gestion de la communication par suivi et traitement des appels entrants, en veillant à une réponse rapide et appropriée.</li>
+              <li>Gestion de sécurité des comptes utilisateurs via Active Directory.</li>
+              <li>Accompagnement des utilisateurs dans la prise en main des nouveaux outils numériques.</li>
               <li>Rédaction rigoureuse et structurée des interventions techniques dans ServiceNow, assurant la traçabilité complète des actions menées.</li>
-              <li>Formation et accompagnement des utilisateurs sur les outils bureautiques, collaboratifs, Système windows, accès à distance et de sécurité</li>
+              <li>Accompagnement des utilisateurs sur les outils bureautiques, collaboratifs, Système windows, accès à distance et de sécurité.</li>
             </ul>
             
           <div class="mt-2">
@@ -933,13 +942,13 @@
             <h3 class="text-xl font-bold">Stage Technicien Système Réseau</h3>
             <div class="text-sm text-gray-600"><strong>GT2S</strong> | Octobre 2023 - Décembre 2023</div>
             <ul class="list-disc list-inside text-sm">
-              <li>Configuration d'une infrastructure réseau sécurisée avec VPN et segmentation pour assurer une protection optimale des données</li>
-              <li>Déploiement et gestion de serveurs ESXi et stockage partagé, assurant flexibilité et performance à long terme</li>
-              <li>Migration P2V de plus de 15 postes vers des serveurs ESXi optimisés, améliorant les performances système</li>
-              <li>Automatisation de l'intégration de 200+ équipements dans GLPI, optimisant la gestion du parc informatique</li>
-              <li>Configuration d'ACL et de règles pare-feu pour garantir un accès sécurisé aux systèmes NAS</li>
-              <li>Diagnostic et résolution des incidents logiciels et matériels, garantissant la disponibilité et la stabilité du réseau</li>
-              <li>Supervision proactive du parc informatique via Nagios, incluant le monitoring des serveurs, des applications et des services réseau</li>
+              <li>Configuration d'une infrastructure réseau sécurisée avec VPN et segmentation pour assurer une protection optimale des données.</li>
+              <li>Déploiement, gestion de serveurs ESXi et stockage partagé, assurant flexibilité et performance à long terme.</li>
+              <li>Migration P2V de plus de 15 postes vers des serveurs ESXi optimisés, améliorant les performances système.</li>
+              <li>Automatisation de l'intégration de 200+ équipements dans GLPI, optimisant la gestion du parc informatique.</li>
+              <li>Configuration d'ACL et de règles pare-feu pour garantir un accès sécurisé aux systèmes NAS.</li>
+              <li>Diagnostic et résolution des incidents logiciels et matériels, garantissant la disponibilité et la stabilité du réseau.</li>
+              <li>Supervision proactive du parc informatique via Nagios, incluant le monitoring des serveurs, des applications et des services réseau.</li>
             </ul>
          
           <div class="mt-2">
@@ -966,10 +975,10 @@
             <div class="text-sm text-gray-600"><strong>INGRAM MICRO</strong> | Octobre 2018 - Décembre 2018</div>
             <ul class="list-disc list-inside text-sm">
                <li>Déploiement et mise à jour des systèmes d’exploitation  sur postes clients. (Windows & Cisco iOS)</li>
-               <li>Administration système de premier niveau et configuration de serveurs Cisco dans un environnement contrôlé</li>
-               <li>Validation technique des équipements avant livraison : tests, sauvegardes et conformité aux exigences clients</li>
-               <li>Contrôle qualité des systèmes déployés et documentation des procédures suivies pour assurer la traçabilité</li>
-               <li>Démontage, assemblage et personnalisation d’équipements électroniques</li>
+               <li>Administration système de premier niveau et configuration de serveurs Cisco dans un environnement contrôlé.</li>
+               <li>Vérification technique des équipements avant livraison: tests, sauvegardes et conformité aux exigences clients.</li>
+               <li>Contrôle qualité des systèmes déployés et documentation des procédures suivies pour assurer la traçabilité.</li>
+               <li>Démontage, assemblage et personnalisation d’équipements électroniques.</li>
             </ul>
           
           <div class="mt-2">
@@ -984,19 +993,21 @@
       </div>
     </section>
     
- 
+                                   <!--------------------------- - - - - FIN Expériences Professionnelles - - - - ------------------------------->
         
             
     
+                                                          <!-- - - - -  (Section: Formations, Projets, Réseaux sociaux) - - - - - --> 
     
     
     
-    
-                                                         <!-- (Section: Formations, Projets, Réseaux sociaux) -->
+                                                         
      
      
      
-                                    <!---------------------------------- Section Formation ------------------------------>
+                                    <!---------------------------------- - - - - Section Formation - - - - ------------------------------------->
+                                    
+                                    
 
 <section id="formation" class="py-16 px-6 bg-white">
   <div class="max-w-7xl mx-auto">
@@ -1054,19 +1065,19 @@
               <img src="Images/certificate.svg" alt="Icône de certificat" class="w-9 h-9 text-blue-600" />
             </div>
             <div>
-              <h3 class="text-xl font-bold text-blue-900">CCNA: Introduction aux réseaux</h3>
-              <p class="text-blue-600 font-medium">CISCO | Distanciel - 2023 </p>
+              <h3 class="text-xl font-bold text-blue-900">Technicien Supérieur Système Réseau</h3>
+              <p class="text-blue-600 font-medium">AFCI | Villeneuve d'Ascq - 2023</p>
             </div>
           </div>
           <p class="mt-4 text-gray-700"><strong>Certification en administration réseau. Spécialisation sur la configuration, la sécurisation et le dépannage réseaux selon les normes Cisco.</strong></p>
           <div class="mt-4 pt-4 border-t border-gray-200">
           <h4 class="mt-4 text-md font-semibold text-blue-800">Modules :</h4>
           <ul class="mt-4 list-disc list-inside text-sm text-gray-700">
-              <li>Configuration de commutateurs, routeurs et périphériques pour la connectivité locale et distante</li>
-              <li>Création et gestion d’adressages IPv4/IPv6, vérification de la connectivité réseau</li>
-              <li>Compréhension des couches OSI/TCP-IP pour le support des applications réseau</li>
-              <li>Application des meilleures pratiques de sécurité sur des réseaux de petite taille</li>
-              <li>Diagnostic et résolution de pannes de connectivité réseau</li>
+              <li>Configuration de commutateurs, routeurs et périphériques pour la connectivité locale et distante.</li>
+              <li>Création et gestion d’adressages IPv4/IPv6, vérification de la connectivité réseau.</li>
+              <li>Compréhension des couches OSI/TCP-IP pour le support des applications réseau.</li>
+              <li>Application des meilleures pratiques de sécurité sur des réseaux de petite taille.</li>
+              <li>Diagnostic et résolution de pannes de connectivité réseau.</li>
           </ul>
           <div class="mt-2">
             <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2">Ethernet</span>
@@ -1078,17 +1089,15 @@
             <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2">Security Fundamentals</span>
             <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2">Switching</span>
             
-            <a href="https://www.credly.com/badges/TON-ID-DE-BADGE" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.credly.com/badges/ea9a6233-4e6c-4fa6-9261-4a1b33cb0d2d/public_url" target="_blank" rel="noopener noreferrer">
   <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded">
     Vérifier le badge sur Credly
   </button>
-</a>
-
-            
-            </div>
-          </div>
+          </a>
         </div>
       </div>
+    </div>
+  </div>
 
     <!-- Timeline pour mobile -->
     
@@ -1096,14 +1105,14 @@
       <div class="border-l-2 border-blue-200 pl-6 space-y-8">
         <div class="relative">
           <div class="absolute -left-8 top-1 h-4 w-4 rounded-full bg-blue-500 border-4 border-blue-100"></div>
-          <h3 class="text-lg font-bold text-blue-900">Master en Informatique</h3>
+          <h3 class="text-lg font-bold text-blue-900">CCNA: Introduction aux réseaux</h3>
           <p class="text-blue-600 text-sm">2017 - 2019</p>
           <p class="mt-1 text-gray-700 text-sm">Spécialisation développement web/mobile</p>
         </div>
         <div class="relative">
           <div class="absolute -left-8 top-1 h-4 w-4 rounded-full bg-blue-500 border-4 border-blue-100"></div>
-          <h3 class="text-lg font-bold text-blue-900">Licence en Sciences Informatiques</h3>
-          <p class="text-blue-600 text-sm">2014 - 2017</p>
+          <h3 class="text-lg font-bold text-blue-900">CCNA: Introduction aux réseaux</h3>
+          <p class="text-blue-600 text-sm">CISCO | Distanciel - 2023</p>
           <p class="mt-1 text-gray-700 text-sm">Fondamentaux des systèmes d'information</p>
         </div>
       </div>
@@ -1111,22 +1120,40 @@
   </div>
 </section>
 
+                                                <!------------------------------- - - - - FIN Formations - - - - ---------------------------------->
 
 
 
 
-
-                             <!---------------------------------- Section Projets ---------------------------------->
+                                                <!------------------------------- - - - - Section Projets - - - - ---------------------------------->
 
 <section id="projets" class="py-20 px-6 bg-gray-100 relative overflow-hidden">
+
+
+ <!-- Message d'avertissement -->
+ 
+  <div class="max-w-4xl mx-auto mb-12 px-6 py-4 bg-yellow-100 border-l-4 border-yellow-500 shadow-md rounded-lg flex items-start">
+  <div class="mr-4">
+    <i class="fas fa-tools text-yellow-600 text-2xl animate-pulse"></i>
+  </div>
+  <div>
+    <p class="text-yellow-800 text-sm md:text-base">
+      <strong>📍Cette section est en cours d'intégration.</strong><br>
+      Mes projets professionnels seront bientôt disponibles ici. Je prends le temps de les présenter avec soin pour refléter au mieux leur valeur et leur technicité.<br>
+      <span class="italic text-yellow-700">Merci de votre patience.</span>
+    </p>
+  </div>
+</div>
+
+  
+  
+
 
   <!-- Fond dynamique -->
   
   <div class="absolute inset-0 opacity-10">
     <div class="grid grid-cols-12 grid-rows-12 h-full">
-      <div class="col-span-1 row-span-1 bg-blue-500 rounded-full animate-float"></div>
-      
-      <!-- Répéter pour créer un motif dynamique -->
+      <div class="col-span-1 row-span-1 bg-blue-500 rounded-full animate-float"></div>      
     </div>
   </div>
 
@@ -1137,8 +1164,7 @@
         <span class="absolute bottom-0 left-0 h-1 w-full bg-blue-500 transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></span>
       </span>
     </h2>
-    <p class="text-xl text-center text-gray-600 mb-16 max-w-3xl mx-auto">Explorez mes projets phares avec <span class="text-blue-600 font-medium">interactivité</span></p>
-
+    <p class="text-xl text-center text-gray-600 mb-16 max-w-3xl mx-auto">Explorez mes projets techniques, conçus pour approfondir mes compétences en administration système, infrastructures cloud et automatisation.</p>
 
     <!-- Container 3D -->
     
@@ -1162,7 +1188,7 @@
           </div>
           <div class="p-6 flex-grow">
             <h3 class="text-2xl font-bold text-blue-900 mb-2">Supervision Réseau</h3>
-            <p class="text-gray-600 mb-4">Supervision des services infrastructures réseau, projet en cours de développement.</p>
+            <p class="text-gray-600 mb-4">Déploiement d’une solution de supervision réseau intégrée pour monitorer en temps réel la disponibilité, la performance et la sécurité des équipements et services, avec alertes proactives et tableaux de bord personnalisés.</p>
             
             <div class="tech-stack mb-6">
               <div class="flex items-center space-x-2 mb-2">
@@ -1181,7 +1207,7 @@
           </div>
           <div class="px-6 pb-6">
             <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition">
-              Cas d'étude complet <i class="fas fa-arrow-right ml-2"></i>
+              Bientôt Disponible <i class="fas fa-arrow-right ml-2"></i>
             </a>
           </div>
         </div>
@@ -1189,8 +1215,7 @@
   
 
 
-      <!---------------------------------------------- Projet 2 - Holographique ---------------------------------------->
-
+      <!---- Projet 2 ---->
       
       <div class="project-card bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-transparent hover:border-blue-400 transition-all duration-300">
         <div class="h-full flex flex-col">
@@ -1198,25 +1223,25 @@
             <div class="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
               <div class="text-white text-center p-6">
                 <i class="fas fa-tasks text-5xl mb-4"></i>
-                <h3 class="text-2xl font-bold">TaskMaster Pro</h3>
+                <h3 class="text-2xl font-bold"> Infrastructure hybride : Intégration Cloud–Home Lab</h3>
               </div>
             </div>
             <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-purple-500"></div>
           </div>
           <div class="p-6 flex-grow">
-            <p class="text-gray-600 mb-4">Application de gestion de tâches avec IA intégrée pour la priorisation automatique</p>
+            <p class="text-gray-600 mb-4">Déploiement d’une architecture hybride reliant un environnement cloud à mon home lab via un tunnel VPN sécurisé. L’objectif est de simuler des cas d’usage en entreprise tels que la gestion centralisée des services, la réplication de données, et l’orchestration de machines virtuelles locales et cloud via Ansible et Terraform. Ce projet me permet d’approfondir la maîtrise des environnements distribués, du provisioning automatisé, et du troubleshooting inter-réseaux en contexte multi-environnements.</p>
             <div class="mb-6">
               <div class="flex items-center mb-2">
                 <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-blue-600 h-2 rounded-full" style="width: 85%"></div>
+                  <div class="bg-blue-600 h-2 rounded-full" style="width: 30%"></div>
                 </div>
-                <span class="text-xs text-gray-500 ml-2">85% complété</span>
+                <span class="text-xs text-gray-500 ml-2">30% complété</span>
               </div>
             </div>
           </div>
           <div class="px-6 pb-6">
             <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition flex items-center justify-center">
-              <i class="fas fa-eye mr-2"></i> Voir la démo
+              <i class="fas fa-eye mr-2"></i> Voir le projet
             </button>
           </div>
         </div>
@@ -1237,8 +1262,20 @@
               </button>
             </div>
           </div>
-          <h3 class="text-2xl font-bold text-blue-900 mb-2">Portfolio Professionnel</h3>
-          <p class="text-gray-600 mb-4">Développement d'un site web personnel avec animations avancées</p>
+          <h3 class="text-2xl font-bold text-blue-900 mb-2">Plateforme d’expérimentation – Home Lab sécurisé et évolutif</h3>
+          <p class="text-gray-600 mb-4">Mise en place d’un Home Lab complet simulant une infrastructure d’entreprise. Déploiement de systèmes Windows et Linux, services réseaux, supervision, virtualisation et sécurité. Objectif : tester, apprendre et renforcer mes compétences en administration IT dans un environnement isolé et maîtrisé.</p>
+          
+             <div class="mb-6">
+              <div class="flex items-center mb-2">
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-blue-600 h-2 rounded-full" style="width: 85%"></div>
+                </div>
+                <span class="text-xs text-gray-500 ml-2">85% complété</span>
+              </div>
+            </div>
+          
+          
+          
           <div class="mt-auto">
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="tech-badge">Systèmes</span>
@@ -1248,7 +1285,7 @@
             </div>
             <div class="flex justify-between items-center">
               <a href="#" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                Code source <i class="fas fa-external-link-alt ml-2"></i>
+                Télécharger PDF <i class="fas fa-external-link-alt ml-2"></i>
               </a>
               <span class="text-sm text-gray-500">2024</span>
             </div>
@@ -1274,7 +1311,7 @@
 
 
 <style>
-  /* Animations custom */
+  /* Animations Partie Projets */
   
   .animate-float {
     animation: float 8s ease-in-out infinite;
@@ -1322,15 +1359,16 @@
     transform: rotateY(15deg);
   }
 </style>
+                                                         <!------------------------------- - - - - FIN Section Projets - - - - ---------------------------------->
 
 
 
-
-                            <!------------------------ DEBUT SCRIPTS  ------------------------>
+                                                         <!------------------------------- - - - - DEBUT SCRIPTS - - - -  ------------------------------------------>
  
 
 <script>
 // Effet machine à écrire
+
 const cyberTexts = [
   "JE SUIS YANNICK,",
   "TECHNICIEN SYSTÈMES & RÉSEAUX,",
@@ -1365,6 +1403,7 @@ function typeWriter() {
 }
 
 // Navigation active
+
 function updateActiveNav() {
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -1387,6 +1426,7 @@ function updateActiveNav() {
 }
 
 // Effet parallax
+
 function initParallax() {
   if (window.innerWidth > 768) {
     const parallaxBg = document.querySelector('.parallax-bg img');
@@ -1398,6 +1438,7 @@ function initParallax() {
 }
 
 // Menu mobile
+
 function initMobileMenu() {
   const mobileMenuButton = document.querySelector('.md\\:hidden button');
   const navLinksContainer = document.querySelector('.hidden.md\\:flex');
@@ -1410,6 +1451,7 @@ function initMobileMenu() {
 }
 
 // Initialisation au chargement
+
 document.addEventListener('DOMContentLoaded', function() {
   typeWriter();
   initParallax();
@@ -1418,7 +1460,8 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', function() {
     updateActiveNav();
     
-    // Effet sur la navbar
+// Effet sur la navbar
+    
     const nav = document.getElementById('main-nav');
     if (window.scrollY > 100) {
       nav.classList.add('scrolled');
@@ -1427,7 +1470,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Smooth scroll pour les ancres
+// Smooth scroll pour les ancres
+  
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
@@ -1442,29 +1486,21 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-    // Script de Contact 
+// Script de Contact 
     
-    
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
+document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    // Récupération des valeurs du formulaire
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-    
-    
     window.location.href = `mailto:sugirayannick@yahoo.fr?subject=Message de ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
-    
-    // Réinitialisation du formulaire
     this.reset();
-    
-    // Message de confirmation
     alert('Merci pour votre message ! Je vous répondrai dès que possible.');
   });
 
 </script>
 
+                                             <!------------------------------- - - - - FIN Section SCRIPTS - - - -  ------------------------------------------>
 
 
 
@@ -1472,7 +1508,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-                                          <!----------------------------------- Offre Section ------------------------------->
+                                             <!------------------------------- - - - - Section Aspirations - - - - ----------------------------------------->
 
 
 <section id="future" class="future-section py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
@@ -1487,7 +1523,7 @@ document.addEventListener('DOMContentLoaded', function() {
      <div class="future-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     
     
-      <!-- Carte 1 -->
+      <!-- Projet 1 -->
       
       
       <div class="future-card group relative overflow-hidden rounded-xl p-8 border border-white/10 hover:border-purple-400 transition-all duration-500">
@@ -1496,73 +1532,76 @@ document.addEventListener('DOMContentLoaded', function() {
         <p class="relative z-10 opacity-80 group-hover:opacity-100 transition-opacity">
           Diriger des projets innovants tout en mentorant les nouvelles générations de développeurs.
         </p>
-        <div class="absolute -bottom-8 -right-8 text-9xl opacity-5 group-hover:opacity-20 transition-all duration-300">01</div>
+        <div class="absolute -bottom-8 -right-3 text-9xl opacity-10 group-hover:opacity-20 transition-all duration-300">01</div>
       </div>
       
       
       
       
-      <!-- Carte 2 -->
+      <!-- Projet 2 -->
       
      
-      <div class="future-card group relative overflow-hidden rounded-xl p-8 border border-white/10 hover:border-purple-400 transition-all duration-500">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-purple-900/30 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        <h3 class="text-2xl font-semibold mb-4 relative z-10">CCNP | CISCO</h3>
-        <p class="relative z-10 opacity-80 group-hover:opacity-100 transition-opacity">
-          Cisco Certified Network Professional. Présentez mon expertise dans les domaines de l'infrastructure d'entreprise, de la virtualisation, de l'assurance, de la sécurité et de l'automatisation aux employeurs influents.
-        </p>
-        <div class="absolute -bottom-8 -right-8 text-9xl opacity-5 group-hover:opacity-20 transition-all duration-300">02</div>
-      </div>
-      
-      
-      
-      
-      
-      <!-- Carte 3 -->
-      
-      
       <div class="future-card group relative overflow-hidden rounded-xl p-8 border border-white/10 hover:border-purple-400 transition-all duration-500">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-purple-900/30 opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <h3 class="text-2xl font-semibold mb-4 relative z-10">RHCSA | REDHAT</h3>
         <p class="relative z-10 opacity-80 group-hover:opacity-100 transition-opacity">
           Red Hat Certified System Administrator possède les compétences fondamentales d'administration de systèmes, qui sont requises pour gérer des environnements Red Hat Enterprise Linux.
         </p>
-        <div class="absolute -bottom-8 -right-8 text-9xl opacity-5 group-hover:opacity-20 transition-all duration-300">03</div>
+        <div class="absolute -bottom-8 -right-3 text-9xl opacity-10 group-hover:opacity-20 transition-all duration-300">02</div>
+      </div>
+      
+      
+      
+      
+      
+      <!-- Projet 3 -->
+      
+      
+      <div class="future-card group relative overflow-hidden rounded-xl p-8 border border-white/10 hover:border-purple-400 transition-all duration-500">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-purple-900/30 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <h3 class="text-2xl font-semibold mb-4 relative z-10">CompTIA Security+</h3>
+        <p class="relative z-10 opacity-80 group-hover:opacity-100 transition-opacity">
+           Certification mondiale qui valide les compétences nécessaires pour remplir des fonctions de sécurité informatique. 
+        </p>
+        <div class="absolute -bottom-8 -right-3 text-9xl opacity-10 group-hover:opacity-20 transition-all duration-300">03</div>
       </div>
    
   
       
       
-       <!-- Carte 4 -->
+       <!-- Projet 4 -->
       
       
       <div class="future-card group relative overflow-hidden rounded-xl p-8 bg-white border border-gray-200 hover:border-purple-300 transition-all duration-300 shadow-sm hover:shadow-md">
-        <h3 class="text-2xl font-semibold mb-4 text-gray-800">CompTIA Security+</h3>
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">MCAAA | Microsoft</h3>
         <p class="text-gray-600">
-         Certification mondiale qui valide les compétences nécessaires pour remplir des fonctions de sécurité informatique.
+          Microsoft Certifié: Azure Administrator Associate. Démontrer les compétences clés pour configurer, gérer, sécuriser et administrer des fonctions professionnelles clés dans Microsoft Azure. 
+0
         </p>
-        <div class="absolute -bottom-8 -right-8 text-9xl opacity-5 group-hover:opacity-10 transition-all duration-500 text-purple-400">04</div>
+        <div class="absolute -bottom-8 -right-3 text-9xl opacity- group-hover:opacity-20 transition-all duration-500 text-purple-200">04</div>
       </div>
       
       
       
       
-      <!-- Carte 5 -->
+      <!-- Projet 5 -->
       
      
       <div class="future-card group relative overflow-hidden rounded-xl p-8 bg-white border border-gray-200 hover:border-blue-300 transition-all duration-300 shadow-sm hover:shadow-md">
-        <h3 class="text-2xl font-semibold mb-4 text-gray-800">MCAAA | Microsoft</h3>
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">
+CCNP | CISCO</h3>
         <p class="text-gray-600">
-        Microsoft Certifié: Azure Administrator Associate. Démontrer les compétences clés pour configurer, gérer, sécuriser et administrer des fonctions professionnelles clés dans Microsoft Azure. 
+         Cisco Certified Network Professional. Présentez mon expertise dans les domaines de l'infrastructure d'entreprise, de la virtualisation, de l'assurance, de la sécurité et de l'automatisation aux employeurs influents.
+0 
         </p>
-        <div class="absolute -bottom-8 -right-8 text-9xl opacity-5 group-hover:opacity-10 transition-all duration-500 text-blue-400">05</div>
+        <div class="absolute -bottom-8 -right-3 text-9xl opacity-9 group-hover:opacity-20 transition-all duration-500 text-blue-200">05</div>
       </div>
       
       
       
       
       
-      <!-- Carte 6 -->
+      <!-- Projet 6 -->
       
       
       <div class="future-card group relative overflow-hidden rounded-xl p-8 bg-white border border-gray-200 hover:border-purple-300 transition-all duration-300 shadow-sm hover:shadow-md">
@@ -1570,34 +1609,36 @@ document.addEventListener('DOMContentLoaded', function() {
         <p class="text-gray-600">
           M1/M2 Expert Réseaux & Sécurité. Expert des systèmes informatiques et de la gestion des infrastructures associées. Développer des compétences clés en sécurisation des réseaux, en maîtrise des architectures et en management des systèmes d’information (SI).
         </p>
-        <div class="absolute -bottom-8 -right-8 text-9xl opacity-5 group-hover:opacity-10 transition-all duration-500 text-purple-400">06</div>
+        <div class="absolute -bottom-8 -right-3 text-9xl opacity-9 group-hover:opacity-10 transition-all duration-500 text-purple-200">06</div>
       </div>
      </div>
     </div>
   </div>
 </section>
 
+                                    <!------------------------------- - - - - FIN Section Aspirations - - - - ----------------------------------------->
 
 
 
 
 
-                                    <!------------------------------------ Section Réseaux Sociaux ---------------------------------->
+                                    <!---------------------------- - - - - Section Réseaux Sociaux & Contact- - - - --------------------------------------------->
+                                    
+                                    
 
 
 <section id="connect" class="min-h-screen bg-white py-20 px-6 relative overflow-hidden">
 
 
-  <!-- Fond géométrique subtil -->
-  
-  
+ <!-- Fond géométrique subtil -->
+ 
   <div class="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDAiIG9wYWNpdHk9Ii4wNSI+PHBhdGggZD0iTTM2IDM0YzAtMi4yLTEuOC00LTQtNHMtNCAxLjgtNCA0IDEuOCA0IDQgNCA0LTEuOCA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
-
+  
   <div class="max-w-6xl mx-auto relative z-10">
+
+
   
-  
-  
-    <!-- Section Connect -->
+    <!-- Réseaux Sociaux -->
     
     
     <div class="connect-part text-center mb-24">
@@ -1656,12 +1697,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    <!-- Début du Footer sémantique -->
+    <!-- Début du Footer -->
     
     
     <footer class="footer-light">
       <div class="footer-content grid grid-cols-1 md:grid-cols-3 gap-12">
+      
         <!-- Signature -->
+        
         <div class="signature-box">
           <div class="flex items-center mb-6">
             <span class="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mr-4">
@@ -1673,7 +1716,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
           <p class="text-gray-700">
-            Je maintiens vos systèmes opérationnels pour une productivité sans interruption.
+            Fiabilité, Sécurité et Performance : vos systèmes, toujours opérationnels.
           </p>
         </div>
         
@@ -1728,7 +1771,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         
         
-        <!-- Contact -->
+        <!-- Contact Message -->
         
         
         <div class="contact-box">
@@ -1767,9 +1810,7 @@ document.addEventListener('DOMContentLoaded', function() {
      </p>
     </div>
     </footer>
-    <!-- Fin du Footer sémantique -->
-    
-    
-    
   </div>
 </section>
+
+                                                       <!---------------------- - - - - Fin du Code - - - - ---------------------->
