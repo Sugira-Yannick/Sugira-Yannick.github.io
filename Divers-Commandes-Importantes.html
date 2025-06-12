@@ -1,58 +1,126 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commandes Importantes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        h2 {
-            color: #2980b9;
-            margin-top: 30px;
-            border-left: 4px solid #3498db;
-            padding-left: 10px;
-        }
-        pre {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            border-left: 3px solid #3498db;
-        }
-        code {
-            font-family: Consolas, Monaco, 'Andale Mono', monospace;
-            color: #c7254e;
-            background-color: #f9f2f4;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        .note {
-            background-color: #e7f5fe;
-            padding: 10px;
-            border-left: 4px solid #3498db;
-            margin: 15px 0;
-        }
-        .warning {
-            background-color: #fff3cd;
-            padding: 10px;
-            border-left: 4px solid #ffc107;
-            margin: 15px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commandes Importantes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1e1e1e;
+      --accent: #3498db;
+      --code-bg: #f5f5f5;
+      --note-bg: #e7f5fe;
+      --warn-bg: #fff3cd;
+    }
+    [data-theme="dark"] {
+      --bg: #1e1e1e;
+      --fg: #ffffff;
+      --accent: #2980b9;
+      --code-bg: #2b2b2b;
+      --note-bg: #2c3e50;
+      --warn-bg: #664d03;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      display: flex;
+    }
+    nav {
+      width: 250px;
+      background: var(--accent);
+      color: white;
+      padding: 20px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+    nav h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 5px 0;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      max-width: 1000px;
+    }
+    h1, h2 {
+      color: var(--accent);
+    }
+    pre {
+      background: var(--code-bg);
+      padding: 15px;
+      border-left: 4px solid var(--accent);
+      position: relative;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    code {
+      font-family: Consolas, monospace;
+      color: #c7254e;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ccc;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .note, .warning {
+      padding: 10px;
+      margin: 15px 0;
+      border-left: 4px solid var(--accent);
+    }
+    .note { background: var(--note-bg); }
+    .warning { background: var(--warn-bg); }
+    .theme-toggle {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+    @media (max-width: 768px) {
+      nav { display: none; }
+      body { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
+  <nav>
+    <h2>Navigation</h2>
+    <a href="#linux">Linux</a>
+    <a href="#windows">Windows</a>
+    <a href="#cisco">Cisco</a>
+    <a href="#powershell">PowerShell</a>
+    <a href="#reseau">Réseau</a>
+    <a href="#pfsense">pfSense</a>
+    <a href="#administration">Administration</a>
+  </nav>
+
+  <div class="content">
+    <span class="theme-toggle" onclick="toggleTheme()">🌓</span>
     <h1>Commandes Importantes</h1>
+
+    <!-- Le contenu complet sera injecté ici dynamiquement par la suite -->
+    <!-- Pour simplifier l'exemple, on commence par générer la structure du fichier -->
+    
 
     <h2>Routage sous Linux</h2>
     <pre><code># Ajouter une route
@@ -1096,5 +1164,26 @@ echo 1 | sudo tee /sys/bus/usb/devices/usb1/authorized
 # Réinstaller un pilote (Windows)
 pnputil.exe /delete-driver oem0.inf /uninstall
 pnputil.exe /add-driver "C:\Drivers\new_driver.inf" /install</code></pre>
+  </div>
+
+  <script>
+    document.querySelectorAll('pre').forEach(pre => {
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = '📋';
+      btn.onclick = () => {
+        const code = pre.innerText;
+        navigator.clipboard.writeText(code);
+        btn.textContent = '✅';
+        setTimeout(() => btn.textContent = '📋', 2000);
+      };
+      pre.appendChild(btn);
+    });
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+  </script>
 </body>
 </html>
