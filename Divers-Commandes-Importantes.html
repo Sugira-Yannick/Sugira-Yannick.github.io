@@ -161,6 +161,11 @@ Set-NetIPInterface -InterfaceAlias "Ethernet" -Forwarding Enabled
 
 # Configurer le NAT pour un réseau
 New-NetNat -Name "SwitchAccess" -InternalIPInterfaceAddressPrefix "192.168.10.0/24"
+	    
+
+# Capture du traffic sur une Interface Windows
+netsh trace start capture=yes Ethernet IPv4.Address=IP Adresse
+	    
 
 # Vérifier le NAT
 Get-NetNat
