@@ -345,6 +345,10 @@ tcpdump -i any or &lt;Interface&gt; port 250(ou autres selon la situation) -vv -
 
 # Capturer les paquets avec une adresse IP spécifique
 tcpdump -i eth0 -nn 'host 224.0.0.9'
+	    Pour capturer d'autres protocoles, remplacez icmp par :
+            tcp (ex: tcpdump -i <interface> tcp port 80)
+            udp (ex: tcpdump -i <interface> udp port 53)
+            arp (pour les requêtes ARP)
 
 # Vérifier le trafic NAT
 sudo tcpdump -i &lt;interface_host_local&gt; host NAT &lt;IP_WINDOWS&gt;</code></pre>
