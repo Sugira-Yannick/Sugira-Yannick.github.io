@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes Importantes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 3px solid #3498db;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            color: #c7254e;
+            background-color: #f9f2f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .note {
+            background-color: #e7f5fe;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Commandes Importantes</h1>
+
+    <h2>Routage sous Linux</h2>
+    <pre><code># Ajouter une route
+ip route add (IP address de destination)/(mask) via (IP local capable d'aller vers le réseau de destination)
+
+# Ajouter une route par défaut
+ip route add default via &lt;address-passerelle&gt;
+
+# Rendre une route permanente (Debian/Ubuntu)
+echo "192.168.10.0/24 via 192.168.60.5 dev eth0" | sudo tee -a /etc/network/interfaces
+
+# Vérifier la table de routage
+ip route show
+
+# Ajouter une adresse IP permanente
+ip address add 192.168.1.2/24 dev eth0 sur l'interface concerné dans /etc/network/interfaces
+up ip address add 192.168.1.2/24 dev eth0 sur l'interface concerné</code></pre>
+
+    <h2>Routage sous Windows (Permanent)</h2>
+    <pre><code>ip add -p (IP addres de destination) MASK (ex:255.255.255.0) (IP local capable d'aller vers le réseau de destination)</code></pre>
+
+    <h2>Configuration d'interface sous Linux</h2>
+    <pre><code># Lister les interfaces
+ip link show, ip a
+
+# Activer une interface
+ip link set &lt;interface&gt; up
+
+# Configurer une adresse IP
+ip address add &lt;IP&gt;/&lt;masque&gt; dev &lt;interface&gt;
+
+# Vérifier l'adresse IP
+ip address show &lt;interface&gt;</code></pre>
+
+    <h2>NAT sous Windows</h2>
+    <pre><code># Activer le routage IP
+Set-NetIPInterface -InterfaceAlias "Ethernet" -Forwarding Enabled
+
+# Configurer le NAT pour un réseau
+New-NetNat -Name "SwitchAccess" -InternalIPInterfaceAddressPrefix "192.168.10.0/24"
+
+# Vérifier le NAT
+Get-NetNat
+get-NetNatStaticMappingetFirewallRule -DisplayName "Allow_Linux_Subnet" -RemoteAddress 192.168.60.4 -Action Allow
+Get-NetNatTransitionConfiguration
+
+# Proxy SSH via Windows
+ssh -J user@&lt;IP_Windows&gt; user@&lt;IP_Machine_Adminstrée&gt;
+
+# Tester l'accès SSH
+Test-NetConnection 10.10.2.2 -Port 22</code></pre>
+
+    <h2>NAT sous Linux</h2>
+    <pre><code># Désactiver NAT temporairement
+iptables -t nat -F POSTROUTING
+
+# Activer NAT
+iptables -t nat -A POSTROUTING -s &lt;Network+Mask&gt; -o &lt;Interface&gt; -j MASQUERADE
+
+# Activer le forwarding IP
+sysctl -w net.ipv4.ip_forward=1
+# Permanent: Edit /etc/sysctl.conf and set net.ipv4.ip_forward=1.
+
+# Vérifier le NAT
+sudo iptables -t nat -L POSTROUTING -v -n --line-numbers
+iptables -t nat -L -n -v
+
+# Vérifier le port forwarding
+cat /proc/sys/net/ipv4/ip_forward
+
+# Afficher les paquets NAT en temps réel
+watch -n 1 'sudo iptables -t nat -L POSTROUTING -v -n'</code></pre>
+
+    <div class="note">
+        <p><strong>Alternative (for Static IPs):</strong> Use SNAT</p>
+        <pre><code>iptables -t nat -A POSTROUTING -s 30.30.30.0/30 -o pnet0 -j SNAT --to-source [PUBLIC_IP]</code></pre>
+    </div>
+
+    <h2>NAT pour protocoles spécifiques</h2>
+    <pre><code># Autoriser les paquets RIP (destination)
+iptables -t nat -A POSTROUTING -p udp --dport 520 -j ACCEPT
+
+# Autoriser les paquets RIP (source)
+iptables -t nat -A POSTROUTING -p udp --sport 520 -j ACCEPT
+
+# Autoriser tous les paquets
+iptables -A FORWARD -i pnet0 -j ACCEPT
+iptables -A FORWARD -o pnet0 -j ACCEPT</code></pre>
+
+    <div class="warning">
+        <p><strong>Common Pitfalls:</strong></p>
+        <ul>
+            <li>Interface name typo: Ensure pnet0 exists (ip a or ifconfig)</li>
+            <li>Missing kernel support: Verify NAT is supported (lsmod | grep iptable_nat)</li>
+            <li>Firewall conflicts: Check if other rules block traffic (iptables -L)</li>
+        </ul>
+    </div>
+
+    <h2>Traceroute</h2>
+    <pre><code># Envoyer seulement 3 paquets par saut
+traceroute 8.8.8.8 probe 3
+
+# Trouver le PID du traceroute
+show processes | include traceroute
+
+# Terminer le processus
+kill &lt;PID&gt;</code></pre>
+
+    <h2>RIP Cisco</h2>
+    <pre><code># Afficher les routes RIP
+show ip route rip
+
+# Afficher les voisins RIP
+show ip rip neighbors
+
+# Désactiver RIP sur toutes les interfaces sauf celles nécessaires
+passive-interface default
+
+# Activer RIP sur une interface spécifique
+int &lt;Interface&gt;
+no passive-interface
+
+# Debug RIP
+debug ip rip
+
+# Afficher la configuration RIP
+show run | section router rip
+
+# Effacer la table de routage
+clear ip route *
+
+# Afficher la base de données RIP
+show ip rip database
+
+# Modifier la métrique RIP
+int &lt;Interface&gt;
+ip rip metric 1
+
+# Désactiver RIP sur une interface
+int &lt;Interface&gt;
+no ip rip send
+
+# Forcer les broadcasts RIP v2
+int &lt;Interface&gt;
+ip rip v2-broadcast
+
+# Désactiver le debug
+undebug all</code></pre>
+
+    <h2>Multicast Cisco</h2>
+    <pre><code># Activer le multicast
+configure terminal => ip multicast-routing
+
+# Activer PIM
+int &lt;Interface&gt;
+ip pim sparse-mode
+
+# Utiliser IGMPv2
+ip igmp version 2
+
+# Afficher la table multicast
+show ip mroute
+
+# Lister les groupes joints
+show ip igmp groups
+
+# Debug IGMP
+debug ip igmp
+
+# Lister les interfaces PIM-actives
+show ip pim interface
+
+# Vérifier la RPF
+show ip rpf 224.0.0.9
+
+# Partager les réseaux locaux connectés
+redistribute connected</code></pre>
+
+    <h2>Commandes Cisco diverses</h2>
+    <pre><code># Afficher les interfaces VLAN
+show ip int bri | include vlan
+
+# Afficher les détails des VLANs
+show vlan brief
+
+# Afficher la table ARP
+show arp
+
+# Afficher les listes d'accès
+show access-lists
+
+# Vérifier la connectivité physique
+show cdp neighbors
+
+# Filtrer la table ARP
+show arp | inculde &lt;IP&gt;
+
+# Afficher le switch root
+show spanning-tree root
+
+# Afficher une route spécifique
+show ip route 224.0.0.0/24
+
+# Configurer un tunnel
+int Tunnel0
+tunnel source &lt;Interface&gt;
+tunnel destination &lt;IP de l'autre équipement ou Tunnel sur l'autre&gt; 
+keepalive
+ip address &lt;IP&gt; &lt;MASK&gt;
+no ip split-horizon
+ip rip advertise &lt;Network&gt;
+no shut</code></pre>
+
+    <h2>Tcpdump - Capture de paquets</h2>
+    <pre><code># Capturer les paquets UDP RIP
+tcpdump -i any or &lt;Interface&gt; port 250(ou autres selon la situation) -vv -n
+
+# Capturer les paquets avec une adresse IP spécifique
+tcpdump -i eth0 -nn 'host 224.0.0.9'
+
+# Vérifier le trafic NAT
+sudo tcpdump -i &lt;interface_host_local&gt; host NAT &lt;IP_WINDOWS&gt;</code></pre>
+
+    <h2>Table de routage</h2>
+    <pre><code># Afficher la table de routage (Linux et Windows)
+netstat -rn</code></pre>
+
+    <h2>Analyse des logs sous Linux</h2>
+    <pre><code># Afficher les logs RIP
+grep RIP /var/log/system.log
+
+# Afficher les logs RIP en temps réel
+tail -f /var/log/system.log | grep ripd
+
+# Vérifier le service RIP
+ps aux | grep ripd</code></pre>
+
+    <h2>pfSense</h2>
+    <pre><code># Gestion du firewall
+pftcl -d && pfctl -e
+
+# Vérifier les règles firewall pour le port RIP
+pfctl -sr | grep 520
+
+# Redémarrer le service RIP
+/etc/rc.d/ripd restart
+
+# Gestion de l'historique
+history
+fc -l
+history | grep rip
+cat ~/.history
+
+# Configurer l'historique persistant
+echo 'export HISTFILE=~/.persistent_history' >> ~/.shrc
+echo 'export HISTSIZE=10000' >> ~/.shrc
+touch ~/.persistent_history
+
+# Raccourcis historiques
+!!  # Répète la dernière commande
+!ssh  # Rappelle la dernière commande commençant par ssh
+
+# Gestion des règles pfSense
+nano /etc/pf.conf
+# Ajouter avant les règles de blocage:
+pass in quick proto udp from any to any port = 520  # Autoriser RIP
+
+# Recharger les règles
+pfctl -f /etc/pf.conf</code></pre>
+
+    <h2>Ping</h2>
+    <pre><code># Ping depuis une IP source spécifique
+ping -S &lt;IP source&gt; -c 3 &lt;IP Destination&gt;</code></pre>
+
+
+<!-- Début de la section Windows Server -->
+<h2>Administration Windows Server avec PowerShell</h2>
+
+<h3>1. Installation et configuration initiale</h3>
+<pre><code># Vérifier la version de Windows
+Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsHardwareAbstractionLayer
+
+# Activer le rôle de serveur (ex: AD DS)
+Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+
+# Configurer un nouveau contrôleur de domaine
+Install-ADDSForest -DomainName "corp.example.com" -DomainNetbiosName "CORP" -InstallDns
+
+# Redémarrer après installation
+Restart-Computer -Force</code></pre>
+
+<h3>2. Gestion des utilisateurs et groupes AD</h3>
+<pre><code># Créer un nouvel utilisateur
+New-ADUser -Name "Jean Dupont" -GivenName "Jean" -Surname "Dupont" `
+            -SamAccountName "jdupont" -UserPrincipalName "jdupont@corp.example.com" `
+            -Path "OU=Utilisateurs,DC=corp,DC=example,DC=com" -AccountPassword (ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force) `
+            -Enabled $true
+
+# Modifier un utilisateur
+Set-ADUser -Identity jdupont -Office "Paris" -Department "IT" -Title "Administrateur Système"
+
+# Créer un groupe et ajouter des membres
+New-ADGroup -Name "Admins IT" -GroupScope Global -Path "OU=Groupes,DC=corp,DC=example,DC=com"
+Add-ADGroupMember -Identity "Admins IT" -Members jdupont
+
+# Lister tous les utilisateurs d'une OU
+Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,DC=corp,DC=example,DC=com" | Select Name,SamAccountName</code></pre>
+
+<h3>3. Gestion des stratégies de groupe (GPO)</h3>
+<pre><code># Créer une nouvelle GPO
+New-GPO -Name "Verrouillage Station" -Comment "Stratégie de sécurité de base"
+
+# Lier une GPO à une OU
+New-GPLink -Name "Verrouillage Station" -Target "OU=Utilisateurs,DC=corp,DC=example,DC=com"
+
+# Modifier une GPO
+Set-GPRegistryValue -Name "Verrouillage Station" -Key "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System" `
+                    -ValueName "DisableTaskMgr" -Type DWord -Value 1
+
+# Forcer la mise à jour des GPO sur un client
+Invoke-GPUpdate -Computer "CLIENT01" -Force</code></pre>
+
+<h3>4. Gestion du stockage</h3>
+<pre><code># Lister les disques disponibles
+Get-Disk
+
+# Initialiser un nouveau disque
+Initialize-Disk -Number 1 -PartitionStyle GPT
+
+# Créer une partition
+New-Partition -DiskNumber 1 -UseMaximumSize -DriveLetter D
+
+# Formater le volume
+Format-Volume -DriveLetter D -FileSystem NTFS -NewFileSystemLabel "Données" -Confirm:$false
+
+# Configurer un quota de disque
+New-FsrmQuota -Path "D:\Partage" -Size 5GB -Description "Limite 5GB par utilisateur"</code></pre>
+
+<h3>5. Surveillance et maintenance</h3>
+<pre><code># Vérifier l'espace disque
+Get-Volume | Select DriveLetter,FileSystemLabel,SizeRemaining,Size
+
+# Analyser les événements système
+Get-EventLog -LogName System -Newest 50 | Where-Object {$_.EntryType -eq "Error"}
+
+# Planifier une tâche
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File D:\scripts\cleanup.ps1"
+$trigger = New-ScheduledTaskTrigger -Daily -At 2am
+Register-ScheduledTask -TaskName "Nettoyage nocturne" -Action $action -Trigger $trigger -User "SYSTEM"
+
+# Vérifier les services critiques
+Get-Service | Where-Object {$_.Status -ne "Running" -and $_.StartType -eq "Automatic"}</code></pre>
+
+<!-- Début de la section DHCP et DNS Windows Server -->
+<h2>Administration DHCP et DNS sous Windows Server</h2>
+
+<h3>1. Installation des rôles DHCP et DNS</h3>
+<pre><code># Installer les rôles DHCP et DNS
+Install-WindowsFeature DHCP,DNS -IncludeManagementTools
+
+# Configurer le serveur DHCP après installation
+Add-DhcpServerInDC -DnsName "dc1.corp.example.com" -IPAddress 192.168.1.1
+
+# Redémarrer si nécessaire
+Restart-Computer -Force</code></pre>
+
+<h3>2. Configuration DHCP de base</h3>
+<pre><code># Créer une étendue DHCP
+Add-DhcpServerv4Scope -Name "Réseau Principal" `
+                      -StartRange 192.168.1.100 -EndRange 192.168.1.200 `
+                      -SubnetMask 255.255.255.0 -State Active
+
+# Configurer les options de l'étendue
+Set-DhcpServerv4OptionValue -ScopeId 192.168.1.0 `
+                           -DnsServer 192.168.1.1, 192.168.1.2 `
+                           -Router 192.168.1.1 `
+                           -DnsDomain "corp.example.com"
+
+# Activer les adresses MAC réservées
+Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 `
+                           -IPAddress 192.168.1.50 `
+                           -ClientId "01-23-45-67-89-AB" `
+                           -Description "Serveur d'impression"
+
+# Configurer les plages d'exclusion
+Add-DhcpServerv4ExclusionRange -ScopeId 192.168.1.0 `
+                              -StartRange 192.168.1.1 `
+                              -EndRange 192.168.1.15</code></pre>
+
+<h3>3. Gestion avancée DHCP</h3>
+<pre><code># Afficher toutes les étendues DHCP
+Get-DhcpServerv4Scope
+
+# Afficher les baux actifs
+Get-DhcpServerv4Lease -ScopeId 192.168.1.0
+
+# Supprimer un bail spécifique
+Remove-DhcpServerv4Lease -IPAddress 192.168.1.105
+
+# Sauvegarder la configuration DHCP
+Backup-DhcpServer -Path "C:\DHCP_Backup\" -Force
+
+# Restaurer la configuration DHCP
+Restore-DhcpServer -Path "C:\DHCP_Backup\" -Force
+
+# Migrer un serveur DHCP
+Export-DhcpServer -File "C:\DHCP_Export.xml" -Leases
+Import-DhcpServer -File "C:\DHCP_Export.xml" -Leases</code></pre>
+
+<h3>4. Configuration DNS de base</h3>
+<pre><code># Créer une zone DNS principale
+Add-DnsServerPrimaryZone -Name "corp.example.com" `
+                        -ZoneFile "corp.example.com.dns" `
+                        -DynamicUpdate Secure
+
+# Créer une zone DNS inverse
+Add-DnsServerPrimaryZone -NetworkId "192.168.1.0/24" `
+                        -ZoneFile "1.168.192.in-addr.arpa.dns"
+
+# Ajouter un enregistrement A
+Add-DnsServerResourceRecordA -Name "serveur1" `
+                           -ZoneName "corp.example.com" `
+                           -IPv4Address "192.168.1.10" `
+                           -CreatePtr
+
+# Ajouter un enregistrement CNAME
+Add-DnsServerResourceRecordCName -Name "www" `
+                               -HostNameAlias "serveur1.corp.example.com" `
+                               -ZoneName "corp.example.com"
+
+# Ajouter un enregistrement MX
+Add-DnsServerResourceRecordMX -Preference 10 `
+                             -Name "@" `
+                             -MailExchange "mail.corp.example.com" `
+                             -ZoneName "corp.example.com"</code></pre>
+
+<h3>5. Gestion avancée DNS</h3>
+<pre><code># Activer le nettoyage automatique
+Set-DnsServerScavenging -ScavengingState $true `
+                       -RefreshInterval 7.00:00:00 `
+                       -NoRefreshInterval 7.00:00:00 `
+                       -ApplyOnAllZones
+
+# Forcer le nettoyage immédiat
+Start-DnsServerScavenging -Force
+
+# Configurer le transfert de zone
+Set-DnsServerForwarder -IPAddress "8.8.8.8","8.8.4.4" -PassThru
+
+# Configurer la réplication DNS entre contrôleurs de domaine
+Set-DnsServerDirectoryPartition -Name "DomainDnsZones.corp.example.com" `
+                               -ReplicationScope "Domain"
+
+# Exporter la configuration DNS
+Export-DnsServerZone -Name "corp.example.com" -FileName "C:\DNS_Backup\corp.example.com.dns"
+
+# Importer une zone DNS
+Import-DnsServerZone -Name "corp.example.com" -FileName "C:\DNS_Backup\corp.example.com.dns"</code></pre>
+
+<h3>6. Surveillance et dépannage</h3>
+<pre><code># Vérifier l'état du service DHCP
+Get-Service -Name DHCPServer | Select-Object Name,Status,StartType
+
+# Analyser les événements DHCP
+Get-EventLog -LogName "System" -Source "DHCPServer" -Newest 50
+
+# Tester la résolution DNS
+Resolve-DnsName -Name "serveur1.corp.example.com" -Type A
+
+# Effectuer une requête DNS détaillée
+nslookup
+> server 192.168.1.1
+> set type=MX
+> corp.example.com
+> exit
+
+# Vérifier la réplication DNS
+Repadmin /showrepl
+Repadmin /syncall /AdeP
+
+# Capturer le trafic DHCP/DNS
+netsh trace start scenario=NetConnection capture=yes tracefile=C:\traces\network.etl
+netsh trace stop</code></pre>
+
+<h3>7. Sécurité DHCP et DNS</h3>
+<pre><code># Configurer les options de sécurité DHCP
+Set-DhcpServerv4DnsSetting -DynamicUpdates "Always" `
+                          -DeleteDnsRRonLeaseExpiry $true `
+                          -UpdateDnsRRForOlderClients $true
+
+# Activer DNSSEC pour une zone
+Set-DnsServerZoneSigning -Name "corp.example.com" -Sign
+
+# Configurer le filtrage DNS
+Add-DnsServerQueryResolutionPolicy -Name "BlockMaliciousDomains" `
+                                 -Action DENY `
+                                 -FQDN "EQ,*.malicious.com" `
+                                 -PassThru
+
+# Restreindre les mises à jour DNS dynamiques
+Set-DnsServerPrimaryZone -Name "corp.example.com" `
+                        -DynamicUpdate Secure</code></pre>
+
+<h3>8. Scripts utiles</h3>
+<pre><code># Script pour vérifier les baux DHCP expirés
+$ExpiredLeases = Get-DhcpServerv4Lease -ScopeId 192.168.1.0 | Where-Object {$_.LeaseExpiryTime -lt (Get-Date)}
+$ExpiredLeases | Export-Csv -Path "C:\Reports\ExpiredLeases.csv" -NoTypeInformation
+
+# Script pour auditer les enregistrements DNS
+$DNSRecords = Get-DnsServerResourceRecord -ZoneName "corp.example.com" -RRType "A"
+$DNSRecords | Select-Object HostName,RecordType,Timestamp | Out-GridView
+
+# Script pour migrer des plages DHCP
+$OldScope = Get-DhcpServerv4Scope -ScopeId 192.168.0.0
+Add-DhcpServerv4Scope -Name $OldScope.Name `
+                     -StartRange 192.168.1.100 `
+                     -EndRange 192.168.1.200 `
+                     -SubnetMask $OldScope.SubnetMask
+Get-DhcpServerv4OptionValue -ScopeId $OldScope.ScopeId | ForEach-Object {
+    Set-DhcpServerv4OptionValue -ScopeId 192.168.1.0 -OptionId $_.OptionId -Value $_.Value
+}</code></pre>
+
+<!-- Début de la section Linux Server -->
+<h2>Administration Linux Server</h2>
+
+<h3>1. Gestion des utilisateurs et groupes</h3>
+<pre><code># Créer un nouvel utilisateur
+sudo useradd -m -s /bin/bash jdupont
+sudo passwd jdupont
+
+# Modifier un utilisateur
+sudo usermod -aG sudo jdupont  # Ajouter aux sudoers
+sudo usermod -d /new/home/jdupont jdupont  # Changer le répertoire home
+
+# Créer un groupe
+sudo groupadd admins_it
+
+# Ajouter un utilisateur à un groupe
+sudo usermod -aG admins_it jdupont
+
+# Lister tous les utilisateurs
+cut -d: -f1 /etc/passwd
+
+# Vérifier les sudoers
+sudo grep -Po '^sudo.+:\K.*$' /etc/group</code></pre>
+
+<h3>2. Gestion des permissions</h3>
+<pre><code># Changer le propriétaire d'un fichier
+sudo chown jdupont:admins_it /chemin/du/fichier
+
+# Changer les permissions (chmod en octal)
+sudo chmod 750 /chemin/du/fichier  # rwx pour owner, r-x pour group, --- pour others
+
+# Changer les permissions (chmod symbolique)
+sudo chmod u=rwx,g=rx,o= /chemin/du/fichier
+
+# Définir le bit SUID
+sudo chmod u+s /chemin/du/fichier
+
+# Définir le sticky bit sur un répertoire
+sudo chmod +t /chemin/du/repertoire</code></pre>
+
+<h3>3. Gestion des paquets</h3>
+<pre><code># Debian/Ubuntu
+sudo apt update && sudo apt upgrade  # Mettre à jour tous les paquets
+sudo apt install apache2            # Installer un paquet
+sudo apt remove apache2             # Désinstaller un paquet
+sudo apt autoremove                 # Nettoyer les paquets inutiles
+
+# RHEL/CentOS
+sudo yum update                     # Mettre à jour tous les paquets
+sudo yum install httpd              # Installer un paquet
+sudo yum remove httpd               # Désinstaller un paquet
+sudo yum clean all                  # Nettoyer le cache</code></pre>
+
+<h3>4. Gestion des services</h3>
+<pre><code># Systemd (récent)
+sudo systemctl start apache2        # Démarrer un service
+sudo systemctl stop apache2         # Arrêter un service
+sudo systemctl restart apache2      # Redémarrer un service
+sudo systemctl enable apache2       # Activer au démarrage
+sudo systemctl status apache2       # Vérifier l'état
+
+# SysVinit (ancien)
+sudo service apache2 start          # Démarrer un service
+sudo service apache2 stop           # Arrêter un service
+sudo service apache2 restart        # Redémarrer un service
+sudo update-rc.d apache2 defaults   # Activer au démarrage</code></pre>
+
+<h3>5. Surveillance et maintenance</h3>
+<pre><code># Espace disque
+df -h                              # Afficher l'espace disque
+du -sh /chemin                     # Taille d'un répertoire
+
+# Mémoire
+free -m                            # Utilisation mémoire
+top                                # Moniteur d'activité
+htop                               # Version améliorée de top
+
+# Processus
+ps aux                             # Lister tous les processus
+pstree                             # Arbre des processus
+kill -9 PID                        # Tuer un processus
+
+# Journaux système
+sudo journalctl -xe                # Afficher les logs systemd
+sudo tail -f /var/log/syslog       # Suivre les logs en temps réel
+sudo grep "error" /var/log/syslog  # Filtrer les erreurs</code></pre>
+
+<h3>6. Sécurité et réseau</h3>
+<pre><code># Pare-feu (UFW - Ubuntu)
+sudo ufw enable                    # Activer le pare-feu
+sudo ufw allow 22/tcp              # Autoriser le port SSH
+sudo ufw deny 23/tcp               # Bloquer le port Telnet
+sudo ufw status verbose            # Vérifier les règles
+
+# Pare-feu (firewalld - RHEL/CentOS)
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --reload
+
+# SSH
+sudo ssh-keygen -t rsa -b 4096     # Générer une paire de clés
+sudo nano /etc/ssh/sshd_config     # Configurer le serveur SSH
+sudo systemctl restart sshd        # Redémarrer SSH après modification
+
+# Analyse de sécurité
+sudo lynis audit system            # Audit de sécurité
+sudo chkrootkit                   # Vérifier les rootkits
+sudo rkhunter --checkall          # Analyse complète du système</code></pre>
+
+<h3>7. Sauvegarde et restauration</h3>
+<pre><code># Sauvegarde avec tar
+sudo tar -czvf backup-$(date +%F).tar.gz /dossier/a/sauvegarder
+
+# Sauvegarde incrémentielle avec rsync
+sudo rsync -av --delete --link-dest=/previous/backup /source /destination/backup-$(date +%F)
+
+# Sauvegarde MySQL
+sudo mysqldump -u root -p --all-databases > full_backup.sql
+
+# Sauvegarde PostgreSQL
+sudo pg_dumpall -U postgres > full_backup.sql
+
+# Planifier des sauvegardes avec cron
+(crontab -l 2>/dev/null; echo "0 2 * * * /chemin/vers/script_backup.sh") | crontab -</code></pre>
+
+<h3>8. Scripting avancé</h3>
+<pre><code>#!/bin/bash
+# Exemple de script de surveillance
+
+# Variables
+THRESHOLD=90
+EMAIL="admin@example.com"
+
+# Vérification espace disque
+DISK_USAGE=$(df / | awk '{print $5}' | tail -1 | cut -d'%' -f1)
+
+if [ $DISK_USAGE -gt $THRESHOLD ]; then
+    echo "Alerte : Espace disque critique sur $(hostname)" | mail -s "Alerte disque" $EMAIL
+fi
+
+# Vérification mémoire
+MEM_FREE=$(free -m | awk '/Mem:/ {print $4}')
+if [ $MEM_FREE -lt 100 ]; then
+    echo "Alerte : Mémoire faible sur $(hostname)" | mail -s "Alerte mémoire" $EMAIL
+	
+	<!-- Début de la section Commandes Réseau -->
+<h2>Commandes Réseau PowerShell (Windows)</h2>
+
+<h3>1. Configuration réseau de base</h3>
+<pre><code># Lister toutes les interfaces réseau
+Get-NetAdapter | Select Name, InterfaceDescription, Status
+
+# Activer/Désactiver une interface
+Enable-NetAdapter -Name "Ethernet" -Confirm:$false
+Disable-NetAdapter -Name "Wi-Fi" -Confirm:$false
+
+# Configurer une adresse IP statique
+New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.100 `
+                 -PrefixLength 24 -DefaultGateway 192.168.1.1
+
+# Configurer les serveurs DNS
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" `
+                          -ServerAddresses ("8.8.8.8", "8.8.4.4")</code></pre>
+
+<h3>2. Diagnostic réseau</h3>
+<pre><code># Test de connectivité
+Test-NetConnection -ComputerName google.com -Port 80
+
+# Traceroute amélioré
+Test-NetConnection -ComputerName google.com -TraceRoute
+
+# Analyse des ports ouverts
+Get-NetTCPConnection -State Listen | Sort-Object LocalPort | Format-Table
+
+# Vérifier la configuration IP détaillée
+Get-NetIPConfiguration -Detailed
+
+# Capturer des paquets (nécessite Npcap)
+# Installer d'abord : choco install npcap
+New-NetEventSession -Name "CaptureSession" -CaptureMode SaveToFile -LocalFilePath "C:\capture.etl"
+Add-NetEventPacketCaptureProvider -SessionName "CaptureSession"
+Start-NetEventSession -Name "CaptureSession"
+Stop-NetEventSession -Name "CaptureSession"</code></pre>
+
+<h3>3. Pare-feu avancé</h3>
+<pre><code># Lister toutes les règles
+Get-NetFirewallRule | Where-Object {$_.Enabled -eq "True"} | Format-Table Name,DisplayName
+
+# Créer une nouvelle règle
+New-NetFirewallRule -Name "AllowWeb" -DisplayName "HTTP/HTTPS Access" `
+                   -Direction Inbound -Protocol TCP -LocalPort 80,443 `
+                   -Action Allow
+
+# Bloquer une plage IP
+New-NetFirewallRule -Name "BlockMalicious" -DisplayName "Block Malicious IPs" `
+                   -Direction Inbound -RemoteAddress 192.168.100.0/24 `
+                   -Action Block</code></pre>
+
+<h3>4. Routage avancé</h3>
+<pre><code># Afficher la table de routage
+Get-NetRoute -AddressFamily IPv4 | Format-Table
+
+# Ajouter une route statique
+New-NetRoute -DestinationPrefix "10.0.0.0/24" -InterfaceAlias "Ethernet" `
+             -NextHop 192.168.1.1 -RouteMetric 100
+
+# Configurer le NAT (exige le rôle RRAS)
+Install-WindowsFeature RemoteAccess -IncludeManagementTools
+Install-RemoteAccess -VpnType RoutingOnly
+Add-NetNatStaticMapping -NatName "CorpNAT" -Protocol TCP -ExternalIPAddress 203.0.113.25 `
+                       -InternalIPAddress 192.168.1.50 -InternalPort 3389 -ExternalPort 3389</code></pre>
+
+<h3>5. VPN et connectivité distante</h3>
+<pre><code># Configurer un VPN (PowerShell 5.1+)
+Add-VpnConnection -Name "CorporateVPN" -ServerAddress "vpn.corp.example.com" `
+                 -TunnelType L2tp -L2tpPsk "SharedSecret123" -Force -RememberCredential
+
+# Se connecter à un VPN
+rasdial "CorporateVPN" username password
+
+# Vérifier les connexions VPN
+Get-VpnConnection</code></pre>
+
+<h2>Commandes Réseau Linux (CLI)</h2>
+
+<h3>1. Configuration réseau de base</h3>
+<pre><code># Lister les interfaces
+ip link show
+nmcli device status
+
+# Activer/Désactiver une interface
+sudo ip link set eth0 up
+sudo ip link set eth0 down
+
+# Configurer une adresse IP temporaire
+sudo ip addr add 192.168.1.100/24 dev eth0
+
+# Configurer une adresse IP permanente (Ubuntu/Debian)
+sudo nano /etc/netplan/01-netcfg.yaml
+# Exemple de configuration:
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses: [192.168.1.100/24]
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+sudo netplan apply</code></pre>
+
+<h3>2. Diagnostic réseau</h3>
+<pre><code># Test de connectivité
+ping -c 4 google.com
+ping6 -c 4 ipv6.google.com
+
+# Traceroute (installer avec: sudo apt install traceroute)
+traceroute -n google.com
+
+# Vérifier les ports ouverts
+ss -tulnp
+netstat -tulnp  # Alternative
+
+# Analyse des paquets
+sudo tcpdump -i eth0 -n 'port 80'
+sudo tshark -i eth0 -f "tcp port 22"  # Version avancée (Wireshark CLI)
+
+# Test de débit (installer speedtest-cli)
+speedtest-cli --bytes</code></pre>
+
+<h3>3. Pare-feu avancé (iptables/nftables)</h3>
+<pre><code># Lister les règles iptables
+sudo iptables -L -v -n --line-numbers
+
+# Autoriser le trafic HTTP/HTTPS
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# Bloquer une IP
+sudo iptables -A INPUT -s 192.168.100.23 -j DROP
+
+# Sauvegarder les règles (Debian/Ubuntu)
+sudo iptables-save > /etc/iptables.rules
+
+# nftables (nouvelle génération)
+sudo nft add table inet filter
+sudo nft add chain inet filter input { type filter hook input priority 0 \; }
+sudo nft add rule inet filter input tcp dport 22 accept</code></pre>
+
+<h3>4. Routage avancé</h3>
+<pre><code># Afficher la table de routage
+ip route show
+route -n  # Alternative
+
+# Ajouter une route statique
+sudo ip route add 10.0.0.0/24 via 192.168.1.1 dev eth0
+
+# Configurer le NAT
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo sysctl -w net.ipv4.ip_forward=1
+
+# Configurer le NAT permanent
+echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p</code></pre>
+
+<h3>5. VPN et tunnels</h3>
+<pre><code># OpenVPN (client)
+sudo openvpn --config client.ovpn
+
+# WireGuard (client)
+sudo wg-quick up wg0
+
+# Créer un tunnel SSH
+ssh -N -L 8080:localhost:80 user@remote-server
+ssh -N -R 2222:localhost:22 user@remote-server  # Reverse tunnel
+
+# Tunnel GRE (entre deux serveurs)
+sudo ip tunnel add gre1 mode gre remote 203.0.113.2 local 198.51.100.1 ttl 255
+sudo ip link set gre1 up
+sudo ip addr add 10.0.0.1/30 dev gre1</code></pre>
+
+<h3>6. Outils réseau avancés</h3>
+<pre><code># Analyse de bande passante (nload)
+sudo nload eth0
+
+# Monitorer les connexions (iftop)
+sudo iftop -i eth0
+
+# Scanner réseau (nmap)
+sudo nmap -sS -p 1-1024 192.168.1.0/24
+
+# Benchmark HTTP (httperf)
+httperf --server example.com --port 80 --uri / --num-conn 100
+
+# Test de résilience (mtr)
+mtr -n --report google.com</code></pre>
+
+<h3>7. Scripts réseau utiles</h3>
+<pre><code>#!/bin/bash
+# Script de surveillance réseau
+INTERFACE="eth0"
+MAX_UTIL=90
+
+# Vérifier l'utilisation de la bande passante
+CURRENT_RX=$(ifconfig $INTERFACE | grep "RX packets" | awk '{print $5}')
+CURRENT_TX=$(ifconfig $INTERFACE | grep "TX packets" | awk '{print $5}')
+sleep 1
+NEW_RX=$(ifconfig $INTERFACE | grep "RX packets" | awk '{print $5}')
+NEW_TX=$(ifconfig $INTERFACE | grep "TX packets" | awk '{print $5}')
+
+RX_UTIL=$(( ($NEW_RX - $CURRENT_RX) / 1024 ))
+TX_UTIL=$(( ($NEW_TX - $CURRENT_TX) / 1024 ))
+
+if [ $RX_UTIL -gt $MAX_UTIL ] || [ $TX_UTIL -gt $MAX_UTIL ]; then
+    echo "Alerte: Utilisation élevée du réseau - RX: ${RX_UTIL}KB/s TX: ${TX_UTIL}KB/s" | mail -s "Alerte réseau" admin@example.com
+fi</code></pre>
+fi</code></pre>
+
+
+<!-- Début de la section Gestion des Périphériques Externes -->
+<h2>Gestion des Périphériques Externes</h2>
+
+<h3>1. Windows (PowerShell) - Imprimantes</h3>
+<pre><code># Lister toutes les imprimantes
+Get-Printer | Format-Table Name, DriverName, PortName, Shared, Published
+
+# Ajouter une imprimante locale
+Add-Printer -Name "HP_LaserJet" -DriverName "HP LaserJet P3015 Series PCL6" -PortName "USB001"
+
+# Ajouter une imprimante réseau
+Add-Printer -ConnectionName "\\print-server\HP_Color_LaserJet"
+
+# Configurer une imprimante partagée
+Set-Printer -Name "HP_LaserJet" -Shared $true -ShareName "HP_LaserJet_Shared" -Published $true
+
+# Supprimer une imprimante
+Remove-Printer -Name "Old_Printer"
+
+# Gérer les travaux d'impression
+Get-PrintJob -PrinterName "HP_LaserJet" | Where-Object {$_.JobStatus -eq "Error"} | Remove-PrintJob
+Restart-PrintJob -PrinterName "HP_LaserJet" -ID 5
+
+# Installer un pilote d'imprimante
+pnputil.exe -i -a "C:\Drivers\HP\*.inf"</code></pre>
+
+<h3>2. Windows (PowerShell) - Périphériques USB et autres</h3>
+<pre><code># Lister tous les périphériques connectés
+Get-PnpDevice | Where-Object {$_.Present} | Format-Table FriendlyName, Status, InstanceId
+
+# Désactiver un périphérique USB
+Disable-PnpDevice -InstanceId "USB\VID_0781&PID_5583\AA0123456789" -Confirm:$false
+
+# Activer un périphérique
+Enable-PnpDevice -InstanceId "USB\VID_0781&PID_5583\AA0123456789" -Confirm:$false
+
+# Gérer les moniteurs
+# (Nécessite l'installation de DisplaySwitch.exe via Windows SDK)
+DisplaySwitch.exe /internal  # Utiliser uniquement l'écran intégré
+DisplaySwitch.exe /external  # Utiliser uniquement l'écran externe
+DisplaySwitch.exe /extend    # Étendre l'affichage
+DisplaySwitch.exe /clone     # Dupliquer l'affichage
+
+# Gérer les périphériques audio
+Get-AudioDevice -List | Where-Object {$_.Type -eq "Playback"} | Format-Table Name, ID
+Set-AudioDevice -ID "{0.0.0.00000000}.{a12b3c4d-5e67-8f90-1234-567890abcdef}"</code></pre>
+
+<h3>3. Windows (PowerShell) - Scanners</h3>
+<pre><code># Lister les scanners disponibles (nécessite WIA)
+$deviceManager = New-Object -ComObject WIA.DeviceManager
+$deviceManager.DeviceInfos | Where-Object {$_.Type -eq 1} | Select-Object Properties
+
+# Scanner un document (script avancé)
+$device = $deviceManager.DeviceInfos.Item(1).Connect()
+$scanner = $device.Items.Item(1)
+$image = $scanner.Transfer()
+$image.SaveFile("C:\Scans\document_$(Get-Date -Format 'yyyyMMddHHmmss').jpg")</code></pre>
+
+<h3>4. Linux (CLI) - Imprimantes</h3>
+<pre><code># Lister les imprimantes
+lpstat -p -d
+
+# Installer une imprimante CUPS (Common Unix Printing System)
+sudo lpadmin -p HP_LaserJet -E -v socket://192.168.1.10 -m drv:///HP/hp-laserjet.ppd.gz
+
+# Définir l'imprimante par défaut
+sudo lpoptions -d HP_LaserJet
+
+# Soumettre un travail d'impression
+lpr -P HP_LaserJet document.pdf
+
+# Annuler un travail d'impression
+lprm -P HP_LaserJet 15
+
+# Gérer les files d'attente
+lpq -P HP_LaserJet
+
+# Configurer une imprimante réseau Samba
+sudo lpadmin -p "Office_Printer" -E -v "smb://user:password@print-server/HP_Color" -m everywhere</code></pre>
+
+<h3>5. Linux (CLI) - Périphériques USB et autres</h3>
+<pre><code># Lister tous les périphériques USB
+lsusb
+lsusb -v  # Version détaillée
+
+# Identifier un périphérique spécifique
+udevadm info -a -n /dev/sdb | grep -i "idVendor\|idProduct"
+
+# Monter un périphérique USB
+sudo mkdir /mnt/usbdrive
+sudo mount /dev/sdb1 /mnt/usbdrive -o uid=1000,gid=1000
+
+# Démontrer un périphérique USB
+sudo umount /mnt/usbdrive
+
+# Gérer les moniteurs avec xrandr
+xrandr  # Lister les affichages disponibles
+xrandr --output HDMI-1 --auto --right-of eDP-1  # Configurer multi-écrans
+xrandr --output HDMI-1 --off  # Désactiver un écran
+
+# Configurer les périphériques audio
+pactl list short sinks  # Lister les périphériques de sortie
+pactl set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo  # Définir la sortie par défaut</code></pre>
+
+<h3>6. Linux (CLI) - Scanners</h3>
+<pre><code># Installer SANE (Scanner Access Now Easy)
+sudo apt install sane sane-utils xsane
+
+# Lister les scanners disponibles
+scanimage -L
+
+# Scanner un document (format PNG)
+scanimage --format=png --output-file scan.png --resolution 300dpi --mode Color
+
+# Scanner en PDF (nécessite imagemagick)
+scanimage --format=tiff --resolution 300dpi | convert - scan.pdf
+
+# Configurer un scanner réseau
+sudo nano /etc/sane.d/net.conf
+# Ajouter l'adresse IP du serveur de scanner: 192.168.1.20</code></pre>
+
+<h3>7. Scripts avancés</h3>
+<pre><code>#!/bin/bash
+# Script Linux de surveillance USB
+while true; do
+    USB_DEVICES=$(lsusb | wc -l)
+    if [ $USB_DEVICES -gt 2 ]; then
+        echo "Alerte : Nouveau périphérique USB détecté $(date)" >> /var/log/usb_monitor.log
+        lsusb >> /var/log/usb_monitor.log
+    fi
+    sleep 5
+done
+
+<#
+# Script PowerShell pour déployer des imprimantes
+$Printers = Import-Csv "C:\deploy\printers.csv"
+foreach ($printer in $Printers) {
+    if ($printer.Type -eq "Network") {
+        Add-Printer -ConnectionName $printer.Path
+    } else {
+        Add-Printer -Name $printer.Name -DriverName $printer.Driver -PortName $printer.Port
+    }
+    if ($printer.Shared -eq $true) {
+        Set-Printer -Name $printer.Name -Shared $true -ShareName $printer.ShareName
+    }
+}
+#></code></pre>
+
+<h3>8. Dépannage</h3>
+<pre><code># Windows - Vérifier les erreurs de périphérique
+Get-WinEvent -LogName System | Where-Object {$_.ProviderName -match "USB|Print"} | 
+    Select-Object TimeCreated, Message | Format-Table -AutoSize
+
+# Linux - Journal des périphériques
+sudo journalctl -b | grep -i "usb\|print\|scanner"
+sudo dmesg | grep -i "new device"
+
+# Réinitialiser le sous-système USB (Linux)
+echo 0 | sudo tee /sys/bus/usb/devices/usb1/authorized
+echo 1 | sudo tee /sys/bus/usb/devices/usb1/authorized
+
+# Réinstaller un pilote (Windows)
+pnputil.exe /delete-driver oem0.inf /uninstall
+pnputil.exe /add-driver "C:\Drivers\new_driver.inf" /install</code></pre>
+</body>
+</html>
