@@ -403,7 +403,8 @@ pfctl -f /etc/pf.conf</code></pre>
     <h2>Ping</h2>
     <pre><code># Ping depuis une IP source spécifique
 ping -S &lt;IP source&gt; -c 3 &lt;IP Destination&gt;</code></pre>
-
+hping3 -1 --spoof <IP source> <IP Destination>
+nping --icmp --source-ip <IP source> <IP Destination>
 
 <!-- Début de la section Windows Server -->
 <h2>Administration Windows Server avec PowerShell</h2>
