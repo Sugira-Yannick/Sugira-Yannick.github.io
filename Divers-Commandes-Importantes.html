@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,17 +6,31 @@
   <title>Commandes Importantes</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #1e1e1e;
+:root {
+      --bg: #ffffff; /* Fond blanc */
+      --fg: #333333; /* Texte plus foncé pour meilleur contraste */
       --accent: #3498db;
       --code-bg: #f5f5f5;
       --note-bg: #e7f5fe;
       --warn-bg: #fff3cd;
+      --linux-color: #dd4814;
+      --windows-color: #0078d7;
+      --cisco-color: #1ba0d7;
+      --powershell-color: #5391cc;
+      --network-color: #4b6a88;
+      --pfsense-color: #212121;
+      --admin-color: #6e40aa;
+      --device-color: #6c757d;
+      --web-color: #e44d26;
+      --virt-color: #562d7d;       
+      --backup-color: #5cb85c;     
+      --monitoring-color: #f0ad4e; 
+      --security-color: #d9534f;   
+      --docker-color: #2496ed;     
     }
     [data-theme="dark"] {
       --bg: #1e1e1e;
-      --fg: #ffffff;
+      --fg: #f0f0f0;
       --accent: #2980b9;
       --code-bg: #2b2b2b;
       --note-bg: #2c3e50;
@@ -29,6 +42,7 @@
       background: var(--bg);
       color: var(--fg);
       display: flex;
+      line-height: 1.6;
     }
     nav {
       width: 250px;
@@ -49,17 +63,41 @@
       color: white;
       text-decoration: none;
       margin: 5px 0;
+      padding: 5px;
+      border-radius: 4px;
+      transition: background 0.2s;
     }
     nav a:hover {
-      text-decoration: underline;
+      background: rgba(255,255,255,0.2);
     }
     .content {
       flex: 1;
       padding: 20px;
       max-width: 1000px;
     }
-    h1, h2 {
+    h1 {
       color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: var(--accent);
+      border-bottom: 2px solid;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+    h2 i {
+      margin-right: 10px;
+    }
+    h3 {
+      color: var(--fg);
+      margin-top: 20px;
+      font-size: 1.1em;
+    }
+    h3 i {
+      margin-right: 8px;
+      width: 20px;
+      text-align: center;
     }
     pre {
       background: var(--code-bg);
@@ -68,6 +106,9 @@
       position: relative;
       white-space: pre-wrap;
       word-wrap: break-word;
+      margin: 15px 0;
+      border-radius: 4px;
+      overflow-x: auto;
     }
     code {
       font-family: Consolas, monospace;
@@ -77,52 +118,136 @@
       position: absolute;
       top: 5px;
       right: 5px;
-      background: #ccc;
-      border: none;
+      background: var(--code-bg);
+      border: 1px solid rgba(0,0,0,0.1);
       padding: 5px 10px;
       cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover {
+      background: var(--accent);
+      color: white;
     }
     .note, .warning {
-      padding: 10px;
+      padding: 15px;
       margin: 15px 0;
       border-left: 4px solid var(--accent);
+      border-radius: 4px;
     }
-    .note { background: var(--note-bg); }
-    .warning { background: var(--warn-bg); }
+    .note { 
+      background: var(--note-bg); 
+    }
+    .warning { 
+      background: var(--warn-bg);
+    }
     .theme-toggle {
-      position: absolute;
+      position: fixed;
       top: 10px;
       right: 20px;
       cursor: pointer;
       font-size: 1.2em;
+      background: var(--accent);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     @media (max-width: 768px) {
-      nav { display: none; }
-      body { flex-direction: column; }
+      nav { 
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      body { 
+        flex-direction: column; 
+      }
+      .theme-toggle {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
     }
+    /* Couleurs des icônes par catégorie */
+    .linux-icon { color: var(--linux-color); }
+    .windows-icon { color: var(--windows-color); }
+    .cisco-icon { color: var(--cisco-color); }
+    .powershell-icon { color: var(--powershell-color); }
+    .network-icon { color: var(--network-color); }
+    .pfsense-icon { color: var(--pfsense-color); }
+    .admin-icon { color: var(--admin-color); }
+    .device-icon { color: var(--device-color); }
+    .web-icon { color: var(--web-color); }
+    .virt-icon { color: var(--virt-color); }
+    .backup-icon { color: var(--backup-color); }
+    .monitoring-icon { color: var(--monitoring-color); }
+    .security-icon { color: var(--security-color); }
+    .docker-icon { color: var(--docker-color); }
+    
+    /* Style pour la recherche */
+    #searchInput {
+      margin: 10px 0 20px;
+      padding: 12px 15px;
+      width: 100%;
+      font-size: 1em;
+      border: 2px solid var(--accent);
+      border-radius: 5px;
+      background: var(--bg);
+      color: var(--fg);
+      box-sizing: border-box;
+    }
+    
+    .search-highlight {
+      background-color: yellow;
+      color: black;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+    
+    .section-hidden {
+      display: none;
+    }
+    
+    ul {
+      padding-left: 20px;
+    }
+    
+    li {
+      margin-bottom: 5px;
+    }
+    
+
   </style>
 </head>
 <body>
-  <nav>
-    <h2>Navigation</h2>
-    <a href="#linux">Linux</a>
-    <a href="#windows">Windows</a>
-    <a href="#cisco">Cisco</a>
-    <a href="#powershell">PowerShell</a>
-    <a href="#reseau">Réseau</a>
-    <a href="#pfsense">pfSense</a>
-    <a href="#administration">Administration</a>
-  </nav>
+ 
+    <nav>
+  <h2>Navigation</h2>
+  <a href="#linux"><i class="fab fa-linux linux-icon"></i> Linux</a>
+  <a href="#windows"><i class="fab fa-windows windows-icon"></i> Windows</a>
+  <a href="#cisco"><i class="fas fa-network-wired cisco-icon"></i> Cisco</a>
+  <a href="#powershell"><i class="fas fa-terminal powershell-icon"></i> PowerShell</a>
+  <a href="#reseau"><i class="fas fa-wifi network-icon"></i> Réseau</a>
+  <a href="#pfsense"><i class="fas fa-shield-alt pfsense-icon"></i> pfSense</a>
+  <a href="#administration"><i class="fas fa-user-cog admin-icon"></i> Administration</a>
+  <a href="#peripheriques"><i class="fas fa-print device-icon"></i> periphériques</a>
+  <a href="#web"><i class="fas fa-globe web-icon"></i> Serveur Web</a>
+  <!-- Nouveaux liens ajoutés -->
+  <a href="#virtualisation"><i class="fas fa-cloud virt-icon"></i> Virtualisation</a>
+  <a href="#backup"><i class="fas fa-save backup-icon"></i> Sauvegarde</a>
+  <a href="#monitoring"><i class="fas fa-chart-bar monitoring-icon"></i> Monitoring</a>
+  <a href="#securite"><i class="fas fa-shield-alt security-icon"></i> Sécurité</a>
+  <a href="#containers"><i class="fab fa-docker docker-icon"></i> Containers</a>
+</nav>
 
   <div class="content">
-    <span class="theme-toggle" onclick="toggleTheme()">🌓</span>
+    <input type="text" id="searchInput" placeholder="🔍 Rechercher..." />
+    <span class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></span>
     <h1>Commandes Importantes</h1>
 
-    <!-- Le contenu complet sera injecté ici dynamiquement par la suite -->
-    <!-- Pour simplifier l'exemple, on commence par générer la structure du fichier -->
-    
-
-    <h2>Routage sous Linux</h2>
+    <!-- Linux Section -->
+    <h2 id="linux"><i class="fab fa-linux linux-icon"></i> Routage sous Linux</h2>
     <pre><code># Ajouter une route
 ip route add (IP address de destination)/(mask) via (IP local capable d'aller vers le réseau de destination)
 
@@ -139,10 +264,7 @@ ip route show
 ip address add 192.168.1.2/24 dev eth0 sur l'interface concerné dans /etc/network/interfaces
 up ip address add 192.168.1.2/24 dev eth0 sur l'interface concerné</code></pre>
 
-    <h2>Routage sous Windows (Permanent)</h2>
-    <pre><code>ip add -p (IP addres de destination) MASK (ex:255.255.255.0) (IP local capable d'aller vers le réseau de destination)</code></pre>
-
-    <h2>Configuration d'interface sous Linux</h2>
+    <h2><i class="fab fa-linux linux-icon"></i> Configuration d'interface sous Linux</h2>
     <pre><code># Lister les interfaces
 ip link show, ip a
 
@@ -155,30 +277,7 @@ ip address add &lt;IP&gt;/&lt;masque&gt; dev &lt;interface&gt;
 # Vérifier l'adresse IP
 ip address show &lt;interface&gt;</code></pre>
 
-    <h2>NAT sous Windows</h2>
-    <pre><code># Activer le routage IP
-Set-NetIPInterface -InterfaceAlias "Ethernet" -Forwarding Enabled
-
-# Configurer le NAT pour un réseau
-New-NetNat -Name "SwitchAccess" -InternalIPInterfaceAddressPrefix "192.168.10.0/24"
-	    
-
-# Capture du traffic sur une Interface Windows
-netsh trace start capture=yes Ethernet IPv4.Address=IP Adresse
-	    
-
-# Vérifier le NAT
-Get-NetNat
-get-NetNatStaticMappingetFirewallRule -DisplayName "Allow_Linux_Subnet" -RemoteAddress 192.168.60.4 -Action Allow
-Get-NetNatTransitionConfiguration
-
-# Proxy SSH via Windows
-ssh -J user@&lt;IP_Windows&gt; user@&lt;IP_Machine_Adminstrée&gt;
-
-# Tester l'accès SSH
-Test-NetConnection 10.10.2.2 -Port 22</code></pre>
-
-    <h2>NAT sous Linux</h2>
+    <h2><i class="fab fa-linux linux-icon"></i> NAT sous Linux</h2>
     <pre><code># Désactiver NAT temporairement
 iptables -t nat -F POSTROUTING
 
@@ -204,7 +303,7 @@ watch -n 1 'sudo iptables -t nat -L POSTROUTING -v -n'</code></pre>
         <pre><code>iptables -t nat -A POSTROUTING -s 30.30.30.0/30 -o pnet0 -j SNAT --to-source [PUBLIC_IP]</code></pre>
     </div>
 
-    <h2>NAT pour protocoles spécifiques</h2>
+    <h2><i class="fab fa-linux linux-icon"></i> NAT pour protocoles spécifiques</h2>
     <pre><code># Autoriser les paquets RIP (destination)
 iptables -t nat -A POSTROUTING -p udp --dport 520 -j ACCEPT
 
@@ -224,7 +323,7 @@ iptables -A FORWARD -o pnet0 -j ACCEPT</code></pre>
         </ul>
     </div>
 
-    <h2>Traceroute</h2>
+    <h2><i class="fab fa-linux linux-icon"></i> Traceroute</h2>
     <pre><code># Envoyer seulement 3 paquets par saut
 traceroute 8.8.8.8 probe 3
 
@@ -234,7 +333,112 @@ show processes | include traceroute
 # Terminer le processus
 kill &lt;PID&gt;</code></pre>
 
-    <h2>RIP Cisco</h2>
+    <!-- Nouvelle section Traitement de fichiers -->
+    <h2><i class="fab fa-linux linux-icon"></i> Traitement de fichiers sous Linux</h2>
+    <pre><code># Ajouter un commentaire à la première ligne
+sed -i '1i # Commentaire' /etc/hosts
+
+# Ajouter un texte à la première ligne
+sed -i '1iTexteà insérer' /etc/hosts
+
+# Créer un fichier avec 2 lignes
+echo -e "Ligne 1\nLigne 3" > fichier.txt
+
+# Ajouter une ligne en position 2
+sed -i '2iLigne 2 (ajoutée)' fichier.txt
+
+# Supprimer la deuxième ligne
+sed -i '2d' fichier.txt
+
+# Supprimer un texte spécifique
+sed -i '/texte à supprimer/d' fichier.txt
+
+# Supprimer un bloc de lignes
+sed -i '2,4d' fichier.txt
+
+# Édition interactive avec ed
+ed -s fichier.txt <<EOF
+2i
+Texte ajouté à la ligne 2
+.
+w
+q
+EOF
+
+# Méthode manuelle avec head/tail
+head -n 1 fichier.txt > tmp
+echo "Nouvelle ligne 2" >> tmp
+tail -n +2 fichier.txt >> tmp
+mv tmp fichier.txt</code></pre>
+
+    <!-- Nouvelle section Maintenance Linux -->
+    <h2><i class="fab fa-linux linux-icon"></i> Maintenance système sous Linux</h2>
+    <pre><code># Moderniser les dépôts apt
+apt modernize-sources
+
+# Reconfigurer GRUB
+sudo update-grub
+
+# Nettoyer le système
+sudo apt autoremove --purge
+
+# Régénérer initramfs
+sudo update-initramfs -u -k all
+
+# Corriger les dépendances
+sudo apt install -f
+
+# Vérifier l'espace disque
+df -h /boot</code></pre>
+
+    <!-- Nouvelle section Active Directory -->
+    <h2><i class="fab fa-linux linux-icon"></i> Intégration Active Directory</h2>
+    <pre><code># Joindre un domaine AD
+sudo apt install realmd sssd adcli samba-common krb5-user packagekit
+sudo realm join --user=Administrateur MONDOMAINE.LOCAL</code></pre>
+
+    <!-- Nouvelle section Scanner Linux -->
+    <h2><i class="fab fa-linux linux-icon"></i> Scanner Virtuel sous Linux</h2>
+    <pre><code># Utiliser un scanneur virtuel
+scanimage -d "net:&lt;IP_Scanner&gt;:test:0" --format=png > fake-scan.png
+
+# Vérifier les périphériques disponibles
+scanimage -L</code></pre>
+
+    <!-- Nouvelle section Réseau Linux -->
+    <h2><i class="fab fa-linux linux-icon"></i> Vérification réseau sous Linux</h2>
+    <pre><code># Vérifier un port distant
+nc -vz IP_DU_SERVEUR 631
+
+# Connecter des conteneurs Docker à un bridge
+docker network connect bridge guacamole
+docker network connect bridge guacamole_db
+docker network connect bridge guacd</code></pre>
+
+    <!-- Windows Section -->
+    <h2 id="windows"><i class="fab fa-windows windows-icon"></i> Routage sous Windows (Permanent)</h2>
+    <pre><code>ip add -p (IP addres de destination) MASK (ex:255.255.255.0) (IP local capable d'aller vers le réseau de destination)</code></pre>
+
+    <h2><i class="fab fa-windows windows-icon"></i> NAT sous Windows</h2>
+    <pre><code># Activer le routage IP
+Set-NetIPInterface -InterfaceAlias "Ethernet" -Forwarding Enabled
+
+# Configurer le NAT pour un réseau
+New-NetNat -Name "SwitchAccess" -InternalIPInterfaceAddressPrefix "192.168.10.0/24"
+
+# Vérifier le NAT
+Get-NetNat
+get-NetNatStaticMappingetFirewallRule -DisplayName "Allow_Linux_Subnet" -RemoteAddress 192.168.60.4 -Action Allow
+Get-NetNatTransitionConfiguration
+
+# Proxy SSH via Windows
+ssh -J user@&lt;IP_Windows&gt; user@&lt;IP_Machine_Adminstrée&gt;
+
+# Tester l'accès SSH
+Test-NetConnection 10.10.2.2 -Port 22</code></pre>
+
+    <!-- Cisco Section -->
+    <h2 id="cisco"><i class="fas fa-network-wired cisco-icon"></i> RIP Cisco</h2>
     <pre><code># Afficher les routes RIP
 show ip route rip
 
@@ -275,7 +479,7 @@ ip rip v2-broadcast
 # Désactiver le debug
 undebug all</code></pre>
 
-    <h2>Multicast Cisco</h2>
+    <h2><i class="fas fa-network-wired cisco-icon"></i> Multicast Cisco</h2>
     <pre><code># Activer le multicast
 configure terminal => ip multicast-routing
 
@@ -304,7 +508,31 @@ show ip rpf 224.0.0.9
 # Partager les réseaux locaux connectés
 redistribute connected</code></pre>
 
-    <h2>Commandes Cisco diverses</h2>
+    <!-- Nouvelle section SFTP Cisco -->
+    <h2><i class="fas fa-network-wired cisco-icon"></i> Configuration SFTP Cisco</h2>
+    <pre><code># Limiter l'accès SSH à une IP spécifique
+access-list 10 permit 192.168.1.100
+line vty 0 4
+ access-class 10 in
+exit
+
+# Configurer SFTP
+ip ssh server algorithm sftp
+ip scp server enable
+
+# Lister les répertoires disponibles
+dir flash:
+dir usbflash0:
+dir nvram:
+
+# Commandes SFTP
+sftp admin@&lt;IP&gt;
+sftp> ls
+sftp> cd flash:
+sftp> get running-config
+sftp> put mon_fichier.txt</code></pre>
+
+    <h2><i class="fas fa-network-wired cisco-icon"></i> Commandes Cisco diverses</h2>
     <pre><code># Afficher les interfaces VLAN
 show ip int bri | include vlan
 
@@ -339,35 +567,610 @@ no ip split-horizon
 ip rip advertise &lt;Network&gt;
 no shut</code></pre>
 
-    <h2>Tcpdump - Capture de paquets</h2>
-    <pre><code># Capturer les paquets UDP RIP
-tcpdump -i any or &lt;Interface&gt; port 250(ou autres selon la situation) -vv -n
+    <!-- PowerShell Section -->
+    <h2 id="powershell"><i class="fas fa-terminal powershell-icon"></i> Administration Windows Server avec PowerShell</h2>
 
-# Capturer les paquets avec une adresse IP spécifique
-tcpdump -i eth0 -nn 'host 224.0.0.9'
-	    Pour capturer d'autres protocoles, remplacez icmp par :
-            tcp (ex: tcpdump -i <interface> tcp port 80)
-            udp (ex: tcpdump -i <interface> udp port 53)
-            arp (pour les requêtes ARP)
+    <h3><i class="fas fa-server"></i> 1. Installation et configuration initiale</h3>
+    <pre><code># Vérifier la version de Windows
+Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsHardwareAbstractionLayer
 
-# Vérifier le trafic NAT
-sudo tcpdump -i &lt;interface_host_local&gt; host NAT &lt;IP_WINDOWS&gt;</code></pre>
+# Activer le rôle de serveur (ex: AD DS)
+Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
 
-    <h2>Table de routage</h2>
-    <pre><code># Afficher la table de routage (Linux et Windows)
-netstat -rn</code></pre>
+# Configurer un nouveau contrôleur de domaine
+Install-ADDSForest -DomainName "corp.example.com" -DomainNetbiosName "CORP" -InstallDns
 
-    <h2>Analyse des logs sous Linux</h2>
-    <pre><code># Afficher les logs RIP
-grep RIP /var/log/system.log
+# Redémarrer après installation
+Restart-Computer -Force</code></pre>
 
-# Afficher les logs RIP en temps réel
-tail -f /var/log/system.log | grep ripd
+    <h3><i class="fas fa-users"></i> 2. Gestion des utilisateurs et groupes AD</h3>
+    <pre><code># Créer un nouvel utilisateur
+New-ADUser -Name "Jean Dupont" -GivenName "Jean" -Surname "Dupont" `
+            -SamAccountName "jdupont" -UserPrincipalName "jdupont@corp.example.com" `
+            -Path "OU=Utilisateurs,DC=corp,DC=example,DC=com" -AccountPassword (ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force) `
+            -Enabled $true
 
-# Vérifier le service RIP
-ps aux | grep ripd</code></pre>
+# Modifier un utilisateur
+Set-ADUser -Identity jdupont -Office "Paris" -Department "IT" -Title "Administrateur Système"
 
-    <h2>pfSense</h2>
+# Créer un groupe et ajouter des membres
+New-ADGroup -Name "Admins IT" -GroupScope Global -Path "OU=Groupes,DC=corp,DC=example,DC=com"
+Add-ADGroupMember -Identity "Admins IT" -Members jdupont
+
+# Lister tous les utilisateurs d'une OU
+Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,DC=corp,DC=example,DC=com" | Select Name,SamAccountName</code></pre>
+
+    <h3><i class="fas fa-cogs"></i> 3. Gestion des stratégies de groupe (GPO)</h3>
+    <pre><code># Créer une nouvelle GPO
+New-GPO -Name "Verrouillage Station" -Comment "Stratégie de sécurité de base"
+
+# Lier une GPO à une OU
+New-GPLink -Name "Verrouillage Station" -Target "OU=Utilisateurs,DC=corp,DC=example,DC=com"
+
+# Modifier une GPO
+Set-GPRegistryValue -Name "Verrouillage Station" -Key "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System" `
+                    -ValueName "DisableTaskMgr" -Type DWord -Value 1
+
+# Forcer la mise à jour des GPO sur un client
+Invoke-GPUpdate -Computer "CLIENT01" -Force</code></pre>
+
+    <h3><i class="fas fa-database"></i> 4. Gestion du stockage</h3>
+    <pre><code># Lister les disques disponibles
+Get-Disk
+
+# Initialiser un nouveau disque
+Initialize-Disk -Number 1 -PartitionStyle GPT
+
+# Créer une partition
+New-Partition -DiskNumber 1 -UseMaximumSize -DriveLetter D
+
+# Formater le volume
+Format-Volume -DriveLetter D -FileSystem NTFS -NewFileSystemLabel "Données" -Confirm:$false
+
+# Configurer un quota de disque
+New-FsrmQuota -Path "D:\Partage" -Size 5GB -Description "Limite 5GB par utilisateur"</code></pre>
+
+    <h3><i class="fas fa-chart-line"></i> 5. Surveillance et maintenance</h3>
+    <pre><code># Vérifier l'espace disque
+Get-Volume | Select DriveLetter,FileSystemLabel,SizeRemaining,Size
+
+# Analyser les événements système
+Get-EventLog -LogName System -Newest 50 | Where-Object {$_.EntryType -eq "Error"}
+
+# Planifier une tâche
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File D:\scripts\cleanup.ps1"
+$trigger = New-ScheduledTaskTrigger -Daily -At 2am
+Register-ScheduledTask -TaskName "Nettoyage nocturne" -Action $action -Trigger $trigger -User "SYSTEM"
+
+# Vérifier les services critiques
+Get-Service | Where-Object {$_.Status -ne "Running" -and $_.StartType -eq "Automatic"}</code></pre>
+
+    <h2><i class="fas fa-terminal powershell-icon"></i> Administration DHCP et DNS sous Windows Server</h2>
+
+    <h3><i class="fas fa-network-wired"></i> 1. Installation des rôles DHCP et DNS</h3>
+    <pre><code># Installer les rôles DHCP et DNS
+Install-WindowsFeature DHCP,DNS -IncludeManagementTools
+
+# Configurer le serveur DHCP après installation
+Add-DhcpServerInDC -DnsName "dc1.corp.example.com" -IPAddress 192.168.1.1
+
+# Redémarrer si nécessaire
+Restart-Computer -Force</code></pre>
+
+    <h3><i class="fas fa-dhcp"></i> 2. Configuration DHCP de base</h3>
+    <pre><code># Créer une étendue DHCP
+Add-DhcpServerv4Scope -Name "Réseau Principal" `
+                      -StartRange 192.168.1.100 -EndRange 192.168.1.200 `
+                      -SubnetMask 255.255.255.0 -State Active
+
+# Configurer les options de l'étendue
+Set-DhcpServerv4OptionValue -ScopeId 192.168.1.0 `
+                           -DnsServer 192.168.1.1, 192.168.1.2 `
+                           -Router 192.168.1.1 `
+                           -DnsDomain "corp.example.com"
+
+# Activer les adresses MAC réservées
+Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 `
+                           -IPAddress 192.168.1.50 `
+                           -ClientId "01-23-45-67-89-AB" `
+                           -Description "Serveur d'impression"
+
+# Configurer les plages d'exclusion
+Add-DhcpServerv4ExclusionRange -ScopeId 192.168.1.0 `
+                              -StartRange 192.168.1.1 `
+                              -EndRange 192.168.1.15</code></pre>
+
+    <h3><i class="fas fa-tasks"></i> 3. Gestion avancée DHCP</h3>
+    <pre><code># Afficher toutes les étendues DHCP
+Get-DhcpServerv4Scope
+
+# Afficher les baux actifs
+Get-DhcpServerv4Lease -ScopeId 192.168.1.0
+
+# Supprimer un bail spécifique
+Remove-DhcpServerv4Lease -IPAddress 192.168.1.105
+
+# Sauvegarder la configuration DHCP
+Backup-DhcpServer -Path "C:\DHCP_Backup\" -Force
+
+# Restaurer la configuration DHCP
+Restore-DhcpServer -Path "C:\DHCP_Backup\" -Force
+
+# Migrer un serveur DHCP
+Export-DhcpServer -File "C:\DHCP_Export.xml" -Leases
+Import-DhcpServer -File "C:\DHCP_Export.xml" -Leases</code></pre>
+
+    <h3><i class="fas fa-globe"></i> 4. Configuration DNS de base</h3>
+    <pre><code># Créer une zone DNS principale
+Add-DnsServerPrimaryZone -Name "corp.example.com" `
+                        -ZoneFile "corp.example.com.dns" `
+                        -DynamicUpdate Secure
+
+# Créer une zone DNS inverse
+Add-DnsServerPrimaryZone -NetworkId "192.168.1.0/24" `
+                        -ZoneFile "1.168.192.in-addr.arpa.dns"
+
+# Ajouter un enregistrement A
+Add-DnsServerResourceRecordA -Name "serveur1" `
+                           -ZoneName "corp.example.com" `
+                           -IPv4Address "192.168.1.10" `
+                           -CreatePtr
+
+# Ajouter un enregistrement CNAME
+Add-DnsServerResourceRecordCName -Name "www" `
+                               -HostNameAlias "serveur1.corp.example.com" `
+                               -ZoneName "corp.example.com"
+
+# Ajouter un enregistrement MX
+Add-DnsServerResourceRecordMX -Preference 10 `
+                             -Name "@" `
+                             -MailExchange "mail.corp.example.com" `
+                             -ZoneName "corp.example.com"</code></pre>
+
+    <h3><i class="fas fa-cog"></i> 5. Gestion avancée DNS</h3>
+    <pre><code># Activer le nettoyage automatique
+Set-DnsServerScavenging -ScavengingState $true `
+                       -RefreshInterval 7.00:00:00 `
+                       -NoRefreshInterval 7.00:00:00 `
+                       -ApplyOnAllZones
+
+# Forcer le nettoyage immédiat
+Start-DnsServerScavenging -Force
+
+# Configurer le transfert de zone
+Set-DnsServerForwarder -IPAddress "8.8.8.8","8.8.4.4" -PassThru
+
+# Configurer la réplication DNS entre contrôleurs de domaine
+Set-DnsServerDirectoryPartition -Name "DomainDnsZones.corp.example.com" `
+                               -ReplicationScope "Domain"
+
+# Exporter la configuration DNS
+Export-DnsServerZone -Name "corp.example.com" -FileName "C:\DNS_Backup\corp.example.com.dns"
+
+# Importer une zone DNS
+Import-DnsServerZone -Name "corp.example.com" -FileName "C:\DNS_Backup\corp.example.com.dns"</code></pre>
+
+    <h3><i class="fas fa-search"></i> 6. Surveillance et dépannage</h3>
+    <pre><code># Vérifier l'état du service DHCP
+Get-Service -Name DHCPServer | Select-Object Name,Status,StartType
+
+# Analyser les événements DHCP
+Get-EventLog -LogName "System" -Source "DHCPServer" -Newest 50
+
+# Tester la résolution DNS
+Resolve-DnsName -Name "serveur1.corp.example.com" -Type A
+
+# Effectuer une requête DNS détaillée
+nslookup
+> server 192.168.1.1
+> set type=MX
+> corp.example.com
+> exit
+
+# Vérifier la réplication DNS
+Repadmin /showrepl
+Repadmin /syncall /AdeP
+
+# Capturer le trafic DHCP/DNS
+netsh trace start scenario=NetConnection capture=yes tracefile=C:\traces\network.etl
+netsh trace stop</code></pre>
+
+    <h3><i class="fas fa-shield-alt"></i> 7. Sécurité DHCP et DNS</h3>
+    <pre><code># Configurer les options de sécurité DHCP
+Set-DhcpServerv4DnsSetting -DynamicUpdates "Always" `
+                          -DeleteDnsRRonLeaseExpiry $true `
+                          -UpdateDnsRRForOlderClients $true
+
+# Activer DNSSEC pour une zone
+Set-DnsServerZoneSigning -Name "corp.example.com" -Sign
+
+# Configurer le filtrage DNS
+Add-DnsServerQueryResolutionPolicy -Name "BlockMaliciousDomains" `
+                                 -Action DENY `
+                                 -FQDN "EQ,*.malicious.com" `
+                                 -PassThru
+
+# Restreindre les mises à jour DNS dynamiques
+Set-DnsServerPrimaryZone -Name "corp.example.com" `
+                        -DynamicUpdate Secure</code></pre>
+
+    <h3><i class="fas fa-code"></i> 8. Scripts utiles</h3>
+    <pre><code># Script pour vérifier les baux DHCP expirés
+$ExpiredLeases = Get-DhcpServerv4Lease -ScopeId 192.168.1.0 | Where-Object {$_.LeaseExpiryTime -lt (Get-Date)}
+$ExpiredLeases | Export-Csv -Path "C:\Reports\ExpiredLeases.csv" -NoTypeInformation
+
+# Script pour auditer les enregistrements DNS
+$DNSRecords = Get-DnsServerResourceRecord -ZoneName "corp.example.com" -RRType "A"
+$DNSRecords | Select-Object HostName,RecordType,Timestamp | Out-GridView
+
+# Script pour migrer des plages DHCP
+$OldScope = Get-DhcpServerv4Scope -ScopeId 192.168.0.0
+Add-DhcpServerv4Scope -Name $OldScope.Name `
+                     -StartRange 192.168.1.100 `
+                     -EndRange 192.168.1.200 `
+                     -SubnetMask $OldScope.SubnetMask
+Get-DhcpServerv4OptionValue -ScopeId $OldScope.ScopeId | ForEach-Object {
+    Set-DhcpServerv4OptionValue -ScopeId 192.168.1.0 -OptionId $_.OptionId -Value $_.Value
+}</code></pre>
+
+    <!-- Linux Server Section -->
+    <h2 id="administration"><i class="fab fa-linux linux-icon"></i> Administration Linux Server</h2>
+
+    <h3><i class="fas fa-users"></i> 1. Gestion des utilisateurs et groupes</h3>
+    <pre><code># Créer un nouvel utilisateur
+sudo useradd -m -s /bin/bash jdupont
+sudo passwd jdupont
+
+# Modifier un utilisateur
+sudo usermod -aG sudo jdupont  # Ajouter aux sudoers
+sudo usermod -d /new/home/jdupont jdupont  # Changer le répertoire home
+
+# Créer un groupe
+sudo groupadd admins_it
+
+# Ajouter un utilisateur à un groupe
+sudo usermod -aG admins_it jdupont
+
+# Lister tous les utilisateurs
+cut -d: -f1 /etc/passwd
+
+# Vérifier les sudoers
+sudo grep -Po '^sudo.+:\K.*$' /etc/group</code></pre>
+
+    <h3><i class="fas fa-lock"></i> 2. Gestion des permissions</h3>
+    <pre><code># Changer le propriétaire d'un fichier
+sudo chown jdupont:admins_it /chemin/du/fichier
+
+# Changer les permissions (chmod en octal)
+sudo chmod 750 /chemin/du/fichier  # rwx pour owner, r-x pour group, --- pour others
+
+# Changer les permissions (chmod symbolique)
+sudo chmod u=rwx,g=rx,o= /chemin/du/fichier
+
+# Définir le bit SUID
+sudo chmod u+s /chemin/du/fichier
+
+# Définir le sticky bit sur un répertoire
+sudo chmod +t /chemin/du/repertoire</code></pre>
+
+    <h3><i class="fas fa-box-open"></i> 3. Gestion des paquets</h3>
+    <pre><code># Debian/Ubuntu
+sudo apt update && sudo apt upgrade  # Mettre à jour tous les paquets
+sudo apt install apache2            # Installer un paquet
+sudo apt remove apache2             # Désinstaller un paquet
+sudo apt autoremove                 # Nettoyer les paquets inutiles
+
+# RHEL/CentOS
+sudo yum update                     # Mettre à jour tous les paquets
+sudo yum install httpd              # Installer un paquet
+sudo yum remove httpd               # Désinstaller un paquet
+sudo yum clean all                  # Nettoyer le cache</code></pre>
+
+    <h3><i class="fas fa-cogs"></i> 4. Gestion des services</h3>
+    <pre><code># Systemd (récent)
+sudo systemctl start apache2        # Démarrer un service
+sudo systemctl stop apache2         # Arrêter un service
+sudo systemctl restart apache2      # Redémarrer un service
+sudo systemctl enable apache2       # Activer au démarrage
+sudo systemctl status apache2       # Vérifier l'état
+
+# SysVinit (ancien)
+sudo service apache2 start          # Démarrer un service
+sudo service apache2 stop           # Arrêter un service
+sudo service apache2 restart        # Redémarrer un service
+sudo update-rc.d apache2 defaults   # Activer au démarrage</code></pre>
+
+    <h3><i class="fas fa-chart-line"></i> 5. Surveillance et maintenance</h3>
+    <pre><code># Espace disque
+df -h                              # Afficher l'espace disque
+du -sh /chemin                     # Taille d'un répertoire
+
+# Mémoire
+free -m                            # Utilisation mémoire
+top                                # Moniteur d'activité
+htop                               # Version améliorée de top
+
+# Processus
+ps aux                             # Lister tous les processus
+pstree                             # Arbre des processus
+kill -9 PID                        # Tuer un processus
+
+# Journaux système
+sudo journalctl -xe                # Afficher les logs systemd
+sudo tail -f /var/log/syslog       # Suivre les logs en temps réel
+sudo grep "error" /var/log/syslog  # Filtrer les erreurs</code></pre>
+
+    <h3><i class="fas fa-shield-alt"></i> 6. Sécurité et réseau</h3>
+    <pre><code># Pare-feu (UFW - Ubuntu)
+sudo ufw enable                    # Activer le pare-feu
+sudo ufw allow 22/tcp              # Autoriser le port SSH
+sudo ufw deny 23/tcp               # Bloquer le port Telnet
+sudo ufw status verbose            # Vérifier les règles
+
+# Pare-feu (firewalld - RHEL/CentOS)
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --reload
+
+# SSH
+sudo ssh-keygen -t rsa -b 4096     # Générer une paire de clés
+sudo nano /etc/ssh/sshd_config     # Configurer le serveur SSH
+sudo systemctl restart sshd        # Redémarrer SSH après modification
+
+# Analyse de sécurité
+sudo lynis audit system            # Audit de sécurité
+sudo chkrootkit                   # Vérifier les rootkits
+sudo rkhunter --checkall          # Analyse complète du système</code></pre>
+
+    <h3><i class="fas fa-save"></i> 7. Sauvegarde et restauration</h3>
+    <pre><code># Sauvegarde avec tar
+sudo tar -czvf backup-$(date +%F).tar.gz /dossier/a/sauvegarder
+
+# Sauvegarde incrémentielle avec rsync
+sudo rsync -av --delete --link-dest=/previous/backup /source /destination/backup-$(date +%F)
+
+# Sauvegarde MySQL
+sudo mysqldump -u root -p --all-databases > full_backup.sql
+
+# Sauvegarde PostgreSQL
+sudo pg_dumpall -U postgres > full_backup.sql
+
+# Planifier des sauvegardes avec cron
+(crontab -l 2>/dev/null; echo "0 2 * * * /chemin/vers/script_backup.sh") | crontab -</code></pre>
+
+    <h3><i class="fas fa-code"></i> 8. Scripting avancé</h3>
+    <pre><code>#!/bin/bash
+# Exemple de script de surveillance
+
+# Variables
+THRESHOLD=90
+EMAIL="admin@example.com"
+
+# Vérification espace disque
+DISK_USAGE=$(df / | awk '{print $5}' | tail -1 | cut -d'%' -f1)
+
+if [ $DISK_USAGE -gt $THRESHOLD ]; then
+    echo "Alerte : Espace disque critique sur $(hostname)" | mail -s "Alerte disque" $EMAIL
+fi
+
+# Vérification mémoire
+MEM_FREE=$(free -m | awk '/Mem:/ {print $4}')
+if [ $MEM_FREE -lt 100 ]; then
+    echo "Alerte : Mémoire faible sur $(hostname)" | mail -s "Alerte mémoire" $EMAIL
+fi</code></pre>
+
+    <!-- Network Section -->
+    <h2 id="reseau"><i class="fas fa-network-wired network-icon"></i> Commandes Réseau PowerShell (Windows)</h2>
+
+    <h3><i class="fas fa-ethernet"></i> 1. Configuration réseau de base</h3>
+    <pre><code># Lister toutes les interfaces réseau
+Get-NetAdapter | Select Name, InterfaceDescription, Status
+
+# Activer/Désactiver une interface
+Enable-NetAdapter -Name "Ethernet" -Confirm:$false
+Disable-NetAdapter -Name "Wi-Fi" -Confirm:$false
+
+# Configurer une adresse IP statique
+New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.100 `
+                -PrefixLength 24 -DefaultGateway 192.168.1.1
+
+# Configurer les serveurs DNS
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" `
+                        -ServerAddresses ("8.8.8.8", "8.8.4.4")</code></pre>
+
+    <h3><i class="fas fa-search"></i> 2. Diagnostic réseau</h3>
+    <pre><code># Test de connectivité
+Test-NetConnection -ComputerName google.com -Port 80
+
+# Traceroute amélioré
+Test-NetConnection -ComputerName google.com -TraceRoute
+
+# Analyse des ports ouverts
+Get-NetTCPConnection -State Listen | Sort-Object LocalPort | Format-Table
+
+# Vérifier la configuration IP détaillée
+Get-NetIPConfiguration -Detailed
+
+# Capturer des paquets (nécessite Npcap)
+# Installer d'abord : choco install npcap
+New-NetEventSession -Name "CaptureSession" -CaptureMode SaveToFile -LocalFilePath "C:\capture.etl"
+Add-NetEventPacketCaptureProvider -SessionName "CaptureSession"
+Start-NetEventSession -Name "CaptureSession"
+Stop-NetEventSession -Name "CaptureSession"</code></pre>
+
+    <h3><i class="fas fa-shield-alt"></i> 3. Pare-feu avancé</h3>
+    <pre><code># Lister toutes les règles
+Get-NetFirewallRule | Where-Object {$_.Enabled -eq "True"} | Format-Table Name,DisplayName
+
+# Créer une nouvelle règle
+New-NetFirewallRule -Name "AllowWeb" -DisplayName "HTTP/HTTPS Access" `
+                   -Direction Inbound -Protocol TCP -LocalPort 80,443 `
+                   -Action Allow
+
+# Bloquer une plage IP
+New-NetFirewallRule -Name "BlockMalicious" -DisplayName "Block Malicious IPs" `
+                   -Direction Inbound -RemoteAddress 192.168.100.0/24 `
+                   -Action Block</code></pre>
+
+    <h3><i class="fas fa-route"></i> 4. Routage avancé</h3>
+    <pre><code># Afficher la table de routage
+Get-NetRoute -AddressFamily IPv4 | Format-Table
+
+# Ajouter une route statique
+New-NetRoute -DestinationPrefix "10.0.0.0/24" -InterfaceAlias "Ethernet" `
+             -NextHop 192.168.1.1 -RouteMetric 100
+
+# Configurer le NAT (exige le rôle RRAS)
+Install-WindowsFeature RemoteAccess -IncludeManagementTools
+Install-RemoteAccess -VpnType RoutingOnly
+Add-NetNatStaticMapping -NatName "CorpNAT" -Protocol TCP -ExternalIPAddress 203.0.113.25 `
+                       -InternalIPAddress 192.168.1.50 -InternalPort 3389 -ExternalPort 3389</code></pre>
+
+    <h3><i class="fas fa-lock"></i> 5. VPN et connectivité distante</h3>
+    <pre><code># Configurer un VPN (PowerShell 5.1+)
+Add-VpnConnection -Name "CorporateVPN" -ServerAddress "vpn.corp.example.com" `
+                 -TunnelType L2tp -L2tpPsk "SharedSecret123" -Force -RememberCredential
+
+# Se connecter à un VPN
+rasdial "CorporateVPN" username password
+
+# Vérifier les connexions VPN
+Get-VpnConnection</code></pre>
+
+    <h2><i class="fas fa-network-wired network-icon"></i> Commandes Réseau Linux (CLI)</h2>
+
+    <h3><i class="fas fa-ethernet"></i> 1. Configuration réseau de base</h3>
+    <pre><code># Lister les interfaces
+ip link show
+nmcli device status
+
+# Activer/Désactiver une interface
+sudo ip link set eth0 up
+sudo ip link set eth0 down
+
+# Configurer une adresse IP temporaire
+sudo ip addr add 192.168.1.100/24 dev eth0
+
+# Configurer une adresse IP permanente (Ubuntu/Debian)
+sudo nano /etc/netplan/01-netcfg.yaml
+# Exemple de configuration:
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses: [192.168.1.100/24]
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+sudo netplan apply</code></pre>
+
+    <h3><i class="fas fa-search"></i> 2. Diagnostic réseau</h3>
+    <pre><code># Test de connectivité
+ping -c 4 google.com
+ping6 -c 4 ipv6.google.com
+
+# Traceroute (installer avec: sudo apt install traceroute)
+traceroute -n google.com
+
+# Vérifier les ports ouverts
+ss -tulnp
+netstat -tulnp  # Alternative
+
+# Analyse des paquets
+sudo tcpdump -i eth0 -n 'port 80'
+sudo tshark -i eth0 -f "tcp port 22"  # Version avancée (Wireshark CLI)
+
+# Test de débit (installer speedtest-cli)
+speedtest-cli --bytes</code></pre>
+
+    <h3><i class="fas fa-shield-alt"></i> 3. Pare-feu avancé (iptables/nftables)</h3>
+    <pre><code># Lister les règles iptables
+sudo iptables -L -v -n --line-numbers
+
+# Autoriser le trafic HTTP/HTTPS
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# Bloquer une IP
+sudo iptables -A INPUT -s 192.168.100.23 -j DROP
+
+# Sauvegarder les règles (Debian/Ubuntu)
+sudo iptables-save > /etc/iptables.rules
+
+# nftables (nouvelle génération)
+sudo nft add table inet filter
+sudo nft add chain inet filter input { type filter hook input priority 0 \; }
+sudo nft add rule inet filter input tcp dport 22 accept</code></pre>
+
+    <h3><i class="fas fa-route"></i> 4. Routage avancé</h3>
+    <pre><code># Afficher la table de routage
+ip route show
+route -n  # Alternative
+
+# Ajouter une route statique
+sudo ip route add 10.0.0.0/24 via 192.168.1.1 dev eth0
+
+# Configurer le NAT
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo sysctl -w net.ipv4.ip_forward=1
+
+# Configurer le NAT permanent
+echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p</code></pre>
+
+    <h3><i class="fas fa-lock"></i> 5. VPN et tunnels</h3>
+    <pre><code># OpenVPN (client)
+sudo openvpn --config client.ovpn
+
+# WireGuard (client)
+sudo wg-quick up wg0
+
+# Créer un tunnel SSH
+ssh -N -L 8080:localhost:80 user@remote-server
+ssh -N -R 2222:localhost:22 user@remote-server  # Reverse tunnel
+
+# Tunnel GRE (entre deux serveurs)
+sudo ip tunnel add gre1 mode gre remote 203.0.113.2 local 198.51.100.1 ttl 255
+sudo ip link set gre1 up
+sudo ip addr add 10.0.0.1/30 dev gre1</code></pre>
+
+    <h3><i class="fas fa-tools"></i> 6. Outils réseau avancés</h3>
+    <pre><code># Analyse de bande passante (nload)
+sudo nload eth0
+
+# Monitorer les connexions (iftop)
+sudo iftop -i eth0
+
+# Scanner réseau (nmap)
+sudo nmap -sS -p 1-1024 192.168.1.0/24
+
+# Benchmark HTTP (httperf)
+httperf --server example.com --port 80 --uri / --num-conn 100
+
+# Test de résilience (mtr)
+mtr -n --report google.com</code></pre>
+
+    <h3><i class="fas fa-code"></i> 7. Scripts réseau utiles</h3>
+    <pre><code>#!/bin/bash
+# Script de surveillance réseau
+INTERFACE="eth0"
+MAX_UTIL=90
+
+# Vérifier l'utilisation de la bande passante
+CURRENT_RX=$(ifconfig $INTERFACE | grep "RX packets" | awk '{print $5}')
+CURRENT_TX=$(ifconfig $INTERFACE | grep "TX packets" | awk '{print $5}')
+sleep 1
+NEW_RX=$(ifconfig $INTERFACE | grep "RX packets" | awk '{print $5}')
+NEW_TX=$(ifconfig $INTERFACE | grep "TX packets" | awk '{print $5}')
+
+RX_UTIL=$(( ($NEW_RX - $CURRENT_RX) / 1024 ))
+TX_UTIL=$(( ($NEW_TX - $CURRENT_TX) / 1024 ))
+
+if [ $RX_UTIL -gt $MAX_UTIL ] || [ $TX_UTIL -gt $MAX_UTIL ]; then
+    echo "Alerte: Utilisation élevée du réseau - RX: ${RX_UTIL}KB/s TX: ${TX_UTIL}KB/s" | mail -s "Alerte réseau" admin@example.com
+fi</code></pre>
+
+    <!-- pfSense Section -->
+    <h2 id="pfsense"><i class="fas fa-shield-alt pfsense-icon"></i> pfSense</h2>
     <pre><code># Gestion du firewall
 pftcl -d && pfctl -e
 
@@ -400,621 +1203,79 @@ pass in quick proto udp from any to any port = 520  # Autoriser RIP
 # Recharger les règles
 pfctl -f /etc/pf.conf</code></pre>
 
-    <h2>Ping</h2>
-    <pre><code># Ping depuis une IP source spécifique
-ping -S &lt;IP source&gt; -c 3 &lt;IP Destination&gt;</code></pre>
-hping3 -1 --spoof <IP source> <IP Destination>
-nping --icmp --source-ip <IP source> <IP Destination>
-
-<!-- Début de la section Windows Server -->
-<h2>Administration Windows Server avec PowerShell</h2>
-
-<h3>1. Installation et configuration initiale</h3>
-<pre><code># Vérifier la version de Windows
-Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsHardwareAbstractionLayer
-
-# Activer le rôle de serveur (ex: AD DS)
-Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
-
-# Configurer un nouveau contrôleur de domaine
-Install-ADDSForest -DomainName "corp.example.com" -DomainNetbiosName "CORP" -InstallDns
-
-# Redémarrer après installation
-Restart-Computer -Force</code></pre>
-
-<h3>2. Gestion des utilisateurs et groupes AD</h3>
-<pre><code># Créer un nouvel utilisateur
-New-ADUser -Name "Jean Dupont" -GivenName "Jean" -Surname "Dupont" `
-            -SamAccountName "jdupont" -UserPrincipalName "jdupont@corp.example.com" `
-            -Path "OU=Utilisateurs,DC=corp,DC=example,DC=com" -AccountPassword (ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force) `
-            -Enabled $true
-
-# Modifier un utilisateur
-Set-ADUser -Identity jdupont -Office "Paris" -Department "IT" -Title "Administrateur Système"
-
-# Créer un groupe et ajouter des membres
-New-ADGroup -Name "Admins IT" -GroupScope Global -Path "OU=Groupes,DC=corp,DC=example,DC=com"
-Add-ADGroupMember -Identity "Admins IT" -Members jdupont
-
-# Lister tous les utilisateurs d'une OU
-Get-ADUser -Filter * -SearchBase "OU=Utilisateurs,DC=corp,DC=example,DC=com" | Select Name,SamAccountName</code></pre>
-
-<h3>3. Gestion des stratégies de groupe (GPO)</h3>
-<pre><code># Créer une nouvelle GPO
-New-GPO -Name "Verrouillage Station" -Comment "Stratégie de sécurité de base"
-
-# Lier une GPO à une OU
-New-GPLink -Name "Verrouillage Station" -Target "OU=Utilisateurs,DC=corp,DC=example,DC=com"
-
-# Modifier une GPO
-Set-GPRegistryValue -Name "Verrouillage Station" -Key "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System" `
-                    -ValueName "DisableTaskMgr" -Type DWord -Value 1
-
-# Forcer la mise à jour des GPO sur un client
-Invoke-GPUpdate -Computer "CLIENT01" -Force</code></pre>
-
-<h3>4. Gestion du stockage</h3>
-<pre><code># Lister les disques disponibles
-Get-Disk
-
-# Initialiser un nouveau disque
-Initialize-Disk -Number 1 -PartitionStyle GPT
-
-# Créer une partition
-New-Partition -DiskNumber 1 -UseMaximumSize -DriveLetter D
-
-# Formater le volume
-Format-Volume -DriveLetter D -FileSystem NTFS -NewFileSystemLabel "Données" -Confirm:$false
-
-# Configurer un quota de disque
-New-FsrmQuota -Path "D:\Partage" -Size 5GB -Description "Limite 5GB par utilisateur"</code></pre>
-
-<h3>5. Surveillance et maintenance</h3>
-<pre><code># Vérifier l'espace disque
-Get-Volume | Select DriveLetter,FileSystemLabel,SizeRemaining,Size
-
-# Analyser les événements système
-Get-EventLog -LogName System -Newest 50 | Where-Object {$_.EntryType -eq "Error"}
-
-# Planifier une tâche
-$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File D:\scripts\cleanup.ps1"
-$trigger = New-ScheduledTaskTrigger -Daily -At 2am
-Register-ScheduledTask -TaskName "Nettoyage nocturne" -Action $action -Trigger $trigger -User "SYSTEM"
-
-# Vérifier les services critiques
-Get-Service | Where-Object {$_.Status -ne "Running" -and $_.StartType -eq "Automatic"}</code></pre>
-
-<!-- Début de la section DHCP et DNS Windows Server -->
-<h2>Administration DHCP et DNS sous Windows Server</h2>
-
-<h3>1. Installation des rôles DHCP et DNS</h3>
-<pre><code># Installer les rôles DHCP et DNS
-Install-WindowsFeature DHCP,DNS -IncludeManagementTools
-
-# Configurer le serveur DHCP après installation
-Add-DhcpServerInDC -DnsName "dc1.corp.example.com" -IPAddress 192.168.1.1
-
-# Redémarrer si nécessaire
-Restart-Computer -Force</code></pre>
-
-<h3>2. Configuration DHCP de base</h3>
-<pre><code># Créer une étendue DHCP
-Add-DhcpServerv4Scope -Name "Réseau Principal" `
-                      -StartRange 192.168.1.100 -EndRange 192.168.1.200 `
-                      -SubnetMask 255.255.255.0 -State Active
-
-# Configurer les options de l'étendue
-Set-DhcpServerv4OptionValue -ScopeId 192.168.1.0 `
-                           -DnsServer 192.168.1.1, 192.168.1.2 `
-                           -Router 192.168.1.1 `
-                           -DnsDomain "corp.example.com"
-
-# Activer les adresses MAC réservées
-Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 `
-                           -IPAddress 192.168.1.50 `
-                           -ClientId "01-23-45-67-89-AB" `
-                           -Description "Serveur d'impression"
-
-# Configurer les plages d'exclusion
-Add-DhcpServerv4ExclusionRange -ScopeId 192.168.1.0 `
-                              -StartRange 192.168.1.1 `
-                              -EndRange 192.168.1.15</code></pre>
-
-<h3>3. Gestion avancée DHCP</h3>
-<pre><code># Afficher toutes les étendues DHCP
-Get-DhcpServerv4Scope
-
-# Afficher les baux actifs
-Get-DhcpServerv4Lease -ScopeId 192.168.1.0
-
-# Supprimer un bail spécifique
-Remove-DhcpServerv4Lease -IPAddress 192.168.1.105
-
-# Sauvegarder la configuration DHCP
-Backup-DhcpServer -Path "C:\DHCP_Backup\" -Force
-
-# Restaurer la configuration DHCP
-Restore-DhcpServer -Path "C:\DHCP_Backup\" -Force
-
-# Migrer un serveur DHCP
-Export-DhcpServer -File "C:\DHCP_Export.xml" -Leases
-Import-DhcpServer -File "C:\DHCP_Export.xml" -Leases</code></pre>
-
-<h3>4. Configuration DNS de base</h3>
-<pre><code># Créer une zone DNS principale
-Add-DnsServerPrimaryZone -Name "corp.example.com" `
-                        -ZoneFile "corp.example.com.dns" `
-                        -DynamicUpdate Secure
-
-# Créer une zone DNS inverse
-Add-DnsServerPrimaryZone -NetworkId "192.168.1.0/24" `
-                        -ZoneFile "1.168.192.in-addr.arpa.dns"
-
-# Ajouter un enregistrement A
-Add-DnsServerResourceRecordA -Name "serveur1" `
-                           -ZoneName "corp.example.com" `
-                           -IPv4Address "192.168.1.10" `
-                           -CreatePtr
-
-# Ajouter un enregistrement CNAME
-Add-DnsServerResourceRecordCName -Name "www" `
-                               -HostNameAlias "serveur1.corp.example.com" `
-                               -ZoneName "corp.example.com"
-
-# Ajouter un enregistrement MX
-Add-DnsServerResourceRecordMX -Preference 10 `
-                             -Name "@" `
-                             -MailExchange "mail.corp.example.com" `
-                             -ZoneName "corp.example.com"</code></pre>
-
-<h3>5. Gestion avancée DNS</h3>
-<pre><code># Activer le nettoyage automatique
-Set-DnsServerScavenging -ScavengingState $true `
-                       -RefreshInterval 7.00:00:00 `
-                       -NoRefreshInterval 7.00:00:00 `
-                       -ApplyOnAllZones
-
-# Forcer le nettoyage immédiat
-Start-DnsServerScavenging -Force
-
-# Configurer le transfert de zone
-Set-DnsServerForwarder -IPAddress "8.8.8.8","8.8.4.4" -PassThru
-
-# Configurer la réplication DNS entre contrôleurs de domaine
-Set-DnsServerDirectoryPartition -Name "DomainDnsZones.corp.example.com" `
-                               -ReplicationScope "Domain"
-
-# Exporter la configuration DNS
-Export-DnsServerZone -Name "corp.example.com" -FileName "C:\DNS_Backup\corp.example.com.dns"
-
-# Importer une zone DNS
-Import-DnsServerZone -Name "corp.example.com" -FileName "C:\DNS_Backup\corp.example.com.dns"</code></pre>
-
-<h3>6. Surveillance et dépannage</h3>
-<pre><code># Vérifier l'état du service DHCP
-Get-Service -Name DHCPServer | Select-Object Name,Status,StartType
-
-# Analyser les événements DHCP
-Get-EventLog -LogName "System" -Source "DHCPServer" -Newest 50
-
-# Tester la résolution DNS
-Resolve-DnsName -Name "serveur1.corp.example.com" -Type A
-
-# Effectuer une requête DNS détaillée
-nslookup
-> server 192.168.1.1
-> set type=MX
-> corp.example.com
-> exit
-
-# Vérifier la réplication DNS
-Repadmin /showrepl
-Repadmin /syncall /AdeP
-
-# Capturer le trafic DHCP/DNS
-netsh trace start scenario=NetConnection capture=yes tracefile=C:\traces\network.etl
-netsh trace stop</code></pre>
-
-<h3>7. Sécurité DHCP et DNS</h3>
-<pre><code># Configurer les options de sécurité DHCP
-Set-DhcpServerv4DnsSetting -DynamicUpdates "Always" `
-                          -DeleteDnsRRonLeaseExpiry $true `
-                          -UpdateDnsRRForOlderClients $true
-
-# Activer DNSSEC pour une zone
-Set-DnsServerZoneSigning -Name "corp.example.com" -Sign
-
-# Configurer le filtrage DNS
-Add-DnsServerQueryResolutionPolicy -Name "BlockMaliciousDomains" `
-                                 -Action DENY `
-                                 -FQDN "EQ,*.malicious.com" `
-                                 -PassThru
-
-# Restreindre les mises à jour DNS dynamiques
-Set-DnsServerPrimaryZone -Name "corp.example.com" `
-                        -DynamicUpdate Secure</code></pre>
-
-<h3>8. Scripts utiles</h3>
-<pre><code># Script pour vérifier les baux DHCP expirés
-$ExpiredLeases = Get-DhcpServerv4Lease -ScopeId 192.168.1.0 | Where-Object {$_.LeaseExpiryTime -lt (Get-Date)}
-$ExpiredLeases | Export-Csv -Path "C:\Reports\ExpiredLeases.csv" -NoTypeInformation
-
-# Script pour auditer les enregistrements DNS
-$DNSRecords = Get-DnsServerResourceRecord -ZoneName "corp.example.com" -RRType "A"
-$DNSRecords | Select-Object HostName,RecordType,Timestamp | Out-GridView
-
-# Script pour migrer des plages DHCP
-$OldScope = Get-DhcpServerv4Scope -ScopeId 192.168.0.0
-Add-DhcpServerv4Scope -Name $OldScope.Name `
-                     -StartRange 192.168.1.100 `
-                     -EndRange 192.168.1.200 `
-                     -SubnetMask $OldScope.SubnetMask
-Get-DhcpServerv4OptionValue -ScopeId $OldScope.ScopeId | ForEach-Object {
-    Set-DhcpServerv4OptionValue -ScopeId 192.168.1.0 -OptionId $_.OptionId -Value $_.Value
-}</code></pre>
-
-<!-- Début de la section Linux Server -->
-<h2>Administration Linux Server</h2>
-
-<h3>1. Gestion des utilisateurs et groupes</h3>
-<pre><code># Créer un nouvel utilisateur
-sudo useradd -m -s /bin/bash jdupont
-sudo passwd jdupont
-
-# Modifier un utilisateur
-sudo usermod -aG sudo jdupont  # Ajouter aux sudoers
-sudo usermod -d /new/home/jdupont jdupont  # Changer le répertoire home
-
-# Créer un groupe
-sudo groupadd admins_it
-
-# Ajouter un utilisateur à un groupe
-sudo usermod -aG admins_it jdupont
-
-# Lister tous les utilisateurs
-cut -d: -f1 /etc/passwd
-
-# Vérifier les sudoers
-sudo grep -Po '^sudo.+:\K.*$' /etc/group</code></pre>
-
-<h3>2. Gestion des permissions</h3>
-<pre><code># Changer le propriétaire d'un fichier
-sudo chown jdupont:admins_it /chemin/du/fichier
-
-# Changer les permissions (chmod en octal)
-sudo chmod 750 /chemin/du/fichier  # rwx pour owner, r-x pour group, --- pour others
-
-# Changer les permissions (chmod symbolique)
-sudo chmod u=rwx,g=rx,o= /chemin/du/fichier
-
-# Définir le bit SUID
-sudo chmod u+s /chemin/du/fichier
-
-# Définir le sticky bit sur un répertoire
-sudo chmod +t /chemin/du/repertoire</code></pre>
-
-<h3>3. Gestion des paquets</h3>
-<pre><code># Debian/Ubuntu
-sudo apt update && sudo apt upgrade  # Mettre à jour tous les paquets
-sudo apt install apache2            # Installer un paquet
-sudo apt remove apache2             # Désinstaller un paquet
-sudo apt autoremove                 # Nettoyer les paquets inutiles
-
-# RHEL/CentOS
-sudo yum update                     # Mettre à jour tous les paquets
-sudo yum install httpd              # Installer un paquet
-sudo yum remove httpd               # Désinstaller un paquet
-sudo yum clean all                  # Nettoyer le cache</code></pre>
-
-<h3>4. Gestion des services</h3>
-<pre><code># Systemd (récent)
-sudo systemctl start apache2        # Démarrer un service
-sudo systemctl stop apache2         # Arrêter un service
-sudo systemctl restart apache2      # Redémarrer un service
-sudo systemctl enable apache2       # Activer au démarrage
-sudo systemctl status apache2       # Vérifier l'état
-
-# SysVinit (ancien)
-sudo service apache2 start          # Démarrer un service
-sudo service apache2 stop           # Arrêter un service
-sudo service apache2 restart        # Redémarrer un service
-sudo update-rc.d apache2 defaults   # Activer au démarrage</code></pre>
-
-<h3>5. Surveillance et maintenance</h3>
-<pre><code># Espace disque
-df -h                              # Afficher l'espace disque
-du -sh /chemin                     # Taille d'un répertoire
-
-# Mémoire
-free -m                            # Utilisation mémoire
-top                                # Moniteur d'activité
-htop                               # Version améliorée de top
-
-# Processus
-ps aux                             # Lister tous les processus
-pstree                             # Arbre des processus
-kill -9 PID                        # Tuer un processus
-
-# Journaux système
-sudo journalctl -xe                # Afficher les logs systemd
-sudo tail -f /var/log/syslog       # Suivre les logs en temps réel
-sudo grep "error" /var/log/syslog  # Filtrer les erreurs</code></pre>
-
-<h3>6. Sécurité et réseau</h3>
-<pre><code># Pare-feu (UFW - Ubuntu)
-sudo ufw enable                    # Activer le pare-feu
-sudo ufw allow 22/tcp              # Autoriser le port SSH
-sudo ufw deny 23/tcp               # Bloquer le port Telnet
-sudo ufw status verbose            # Vérifier les règles
-
-# Pare-feu (firewalld - RHEL/CentOS)
-sudo firewall-cmd --permanent --add-port=80/tcp
-sudo firewall-cmd --reload
-
-# SSH
-sudo ssh-keygen -t rsa -b 4096     # Générer une paire de clés
-sudo nano /etc/ssh/sshd_config     # Configurer le serveur SSH
-sudo systemctl restart sshd        # Redémarrer SSH après modification
-
-# Analyse de sécurité
-sudo lynis audit system            # Audit de sécurité
-sudo chkrootkit                   # Vérifier les rootkits
-sudo rkhunter --checkall          # Analyse complète du système</code></pre>
-
-<h3>7. Sauvegarde et restauration</h3>
-<pre><code># Sauvegarde avec tar
-sudo tar -czvf backup-$(date +%F).tar.gz /dossier/a/sauvegarder
-
-# Sauvegarde incrémentielle avec rsync
-sudo rsync -av --delete --link-dest=/previous/backup /source /destination/backup-$(date +%F)
-
-# Sauvegarde MySQL
-sudo mysqldump -u root -p --all-databases > full_backup.sql
-
-# Sauvegarde PostgreSQL
-sudo pg_dumpall -U postgres > full_backup.sql
-
-# Planifier des sauvegardes avec cron
-(crontab -l 2>/dev/null; echo "0 2 * * * /chemin/vers/script_backup.sh") | crontab -</code></pre>
-
-<h3>8. Scripting avancé</h3>
-<pre><code>#!/bin/bash
-# Exemple de script de surveillance
-
-# Variables
-THRESHOLD=90
-EMAIL="admin@example.com"
-
-# Vérification espace disque
-DISK_USAGE=$(df / | awk '{print $5}' | tail -1 | cut -d'%' -f1)
-
-if [ $DISK_USAGE -gt $THRESHOLD ]; then
-    echo "Alerte : Espace disque critique sur $(hostname)" | mail -s "Alerte disque" $EMAIL
-fi
-
-# Vérification mémoire
-MEM_FREE=$(free -m | awk '/Mem:/ {print $4}')
-if [ $MEM_FREE -lt 100 ]; then
-    echo "Alerte : Mémoire faible sur $(hostname)" | mail -s "Alerte mémoire" $EMAIL
-	
-	<!-- Début de la section Commandes Réseau -->
-<h2>Commandes Réseau PowerShell (Windows)</h2>
-
-<h3>1. Configuration réseau de base</h3>
-<pre><code># Lister toutes les interfaces réseau
-Get-NetAdapter | Select Name, InterfaceDescription, Status
-
-# Activer/Désactiver une interface
-Enable-NetAdapter -Name "Ethernet" -Confirm:$false
-Disable-NetAdapter -Name "Wi-Fi" -Confirm:$false
-
-# Configurer une adresse IP statique
-New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.100 `
-                 -PrefixLength 24 -DefaultGateway 192.168.1.1
-
-# Configurer les serveurs DNS
-Set-DnsClientServerAddress -InterfaceAlias "Ethernet" `
-                          -ServerAddresses ("8.8.8.8", "8.8.4.4")</code></pre>
-
-<h3>2. Diagnostic réseau</h3>
-<pre><code># Test de connectivité
-Test-NetConnection -ComputerName google.com -Port 80
-
-# Traceroute amélioré
-Test-NetConnection -ComputerName google.com -TraceRoute
-
-# Analyse des ports ouverts
-Get-NetTCPConnection -State Listen | Sort-Object LocalPort | Format-Table
-
-# Vérifier la configuration IP détaillée
-Get-NetIPConfiguration -Detailed
-
-# Capturer des paquets (nécessite Npcap)
-# Installer d'abord : choco install npcap
-New-NetEventSession -Name "CaptureSession" -CaptureMode SaveToFile -LocalFilePath "C:\capture.etl"
-Add-NetEventPacketCaptureProvider -SessionName "CaptureSession"
-Start-NetEventSession -Name "CaptureSession"
-Stop-NetEventSession -Name "CaptureSession"</code></pre>
-
-<h3>3. Pare-feu avancé</h3>
-<pre><code># Lister toutes les règles
-Get-NetFirewallRule | Where-Object {$_.Enabled -eq "True"} | Format-Table Name,DisplayName
-
-# Créer une nouvelle règle
-New-NetFirewallRule -Name "AllowWeb" -DisplayName "HTTP/HTTPS Access" `
-                   -Direction Inbound -Protocol TCP -LocalPort 80,443 `
-                   -Action Allow
-
-# Bloquer une plage IP
-New-NetFirewallRule -Name "BlockMalicious" -DisplayName "Block Malicious IPs" `
-                   -Direction Inbound -RemoteAddress 192.168.100.0/24 `
-                   -Action Block</code></pre>
-
-<h3>4. Routage avancé</h3>
-<pre><code># Afficher la table de routage
-Get-NetRoute -AddressFamily IPv4 | Format-Table
-
-# Ajouter une route statique
-New-NetRoute -DestinationPrefix "10.0.0.0/24" -InterfaceAlias "Ethernet" `
-             -NextHop 192.168.1.1 -RouteMetric 100
-
-# Configurer le NAT (exige le rôle RRAS)
-Install-WindowsFeature RemoteAccess -IncludeManagementTools
-Install-RemoteAccess -VpnType RoutingOnly
-Add-NetNatStaticMapping -NatName "CorpNAT" -Protocol TCP -ExternalIPAddress 203.0.113.25 `
-                       -InternalIPAddress 192.168.1.50 -InternalPort 3389 -ExternalPort 3389</code></pre>
-
-<h3>5. VPN et connectivité distante</h3>
-<pre><code># Configurer un VPN (PowerShell 5.1+)
-Add-VpnConnection -Name "CorporateVPN" -ServerAddress "vpn.corp.example.com" `
-                 -TunnelType L2tp -L2tpPsk "SharedSecret123" -Force -RememberCredential
-
-# Se connecter à un VPN
-rasdial "CorporateVPN" username password
-
-# Vérifier les connexions VPN
-Get-VpnConnection</code></pre>
-
-<h2>Commandes Réseau Linux (CLI)</h2>
-
-<h3>1. Configuration réseau de base</h3>
-<pre><code># Lister les interfaces
-ip link show
-nmcli device status
-
-# Activer/Désactiver une interface
-sudo ip link set eth0 up
-sudo ip link set eth0 down
-
-# Configurer une adresse IP temporaire
-sudo ip addr add 192.168.1.100/24 dev eth0
-
-# Configurer une adresse IP permanente (Ubuntu/Debian)
-sudo nano /etc/netplan/01-netcfg.yaml
-# Exemple de configuration:
-network:
-  version: 2
-  ethernets:
-    eth0:
-      addresses: [192.168.1.100/24]
-      gateway4: 192.168.1.1
-      nameservers:
-        addresses: [8.8.8.8, 8.8.4.4]
-sudo netplan apply</code></pre>
-
-<h3>2. Diagnostic réseau</h3>
-<pre><code># Test de connectivité
-ping -c 4 google.com
-ping6 -c 4 ipv6.google.com
-
-# Traceroute (installer avec: sudo apt install traceroute)
-traceroute -n google.com
-
-# Vérifier les ports ouverts
-ss -tulnp
-netstat -tulnp  # Alternative
-
-# Analyse des paquets
-sudo tcpdump -i eth0 -n 'port 80'
-sudo tshark -i eth0 -f "tcp port 22"  # Version avancée (Wireshark CLI)
-
-# Test de débit (installer speedtest-cli)
-speedtest-cli --bytes</code></pre>
-
-<h3>3. Pare-feu avancé (iptables/nftables)</h3>
-<pre><code># Lister les règles iptables
-sudo iptables -L -v -n --line-numbers
-
-# Autoriser le trafic HTTP/HTTPS
-sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-
-# Bloquer une IP
-sudo iptables -A INPUT -s 192.168.100.23 -j DROP
-
-# Sauvegarder les règles (Debian/Ubuntu)
-sudo iptables-save > /etc/iptables.rules
-
-# nftables (nouvelle génération)
-sudo nft add table inet filter
-sudo nft add chain inet filter input { type filter hook input priority 0 \; }
-sudo nft add rule inet filter input tcp dport 22 accept</code></pre>
-
-<h3>4. Routage avancé</h3>
-<pre><code># Afficher la table de routage
-ip route show
-route -n  # Alternative
-
-# Ajouter une route statique
-sudo ip route add 10.0.0.0/24 via 192.168.1.1 dev eth0
-
-# Configurer le NAT
-sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-sudo sysctl -w net.ipv4.ip_forward=1
-
-# Configurer le NAT permanent
-echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p</code></pre>
-
-<h3>5. VPN et tunnels</h3>
-<pre><code># OpenVPN (client)
-sudo openvpn --config client.ovpn
-
-# WireGuard (client)
-sudo wg-quick up wg0
-
-# Créer un tunnel SSH
-ssh -N -L 8080:localhost:80 user@remote-server
-ssh -N -R 2222:localhost:22 user@remote-server  # Reverse tunnel
-
-# Tunnel GRE (entre deux serveurs)
-sudo ip tunnel add gre1 mode gre remote 203.0.113.2 local 198.51.100.1 ttl 255
-sudo ip link set gre1 up
-sudo ip addr add 10.0.0.1/30 dev gre1</code></pre>
-
-<h3>6. Outils réseau avancés</h3>
-<pre><code># Analyse de bande passante (nload)
-sudo nload eth0
-
-# Monitorer les connexions (iftop)
-sudo iftop -i eth0
-
-# Scanner réseau (nmap)
-sudo nmap -sS -p 1-1024 192.168.1.0/24
-
-# Benchmark HTTP (httperf)
-httperf --server example.com --port 80 --uri / --num-conn 100
-
-# Test de résilience (mtr)
-mtr -n --report google.com</code></pre>
-
-<h3>7. Scripts réseau utiles</h3>
-<pre><code>#!/bin/bash
-# Script de surveillance réseau
-INTERFACE="eth0"
-MAX_UTIL=90
-
-# Vérifier l'utilisation de la bande passante
-CURRENT_RX=$(ifconfig $INTERFACE | grep "RX packets" | awk '{print $5}')
-CURRENT_TX=$(ifconfig $INTERFACE | grep "TX packets" | awk '{print $5}')
-sleep 1
-NEW_RX=$(ifconfig $INTERFACE | grep "RX packets" | awk '{print $5}')
-NEW_TX=$(ifconfig $INTERFACE | grep "TX packets" | awk '{print $5}')
-
-RX_UTIL=$(( ($NEW_RX - $CURRENT_RX) / 1024 ))
-TX_UTIL=$(( ($NEW_TX - $CURRENT_TX) / 1024 ))
-
-if [ $RX_UTIL -gt $MAX_UTIL ] || [ $TX_UTIL -gt $MAX_UTIL ]; then
-    echo "Alerte: Utilisation élevée du réseau - RX: ${RX_UTIL}KB/s TX: ${TX_UTIL}KB/s" | mail -s "Alerte réseau" admin@example.com
-fi</code></pre>
-fi</code></pre>
-
-
-<!-- Début de la section Gestion des Périphériques Externes -->
-<h2>Gestion des Périphériques Externes</h2>
-
-<h3>1. Windows (PowerShell) - Imprimantes</h3>
-<pre><code># Lister toutes les imprimantes
+    <!-- Nouvelle section Serveur Web -->
+    <h2 id="web"><i class="fas fa-globe web-icon"></i> Serveur Web Apache</h2>
+
+    <h3><i class="fas fa-server"></i> 1. Installation de base</h3>
+    <pre><code># Installer Apache
+sudo apt update && sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo systemctl enable --now apache2
+
+# Vérifier le statut
+sudo systemctl status apache2</code></pre>
+
+    <h3><i class="fas fa-folder-open"></i> 2. Structure des fichiers</h3>
+    <pre><code># Créer un nouveau site
+sudo mkdir -p /var/www/monsite/html
+sudo chown -R www-data:www-data /var/www/monsite
+sudo chmod -R 755 /var/www/monsite</code></pre>
+
+    <h3><i class="fas fa-cog"></i> 3. Configuration VirtualHost</h3>
+    <pre><code># Exemple de configuration
+&lt;VirtualHost *:80&gt;
+    ServerName monsite.local
+    ServerAlias www.monsite.local
+    DocumentRoot /var/www/monsite/html
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    
+    &lt;Directory /var/www/monsite/html&gt;
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+
+# Activer le site
+sudo a2ensite monsite.conf
+sudo systemctl reload apache2</code></pre>
+
+    <h3><i class="fas fa-code"></i> 4. Configuration PHP</h3>
+    <pre><code># Installer PHP
+sudo apt install php libapache2-mod-php php-mysql -y
+sudo systemctl restart apache2
+
+# Tester PHP
+echo "<?php phpinfo(); ?>" | sudo tee /var/www/monsite/html/info.php</code></pre>
+
+    <h3><i class="fas fa-lock"></i> 5. Sécurisation</h3>
+    <pre><code># Activer le module security
+sudo a2enmod security2
+sudo systemctl restart apache2
+
+# Configurer SSL avec Let's Encrypt
+sudo apt install certbot python3-certbot-apache -y
+sudo certbot --apache -d monsite.local -d www.monsite.local
+sudo certbot renew --dry-run</code></pre>
+
+    <div class="note">
+        <p><strong>Résumé des Commandes Clés</strong></p>
+        <ul>
+            <li>Installer Apache: <code>sudo apt install apache2 -y</code></li>
+            <li>Activer un site: <code>sudo a2ensite nom.conf</code></li>
+            <li>Désactiver le site par défaut: <code>sudo a2dissite 000-default.conf</code></li>
+            <li>Tester la configuration: <code>sudo apache2ctl configtest</code></li>
+            <li>Redémarrer Apache: <code>sudo systemctl restart apache2</code></li>
+            <li>Vérifier les logs: <code>sudo tail -f /var/log/apache2/error.log</code></li>
+        </ul>
+    </div>
+
+    <!-- Devices Section -->
+    <h2 id="peripheriques"><i class="fas fa-print device-icon"></i> Gestion des Périphériques Externes</h2>
+
+    <h3><i class="fab fa-windows windows-icon"></i> 1. Windows (PowerShell) - Imprimantes</h3>
+    <pre><code># Lister toutes les imprimantes
 Get-Printer | Format-Table Name, DriverName, PortName, Shared, Published
 
 # Ajouter une imprimante locale
@@ -1036,8 +1297,8 @@ Restart-PrintJob -PrinterName "HP_LaserJet" -ID 5
 # Installer un pilote d'imprimante
 pnputil.exe -i -a "C:\Drivers\HP\*.inf"</code></pre>
 
-<h3>2. Windows (PowerShell) - Périphériques USB et autres</h3>
-<pre><code># Lister tous les périphériques connectés
+    <h3><i class="fab fa-windows windows-icon"></i> 2. Windows (PowerShell) - Périphériques USB et autres</h3>
+    <pre><code># Lister tous les périphériques connectés
 Get-PnpDevice | Where-Object {$_.Present} | Format-Table FriendlyName, Status, InstanceId
 
 # Désactiver un périphérique USB
@@ -1057,8 +1318,8 @@ DisplaySwitch.exe /clone     # Dupliquer l'affichage
 Get-AudioDevice -List | Where-Object {$_.Type -eq "Playback"} | Format-Table Name, ID
 Set-AudioDevice -ID "{0.0.0.00000000}.{a12b3c4d-5e67-8f90-1234-567890abcdef}"</code></pre>
 
-<h3>3. Windows (PowerShell) - Scanners</h3>
-<pre><code># Lister les scanners disponibles (nécessite WIA)
+    <h3><i class="fab fa-windows windows-icon"></i> 3. Windows (PowerShell) - Scanners</h3>
+    <pre><code># Lister les scanners disponibles (nécessite WIA)
 $deviceManager = New-Object -ComObject WIA.DeviceManager
 $deviceManager.DeviceInfos | Where-Object {$_.Type -eq 1} | Select-Object Properties
 
@@ -1068,8 +1329,8 @@ $scanner = $device.Items.Item(1)
 $image = $scanner.Transfer()
 $image.SaveFile("C:\Scans\document_$(Get-Date -Format 'yyyyMMddHHmmss').jpg")</code></pre>
 
-<h3>4. Linux (CLI) - Imprimantes</h3>
-<pre><code># Lister les imprimantes
+    <h3><i class="fab fa-linux linux-icon"></i> 4. Linux (CLI) - Imprimantes</h3>
+    <pre><code># Lister les imprimantes
 lpstat -p -d
 
 # Installer une imprimante CUPS (Common Unix Printing System)
@@ -1090,8 +1351,8 @@ lpq -P HP_LaserJet
 # Configurer une imprimante réseau Samba
 sudo lpadmin -p "Office_Printer" -E -v "smb://user:password@print-server/HP_Color" -m everywhere</code></pre>
 
-<h3>5. Linux (CLI) - Périphériques USB et autres</h3>
-<pre><code># Lister tous les périphériques USB
+    <h3><i class="fab fa-linux linux-icon"></i> 5. Linux (CLI) - Périphériques USB et autres</h3>
+    <pre><code># Lister tous les périphériques USB
 lsusb
 lsusb -v  # Version détaillée
 
@@ -1114,8 +1375,8 @@ xrandr --output HDMI-1 --off  # Désactiver un écran
 pactl list short sinks  # Lister les périphériques de sortie
 pactl set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo  # Définir la sortie par défaut</code></pre>
 
-<h3>6. Linux (CLI) - Scanners</h3>
-<pre><code># Installer SANE (Scanner Access Now Easy)
+    <h3><i class="fab fa-linux linux-icon"></i> 6. Linux (CLI) - Scanners</h3>
+    <pre><code># Installer SANE (Scanner Access Now Easy)
 sudo apt install sane sane-utils xsane
 
 # Lister les scanners disponibles
@@ -1131,8 +1392,8 @@ scanimage --format=tiff --resolution 300dpi | convert - scan.pdf
 sudo nano /etc/sane.d/net.conf
 # Ajouter l'adresse IP du serveur de scanner: 192.168.1.20</code></pre>
 
-<h3>7. Scripts avancés</h3>
-<pre><code>#!/bin/bash
+    <h3><i class="fas fa-code"></i> 7. Scripts avancés</h3>
+    <pre><code>#!/bin/bash
 # Script Linux de surveillance USB
 while true; do
     USB_DEVICES=$(lsusb | wc -l)
@@ -1158,8 +1419,8 @@ foreach ($printer in $Printers) {
 }
 #></code></pre>
 
-<h3>8. Dépannage</h3>
-<pre><code># Windows - Vérifier les erreurs de périphérique
+    <h3><i class="fas fa-tools"></i> 8. Dépannage</h3>
+    <pre><code># Windows - Vérifier les erreurs de périphérique
 Get-WinEvent -LogName System | Where-Object {$_.ProviderName -match "USB|Print"} | 
     Select-Object TimeCreated, Message | Format-Table -AutoSize
 
@@ -1174,26 +1435,330 @@ echo 1 | sudo tee /sys/bus/usb/devices/usb1/authorized
 # Réinstaller un pilote (Windows)
 pnputil.exe /delete-driver oem0.inf /uninstall
 pnputil.exe /add-driver "C:\Drivers\new_driver.inf" /install</code></pre>
+
+    <!-- Tcpdump Section -->
+    <h2><i class="fas fa-network-wired network-icon"></i> Tcpdump - Capture de paquets</h2>
+    <pre><code># Capturer les paquets UDP RIP
+tcpdump -i any or &lt;Interface&gt; port 250(ou autres selon la situation) -vv -n
+
+# Capturer les paquets avec une adresse IP spécifique
+tcpdump -i eth0 -nn 'host 224.0.0.9'
+
+# Vérifier le trafic NAT
+sudo tcpdump -i &lt;interface_host_local&gt; host NAT &lt;IP_WINDOWS&gt;</code></pre>
+
+    <!-- Ping Section -->
+    <h2><i class="fas fa-network-wired network-icon"></i> Ping</h2>
+    <pre><code># Ping depuis une IP source spécifique
+ping -S &lt;IP source&gt; -c 3 &lt;IP Destination&gt;</code></pre>
+
+    <!-- Table de routage Section -->
+    <h2><i class="fas fa-network-wired network-icon"></i> Table de routage</h2>
+    <pre><code># Afficher la table de routage (Linux et Windows)
+netstat -rn</code></pre>
+
+    <!-- Analyse des logs Section -->
+    <h2><i class="fas fa-search linux-icon"></i> Analyse des logs sous Linux</h2>
+    <pre><code># Afficher les logs RIP
+grep RIP /var/log/system.log
+
+# Afficher les logs RIP en temps réel
+tail -f /var/log/system.log | grep ripd
+
+# Vérifier le service RIP
+ps aux | grep ripd</code></pre>
+
+<!-- Virtualisation Section -->
+<h2 id="virtualisation"><i class="fas fa-cloud virt-icon"></i> Virtualisation</h2>
+
+<h3><i class="fas fa-server"></i> 1. KVM/QEMU</h3>
+<pre><code># Installer KVM sur Ubuntu
+sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
+
+# Vérifier que la virtualisation est activée
+kvm-ok</code></pre>
+
+<div class="note">
+    <p><strong>Note :</strong> Après installation, ajoutez votre utilisateur au groupe libvirt :</p>
+    <pre><code>sudo usermod -aG libvirt $USER</code></pre>
+</div>
+
+<h3><i class="fab fa-vmware"></i> 2. VMware ESXi</h3>
+<pre><code># Lister les VMs
+esxcli vm process list
+
+# Obtenir des informations sur l'hôte
+esxcli system version get</code></pre>
+
+<!-- Sauvegarde Section -->
+<h2 id="backup"><i class="fas fa-save backup-icon"></i> Sauvegarde et Restauration</h2>
+
+<h3><i class="fas fa-database"></i> 1. Bases de données</h3>
+<pre><code># MySQL dump
+mysqldump -u root -p --all-databases > backup_complet.sql</code></pre>
+
+<div class="warning">
+    <p><strong>Attention :</strong> Stockez toujours les sauvegardes dans un emplacement sécurisé et chiffré.</p>
+</div>
+<!-- ... (contenu existant) ... -->
+
+    <!-- Monitoring Section -->
+    <h2 id="monitoring"><i class="fas fa-chart-bar monitoring-icon"></i> Monitoring</h2>
+
+    <h3><i class="fas fa-server"></i> 1. Outils de base</h3>
+    <pre><code># Vérification de l'état du système (Linux)
+top
+htop
+glances  # Version améliorée avec plus de métriques
+
+# Surveillance des disques
+iotop -o  # Affiche les E/S disque en temps réel
+iftop     # Surveillance du trafic réseau
+
+# Installer NetData (monitoring complet)
+bash <(curl -Ss https://my-netdata.io/kickstart.sh)</code></pre>
+
+    <h3><i class="fas fa-network-wired"></i> 2. Solutions professionnelles</h3>
+    <pre><code># Prometheus (collecte de métriques)
+# Installation:
+wget https://github.com/prometheus/prometheus/releases/download/v2.30.3/prometheus-2.30.3.linux-amd64.tar.gz
+tar xvfz prometheus-*.tar.gz
+cd prometheus-*
+./prometheus --config.file=prometheus.yml
+
+# Grafana (visualisation)
+sudo apt-get install -y grafana
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server</code></pre>
+
+    <h3><i class="fas fa-bell"></i> 3. Alerting</h3>
+    <pre><code># Configurer Alertmanager avec Prometheus
+global:
+  resolve_timeout: 5m
+route:
+  group_by: ['alertname']
+  receiver: 'email-notifications'
+receivers:
+- name: 'email-notifications'
+  email_configs:
+  - to: 'admin@example.com'
+    from: 'alertmanager@example.com'
+    smarthost: 'smtp.example.com:587'
+    auth_username: 'user'
+    auth_password: 'password'</code></pre>
+
+    <!-- Sécurité Section -->
+    <h2 id="securite"><i class="fas fa-shield-alt security-icon"></i> Sécurité</h2>
+
+    <h3><i class="fas fa-search"></i> 1. Audit et analyse</h3>
+    <pre><code># Scan de vulnérabilités avec OpenVAS
+sudo apt install openvas
+sudo gvm-setup
+sudo gvm-start
+
+# Analyse avec Lynis (audit de sécurité)
+sudo lynis audit system
+
+# Vérification des ports ouverts
+nmap -sS -p- -T4 192.168.1.1  # Scan TCP SYN
+nmap -sU -p- -T4 192.168.1.1  # Scan UDP</code></pre>
+
+    <h3><i class="fas fa-lock"></i> 2. Hardening</h3>
+    <pre><code># CIS Benchmark (Windows)
+Install-Module -Name CISBenchmark -Force
+Get-CISBenchmark -Level 1 | Invoke-CISBenchmark
+
+# Hardening Linux avec Bastille
+sudo apt install bastille
+sudo bastille -c
+
+# Désactivation des services inutiles (Linux)
+sudo systemctl list-unit-files --state=enabled
+sudo systemctl disable [service_name]</code></pre>
+
+    <h3><i class="fas fa-user-secret"></i> 3. Forensic</h3>
+    <pre><code># Analyse des processus suspects
+ps aux | grep -E '(crypt|miner|attack)'
+
+# Recherche de fichiers modifiés récemment
+find / -type f -mtime -1 -print
+
+# Capture de trafic suspect
+tcpdump -i eth0 -w capture.pcap 'port not 22 and port not 80 and port not 443'</code></pre>
+
+    <!-- Containers Section -->
+    <h2 id="containers"><i class="fab fa-docker docker-icon"></i> Containers</h2>
+
+    <h3><i class="fas fa-box"></i> 1. Docker</h3>
+    <pre><code># Gestion des containers
+docker ps -a                          # Lister tous les containers
+docker stats                          # Statistiques en temps réel
+docker inspect [container_id]         # Détails d'un container
+
+# Gestion des images
+docker images                         # Lister les images
+docker image prune                    # Nettoyer les images inutilisées
+
+# Réseau Docker
+docker network ls                     # Lister les réseaux
+docker network inspect bridge         # Inspecter un réseau</code></pre>
+
+    <h3><i class="fas fa-project-diagram"></i> 2. Docker Compose</h3>
+    <pre><code># Déployer une stack
+docker-compose -f stack.yml up -d
+
+# Surveiller les logs
+docker-compose logs -f --tail=100
+
+# Scale de services
+docker-compose up -d --scale web=3 --scale worker=5</code></pre>
+
+    <h3><i class="fas fa-cloud"></i> 3. Kubernetes</h3>
+    <pre><code># Commandes kubectl de base
+kubectl get pods -A                   # Lister tous les pods
+kubectl describe node [node_name]     # Détails d'un noeud
+kubectl logs [pod_name]               # Voir les logs d'un pod
+
+# Surveillance
+kubectl top nodes                     # Utilisation ressources des noeuds
+kubectl top pods                      # Utilisation ressources des pods
+
+# Déploiement
+kubectl apply -f deployment.yml       # Déployer une configuration
+kubectl rollout status deployment/[deployment_name]</code></pre>
+
+    <div class="note">
+        <p><strong>Bonnes pratiques Docker :</strong></p>
+        <ul>
+            <li>Utiliser des images officielles et vérifiées</li>
+            <li>Limiter les privilèges des containers (--cap-drop)</li>
+            <li>Scanner régulièrement les images avec Docker Bench Security</li>
+        </ul>
+    </div>
+
   </div>
+  
+
 
   <script>
+    // Fonction pour copier le code
     document.querySelectorAll('pre').forEach(pre => {
       const btn = document.createElement('button');
       btn.className = 'copy-btn';
-      btn.textContent = '📋';
+      btn.innerHTML = '<i class="far fa-copy"></i>';
       btn.onclick = () => {
-        const code = pre.innerText;
-        navigator.clipboard.writeText(code);
-        btn.textContent = '✅';
-        setTimeout(() => btn.textContent = '📋', 2000);
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          btn.innerHTML = '<i class="fas fa-check"></i>';
+          setTimeout(() => btn.innerHTML = '<i class="far fa-copy"></i>', 2000);
+        });
       };
       pre.appendChild(btn);
     });
 
+    // Fonction pour basculer le thème
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme');
-      document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      const icon = document.querySelector('.theme-toggle i');
+      icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      
+      // Sauvegarder la préférence
+      localStorage.setItem('theme', newTheme);
     }
+
+    // Fonction de recherche améliorée
+    function filterContent() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      if (!input) {
+        // Si la recherche est vide, tout afficher et enlever les surlignages
+        document.querySelectorAll('.section-hidden').forEach(el => {
+          el.classList.remove('section-hidden');
+        });
+        document.querySelectorAll('.search-highlight').forEach(el => {
+          el.outerHTML = el.innerHTML;
+        });
+        return;
+      }
+
+      let found = false;
+      
+      // Rechercher dans les titres (h2, h3)
+      document.querySelectorAll('h2, h3').forEach(title => {
+        const titleText = title.textContent.toLowerCase();
+        if (titleText.includes(input)) {
+          found = true;
+          title.classList.remove('section-hidden');
+          
+          // Afficher tout le contenu jusqu'au prochain titre de même niveau ou supérieur
+          let nextEl = title.nextElementSibling;
+          while (nextEl && !(nextEl.tagName === title.tagName || 
+                            (title.tagName === 'H3' && nextEl.tagName === 'H2'))) {
+            nextEl.classList.remove('section-hidden');
+            nextEl = nextEl.nextElementSibling;
+          }
+        } else {
+          title.classList.add('section-hidden');
+        }
+      });
+      
+      // Rechercher dans le contenu (pre)
+      document.querySelectorAll('pre').forEach(pre => {
+        const code = pre.querySelector('code');
+        const codeText = code.textContent.toLowerCase();
+        if (codeText.includes(input)) {
+          found = true;
+          pre.classList.remove('section-hidden');
+          
+          // Mettre en surbrillance
+          const html = code.innerHTML;
+          const highlighted = html.replace(
+            new RegExp(input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'),
+            match => `<span class="search-highlight">${match}</span>`
+          );
+          code.innerHTML = highlighted;
+          
+          // Afficher le titre parent
+          let currentEl = pre.previousElementSibling;
+          while (currentEl && !['H2', 'H3'].includes(currentEl.tagName)) {
+            currentEl = currentEl.previousElementSibling;
+          }
+          if (currentEl) {
+            currentEl.classList.remove('section-hidden');
+          }
+        } else {
+          pre.classList.add('section-hidden');
+          // Retirer les anciens surlignages
+          code.innerHTML = code.textContent;
+        }
+      });
+
+      if (!found) {
+        alert('Aucun résultat trouvé pour : ' + input);
+      }
+    }
+
+    // Écouteur d'événement pour la recherche
+    document.getElementById('searchInput').addEventListener('keyup', debounce(filterContent, 300));
+    
+    // Fonction debounce pour optimiser la recherche
+    function debounce(func, wait) {
+      let timeout;
+      return function() {
+        const context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          func.apply(context, args);
+        }, wait);
+      };
+    }
+    
+    // Initialiser le thème
+    const savedTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.querySelector('.theme-toggle i').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
   </script>
 </body>
 </html>
