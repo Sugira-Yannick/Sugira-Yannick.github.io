@@ -26,7 +26,8 @@
       --backup-color: #5cb85c;     
       --monitoring-color: #f0ad4e; 
       --security-color: #d9534f;   
-      --docker-color: #2496ed;     
+      --docker-color: #2496ed;
+      --sites-color: #9b59b6;      
     }
     [data-theme="dark"] {
       --bg: #1e1e1e;
@@ -184,6 +185,7 @@
     .monitoring-icon { color: var(--monitoring-color); }
     .security-icon { color: var(--security-color); }
     .docker-icon { color: var(--docker-color); }
+    .sites-icon { color: var(--sites-color); }
     
     /* Style pour la recherche */
     #searchInput {
@@ -239,6 +241,7 @@
   <a href="#monitoring"><i class="fas fa-chart-bar monitoring-icon"></i> Monitoring</a>
   <a href="#securite"><i class="fas fa-shield-alt security-icon"></i> Sécurité</a>
   <a href="#containers"><i class="fab fa-docker docker-icon"></i> Containers</a>
+  <a href="#sites-internet"><i class="fas fa-external-link-alt sites-icon"></i> Sites de Référence</a>
 </nav>
 
   <div class="content">
@@ -395,7 +398,10 @@ df -h /boot</code></pre>
     <h2><i class="fab fa-linux linux-icon"></i> Intégration Active Directory</h2>
     <pre><code># Joindre un domaine AD
 sudo apt install realmd sssd adcli samba-common krb5-user packagekit
-sudo realm join --user=Administrateur MONDOMAINE.LOCAL</code></pre>
+sudo realm join --user=Administrateur MONDOMAINE.LOCAL
+
+# Supprimer une machine du domaine AD
+sudo realm leave --remove=/home/[username] [domain.name]</code></pre>
 
     <!-- Nouvelle section Scanner Linux -->
     <h2><i class="fab fa-linux linux-icon"></i> Scanner Virtuel sous Linux</h2>
@@ -414,6 +420,89 @@ nc -vz IP_DU_SERVEUR 631
 docker network connect bridge guacamole
 docker network connect bridge guacamole_db
 docker network connect bridge guacd</code></pre>
+
+    <!-- Nouvelles sections pour les partages réseau Linux -->
+    <h2><i class="fab fa-linux linux-icon"></i> Partages réseau sous Linux</h2>
+
+    <h3><i class="fas fa-share-alt"></i> Montage de partage NFS</h3>
+    <pre><code># Installer les paquets NFS
+sudo apt install nfs-common
+
+# Vérifier les partages disponibles sur le serveur
+showmount -e &lt;IP Serveur NFS&gt;
+
+# Créer un point de montage sur la machine locale
+mkdir -p /mnt/truenas_backup
+
+# Monter le partage
+mount -t nfs 192.168.100.10:/mnt/tank/vmbackups /mnt/truenas_backup
+
+# Vérifier le montage
+df -h
+mount | grep nfs
+
+# Tester l'accès
+ls /mnt/truenas_backup
+
+# Monter automatiquement au démarrage
+nano /etc/fstab
+# Ajouter: 192.168.100.10:/mnt/tank/vmbackups  /mnt/truenas_backup  nfs  rw,soft,nolock  0  0
+
+# Démonter le partage local
+umount /mnt/truenas_backup
+
+# Alternative avec autofs
+sudo apt install autofs
+# Éditer /etc/auto.master: /mnt/truenas  /etc/auto.truenas  --timeout=60
+# Créer /etc/auto.truenas: backup  -fstype=nfs,rw,soft,nolock  192.168.100.10:/mnt/tank/vmbackups
+sudo systemctl restart autofs
+ls /mnt/truenas/backup</code></pre>
+
+    <h3><i class="fas fa-share-alt"></i> Montage de partage SMB</h3>
+    <pre><code># Connecter au serveur SMB et afficher les partages
+smbclient -L &lt;IP Serveur SMB&gt; -U &lt;Utilisateur d'accès SMB Partage&gt;
+
+# Monter un partage SMB
+sudo mount -t cifs -o username=&lt;Nom Utilisateur&gt;,password=&lt;Mot de passe utilisateur&gt;,vers=3.0,uid=$(id -u),gid=$(id -g),nosharesock //IP_Serveur_SMB/Nom_Partage /mnt/truenas_storage</code></pre>
+
+    <!-- Nouvelle section SSH et SFTP -->
+    <h2><i class="fab fa-linux linux-icon"></i> SSH et SFTP sous Linux</h2>
+
+    <h3><i class="fas fa-key"></i> Gestion des clés SSH</h3>
+    <pre><code># Supprimer une clé du known_hosts
+ssh-keygen -f '/root/.ssh/known_hosts' -R 'IP_Host'
+
+# Générer une nouvelle clé SSH
+ssh-keygen -t rsa -b 4096</code></pre>
+
+    <h3><i class="fas fa-server"></i> Serveur SFTP</h3>
+    <pre><code># Installation du serveur SFTP sur Debian
+sudo apt update 
+sudo apt install vsftpd
+sudo systemctl enable vsftpd
+sudo systemctl start vsftpd
+
+# Configuration de base
+sudo nano /etc/vsftpd.conf
+# Ajouter:
+listen=YES
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+chroot_local_user=YES
+user_sub_token=$USER
+local_root=/home/$USER/ftp
+pasv_min_port=40000
+pasv_max_port=50000
+
+# Créer un utilisateur et les répertoires
+sudo adduser ftpuser
+mkdir -p /home/ftpuser/ftp/files
+chmod 550 /home/ftpuser/ftp
+sudo systemctl restart vsftpd
+
+# Tester la connexion FTP
+ftp adresse_ip_serveur</code></pre>
 
     <!-- Windows Section -->
     <h2 id="windows"><i class="fab fa-windows windows-icon"></i> Routage sous Windows (Permanent)</h2>
@@ -436,6 +525,33 @@ ssh -J user@&lt;IP_Windows&gt; user@&lt;IP_Machine_Adminstrée&gt;
 
 # Tester l'accès SSH
 Test-NetConnection 10.10.2.2 -Port 22</code></pre>
+
+    <!-- Nouvelles sections Windows -->
+    <h2><i class="fab fa-windows windows-icon"></i> Réparation réseau Windows</h2>
+    <pre><code># Réparer la pile OSI - problème de connexion internet
+netsh int ip reset              # Réinitialiser les interfaces réseau
+netsh winsock reset             # Réinitialiser Windows Sockets
+ipconfig /release               # Libérer l'adresse IP 
+ipconfig /renew                 # Redemander l'adresse IP
+
+# Trouver l'identifiant du client
+ipconfig /all                   # Regarder "ID physique" ou "Adresse physique"</code></pre>
+
+    <h2><i class="fab fa-windows windows-icon"></i> Partages réseau sous Windows</h2>
+    <h3><i class="fas fa-share-alt"></i> Montage de partage NFS</h3>
+    <pre><code># Activer le client NFS sous Windows
+# Sur Windows 10/11 Pro/Enterprise :
+# - Ouvrez "Paramètres" → "Applications" → "Fonctionnalités facultatives"
+# - Cherchez "Services pour NFS" et installez "Client pour NFS"
+
+# Monter le partage NFS via l'invite de commandes (admin)
+mount -o anon 192.168.100.10:/mnt/tank/vmbackups Z:
+
+# Options avancées avec authentification
+mount -o user=mon_user,password=mon_mdp 192.168.100.10:/mnt/tank/vmbackups Z:
+
+# Démonter
+umount Z:</code></pre>
 
     <!-- Cisco Section -->
     <h2 id="cisco"><i class="fas fa-network-wired cisco-icon"></i> RIP Cisco</h2>
@@ -531,6 +647,62 @@ sftp> ls
 sftp> cd flash:
 sftp> get running-config
 sftp> put mon_fichier.txt</code></pre>
+
+    <!-- Nouvelle section DHCP Cisco -->
+    <h2><i class="fas fa-network-wired cisco-icon"></i> Configuration DHCP Cisco</h2>
+    <pre><code># Exclure les adresses qui ne doivent pas être distribuées
+ip dhcp excluded-address &lt;IP Début&gt; &lt;IP FIN&gt;
+
+# Réserver une adresse IP pour un hôte précis
+ip dhcp pool HOST-PC1
+host 192.168.10.50 255.255.255.0
+client-identifier 0100.1A2B.3C4D.5E  # 01 + MAC address
+client-name PC-SERVEUR
+default-router 192.168.10.1
+dns-server 8.8.8.8 10.10.1.2
+domain-name home.lab
+
+# Alternative avec MAC address directement
+ip dhcp pool HOST-PC2
+hardware-address aaaa.bbbb.cccc
+client-name PC-SERVEUR
+default-router 192.168.1.1
+dns-server 8.8.8.8 8.8.4.4
+
+# Gestion des pools DHCP
+clear ip dhcp binding 192.168.x.x        # Supprimer une adresse attribuée
+show ip dhcp pool                        # Afficher les adresses attribuées
+show ip source binding                   # Afficher les bindings statiques</code></pre>
+
+    <div class="note">
+        <p><strong>Format important pour client-identifier :</strong></p>
+        <ul>
+            <li>Préfixe "01" pour le type Ethernet</li>
+            <li>MAC address en format groupe de 4 chiffres hexa</li>
+            <li>Exemple : MAC aa:bb:cc:dd:ee:ff → 01aabb.ccddee.ff</li>
+        </ul>
+    </div>
+
+    <!-- Nouvelle section Tables MAC Cisco -->
+    <h2><i class="fas fa-network-wired cisco-icon"></i> Tables MAC et ARP Cisco</h2>
+    <pre><code># Tables ARP
+show ip arp                              # Afficher la table ARP complète
+show ip arp interface vlan 10           # Filtrer par interface
+show ip arp &lt;IP&gt;                        # Rechercher une IP spécifique
+
+# Tables MAC
+show mac address-table                   # Afficher toutes les MAC addresses apprises
+show mac address-table dynamic           # Afficher les MAC addresses en temps réel
+show mac address-table interface gigabitethernet 1/0/5   # Filtrer par interface
+show mac address-table vlan 10           # Filtrer par VLAN
+show mac address-table address aaaa.bbbb.cccc   # Rechercher une MAC spécifique
+
+# Gestion des entrées
+clear mac address-table dynamic interface gigabitethernet 1/0/5   # Vider une entrée MAC
+
+# Monitoring
+show interfaces counters                 # Voir les compteurs par interface
+show mac address-table dynamic | include Gi1/0/5   # Monitoring en temps réel</code></pre>
 
     <h2><i class="fas fa-network-wired cisco-icon"></i> Commandes Cisco diverses</h2>
     <pre><code># Afficher les interfaces VLAN
@@ -835,7 +1007,11 @@ sudo usermod -aG admins_it jdupont
 cut -d: -f1 /etc/passwd
 
 # Vérifier les sudoers
-sudo grep -Po '^sudo.+:\K.*$' /etc/group</code></pre>
+sudo grep -Po '^sudo.+:\K.*$' /etc/group
+
+# Trouver l'identifiant du client (MAC address)
+ip link show                    # Regarder "link/ether"
+cat /sys/class/net/eth0/address</code></pre>
 
     <h3><i class="fas fa-lock"></i> 2. Gestion des permissions</h3>
     <pre><code># Changer le propriétaire d'un fichier
@@ -1149,7 +1325,25 @@ httperf --server example.com --port 80 --uri / --num-conn 100
 # Test de résilience (mtr)
 mtr -n --report google.com</code></pre>
 
-    <h3><i class="fas fa-code"></i> 7. Scripts réseau utiles</h3>
+    <!-- Nouvelle section TShark -->
+    <h3><i class="fas fa-search"></i> 7. Analyse de paquets avec TShark</h3>
+    <pre><code># Installation
+sudo apt install tshark                       # Sur Debian/Ubuntu
+
+# Capture en direct
+tshark -D                                     # Lister les interfaces disponibles
+tshark -i eth0                                # Capturer sur une interface spécifique
+tshark -i eth0 -w capture.pcap                # Capturer et enregistrer dans un fichier
+tshark -i eth0 -Y "http"                      # Filtrer le trafic (HTTP seulement)
+tshark -i eth0 -c 100                         # Capturer seulement 100 paquets
+tshark -i eth0 -f "port 80" -Y "http.request" # Afficher en temps réel avec filtrage
+
+# Analyse de fichiers de capture
+tshark -r capture.pcap                        # Lire un fichier .pcap
+tshark -r capture.pcap -Y "dns"               # Filtrer les paquets (DNS seulement)
+tshark -r capture.pcap -qz io,phs             # Afficher les statistiques</code></pre>
+
+    <h3><i class="fas fa-code"></i> 8. Scripts réseau utiles</h3>
     <pre><code>#!/bin/bash
 # Script de surveillance réseau
 INTERFACE="eth0"
@@ -1484,11 +1678,36 @@ kvm-ok</code></pre>
 </div>
 
 <h3><i class="fab fa-vmware"></i> 2. VMware ESXi</h3>
-<pre><code># Lister les VMs
-esxcli vm process list
+<pre><code># Connexion et informations de base
+ssh root@adresse_ip_esxi                       # Se connecter à ESXi via SSH
+vmware -v                                      # Afficher la version d'ESXi
+esxcli system hostname get                     # Afficher les informations sur l'hôte
+esxcli system version get 
 
-# Obtenir des informations sur l'hôte
-esxcli system version get</code></pre>
+# Gestion des VMs
+vim-cmd vmsvc/getallvms                       # Lister toutes les VMs
+vim-cmd vmsvc/power.on XX                     # Démarrer une VM (remplacez `XX` par l'ID de la VM)
+vim-cmd vmsvc/power.off XX                    # Arrêter une VM
+vim-cmd vmsvc/power.reset XX                  # Redémarrer une VM
+vim-cmd vmsvc/power.getstate XX               # Voir l'état d'une VM
+
+# Gestion du stockage
+esxcli storage filesystem list                # Lister les datastores
+df -h                                         # Voir l'espace disque disponible
+ls -lh /vmfs/volumes/                         # Lister les volumes
+
+# Transfert de fichiers
+scp &lt;Repertoire_source_fichier&gt; root@&lt;IP-Machine-ESXI&gt;:/Volumes-Reprtoire_Destionation_Machine-ESXI
+# Exemple: scp debian.iso root@192.168.100.10:/vmfs/volumes/ISO/
+
+# Gestion réseau
+esxcli network nic list                       # Lister les interfaces réseau
+esxcli network vswitch standard list          # Voir les vSwitches
+vmkping google.com                            # Tester la connectivité réseau
+
+# Administration système
+reboot                                        # Redémarrer l'hôte
+poweroff                                      # Éteindre l'hôte</code></pre>
 
 <!-- Sauvegarde Section -->
 <h2 id="backup"><i class="fas fa-save backup-icon"></i> Sauvegarde et Restauration</h2>
@@ -1500,7 +1719,6 @@ mysqldump -u root -p --all-databases > backup_complet.sql</code></pre>
 <div class="warning">
     <p><strong>Attention :</strong> Stockez toujours les sauvegardes dans un emplacement sécurisé et chiffré.</p>
 </div>
-<!-- ... (contenu existant) ... -->
 
     <!-- Monitoring Section -->
     <h2 id="monitoring"><i class="fas fa-chart-bar monitoring-icon"></i> Monitoring</h2>
@@ -1601,7 +1819,21 @@ docker image prune                    # Nettoyer les images inutilisées
 
 # Réseau Docker
 docker network ls                     # Lister les réseaux
-docker network inspect bridge         # Inspecter un réseau</code></pre>
+docker network inspect bridge         # Inspecter un réseau
+
+# Installation de Neko Navigateur avec Docker
+docker run -d \
+  --name neko \                               # Nom du projet dans docker
+  -e NEKO_PASSWORD=34PenetrationTest \        # Mot de passe utilisateur Neko
+  -e NEKO_PASSWORD_ADMIN=34PenetrationTest \  # Mot de passe Admin
+  -p 8090:8080 \                           # Port d'accès à neko
+  -p 52000-52100:52000-52100/udp \
+  --shm-size=2gb \
+  --cap-add=SYS_ADMIN \
+  --device /dev/snd \
+  --security-opt seccomp=unconfined \
+  --rm \
+  m1k1o/neko:firefox                       # Démarrer neko avec le navigateur firefox</code></pre>
 
     <h3><i class="fas fa-project-diagram"></i> 2. Docker Compose</h3>
     <pre><code># Déployer une stack
@@ -1635,6 +1867,82 @@ kubectl rollout status deployment/[deployment_name]</code></pre>
             <li>Scanner régulièrement les images avec Docker Bench Security</li>
         </ul>
     </div>
+    
+    
+ <!-- Nouvelle Section Sites Internet -->
+<h2 id="sites-internet"><i class="fas fa-external-link-alt sites-icon"></i> Sites de Référence et Cheat Sheets</h2>
+
+<div class="note">
+    <p><strong>📚 Ressources en ligne pour approfondir vos connaissances</strong></p>
+</div>
+
+<h3><i class="fas fa-terminal"></i> Commandes et Cheat Sheets</h3>
+<ul>
+    <li><a href="https://cheat.sh/" target="_blank"><strong>cheat.sh</strong></a> - Cheat sheets pour toutes les commandes (curl cht.sh/commande)</li>
+    <li><a href="https://tldr.sh/" target="_blank"><strong>tldr</strong></a> - Simplified man pages avec des exemples concrets</li>
+    <li><a href="https://ss64.com/" target="_blank"><strong>SS64</strong></a> - Référence complète des commandes Windows/Linux</li>
+    <li><a href="https://explainshell.com/" target="_blank"><strong>explainshell</strong></a> - Explication détaillée des options de commandes shell</li>
+    <li><a href="https://phoenixnap.com/kb" target="_blank"><strong>phoenixnap KB</strong></a> - Base de connaissances avec tutoriels et commandes</li>
+    <li><a href="https://devhints.io/" target="_blank"><strong>DevHints</strong></a> - Cheat sheets pour développeurs et administrateurs</li>
+    <li><a href="https://github.com/chubin/cheat.sh" target="_blank"><strong>cheat.sh GitHub</strong></a> - Repository officiel avec toutes les cheat sheets</li>
+    <li><a href="https://www.commandlinefu.com/" target="_blank"><strong>CommandLineFu</strong></a> - Commandes shell partagées par la communauté</li>
+</ul>
+
+<h3><i class="fab fa-linux"></i> Linux et Open Source</h3>
+<ul>
+    <li><a href="https://linux.die.net/" target="_blank"><strong>Linux Man Pages Online</strong></a> - Documentation complète des commandes Linux</li>
+    <li><a href="https://tldp.org/" target="_blank"><strong>The Linux Documentation Project</strong></a> - Guides et HOWTOs Linux</li>
+    <li><a href="https://www.cyberciti.biz/" target="_blank"><strong>nixCraft</strong></a> - Tutoriels et astuces Linux/Unix</li>
+    <li><a href="https://www.debian.org/doc/" target="_blank"><strong>Debian Documentation</strong></a> - Documentation officielle Debian</li>
+</ul>
+
+<h3><i class="fab fa-windows"></i> Windows et Microsoft</h3>
+<ul>
+    <li><a href="https://docs.microsoft.com/en-us/powershell/" target="_blank"><strong>PowerShell Documentation</strong></a> - Documentation officielle PowerShell</li>
+    <li><a href="https://learn.microsoft.com/en-us/windows-server/" target="_blank"><strong>Windows Server Docs</strong></a> - Documentation Windows Server</li>
+    <li><a href="https://docs.microsoft.com/en-us/sysinternals/" target="_blank"><strong>Sysinternals</strong></a> - Outils et documentation système</li>
+</ul>
+
+<h3><i class="fas fa-network-wired"></i> Réseau et Cisco</h3>
+<ul>
+    <li><a href="https://www.cisco.com/c/en/us/support/index.html" target="_blank"><strong>Cisco Documentation</strong></a> - Documentation officielle Cisco</li>
+    <li><a href="https://www.routeralley.com/guides.html" target="_blank"><strong>RouterAlley</strong></a> - Guides réseaux et certifications</li>
+    <li><a href="https://www.packettracernetwork.com/" target="_blank"><strong>PacketLife Cheat Sheets</strong></a> - Cheat sheets réseaux</li>
+</ul>
+
+<h3><i class="fas fa-database"></i> Bases de Données</h3>
+<ul>
+    <li><a href="https://dev.mysql.com/doc/" target="_blank"><strong>MySQL Documentation</strong></a> - Documentation officielle MySQL</li>
+    <li><a href="https://www.postgresql.org/docs/" target="_blank"><strong>PostgreSQL Docs</strong></a> - Documentation PostgreSQL</li>
+</ul>
+
+<h3><i class="fab fa-docker"></i> Containers et Virtualisation</h3>
+<ul>
+    <li><a href="https://docs.docker.com/reference/" target="_blank"><strong>Docker Documentation</strong></a> - Référence Docker</li>
+    <li><a href="https://kubernetes.io/docs/home/" target="_blank"><strong>Kubernetes Documentation</strong></a> - Docs officielles K8s</li>
+    <li><a href="https://docs.vmware.com/en/VMware-vSphere/index.html" target="_blank"><strong>vSphere Documentation</strong></a> - Documentation VMware</li>
+</ul>
+
+<h3><i class="fas fa-shield-alt"></i> Sécurité</h3>
+<ul>
+    <li><a href="https://owasp.org/www-project-cheat-sheets/" target="_blank"><strong>OWASP Cheat Sheets</strong></a> - Sécurité applicative</li>
+    <li><a href="https://cheatsheetseries.owasp.org/" target="_blank"><strong>OWASP Cheat Sheet Series</strong></a> - Sécurité web</li>
+    <li><a href="https://www.sans.org/blog/the-ultimate-list-of-sans-cheat-sheets/" target="_blank"><strong>SANS Cheat Sheets</strong></a> - Sécurité informatique</li>
+</ul>
+
+<h3><i class="fas fa-tools"></i> Outils en Ligne</h3>
+<ul>
+    <li><a href="https://www.regex101.com/" target="_blank"><strong>Regex101</strong></a> - Testeur d'expressions régulières</li>
+    <li><a href="https://jsonformatter.org/" target="_blank"><strong>JSON Formatter</strong></a> - Validation et formatage JSON</li>
+    <li><a href="https://www.base64decode.org/" target="_blank"><strong>Base64 Decode</strong></a> - Encodeur/décodeur Base64</li>
+    <li><a href="https://crontab.guru/" target="_blank"><strong>Crontab Guru</strong></a> - Éditeur visuel de crontab</li>
+</ul>
+
+<div class="warning">
+    <p><strong>💡 Conseil :</strong> Ces sites externes s'ouvriront dans un nouvel onglet. N'hésitez pas à les bookmarker pour un accès rapide !</p>
+</div>
+
+  </div>  <!-- Fermeture du div content -->   
 
   </div>
   
