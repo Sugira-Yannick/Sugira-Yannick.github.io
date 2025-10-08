@@ -6,9 +6,9 @@
   <title>Commandes Importantes</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-:root {
-      --bg: #ffffff; /* Fond blanc */
-      --fg: #333333; /* Texte plus foncé pour meilleur contraste */
+    :root {
+      --bg: #ffffff;
+      --fg: #333333;
       --accent: #3498db;
       --code-bg: #f5f5f5;
       --note-bg: #e7f5fe;
@@ -27,7 +27,11 @@
       --monitoring-color: #f0ad4e; 
       --security-color: #d9534f;   
       --docker-color: #2496ed;
-      --sites-color: #9b59b6;      
+      --cloud-color: #ff9900;
+      --automation-color: #28a745;
+      --database-color: #8e44ad;
+      --lab-color: #e67e22;
+      --sites-color: #9b59b6; 
     }
     [data-theme="dark"] {
       --bg: #1e1e1e;
@@ -130,7 +134,7 @@
       background: var(--accent);
       color: white;
     }
-    .note, .warning {
+    .note, .warning, .usage {
       padding: 15px;
       margin: 15px 0;
       border-left: 4px solid var(--accent);
@@ -141,6 +145,12 @@
     }
     .warning { 
       background: var(--warn-bg);
+    }
+    .usage {
+      background: #e8f5e8;
+      border-left-color: #28a745;
+      color: #333;
+      
     }
     .theme-toggle {
       position: fixed;
@@ -185,6 +195,10 @@
     .monitoring-icon { color: var(--monitoring-color); }
     .security-icon { color: var(--security-color); }
     .docker-icon { color: var(--docker-color); }
+    .cloud-icon { color: var(--cloud-color); }
+    .automation-icon { color: var(--automation-color); }
+    .database-icon { color: var(--database-color); }
+    .lab-icon { color: var(--lab-color); }
     .sites-icon { color: var(--sites-color); }
     
     /* Style pour la recherche */
@@ -219,7 +233,13 @@
       margin-bottom: 5px;
     }
     
-
+    .usage-item {
+      background: #f8f9fa;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border-left: 3px solid #28a745;
+    }
   </style>
 </head>
 <body>
@@ -235,12 +255,15 @@
   <a href="#administration"><i class="fas fa-user-cog admin-icon"></i> Administration</a>
   <a href="#peripheriques"><i class="fas fa-print device-icon"></i> periphériques</a>
   <a href="#web"><i class="fas fa-globe web-icon"></i> Serveur Web</a>
-  <!-- Nouveaux liens ajoutés -->
   <a href="#virtualisation"><i class="fas fa-cloud virt-icon"></i> Virtualisation</a>
   <a href="#backup"><i class="fas fa-save backup-icon"></i> Sauvegarde</a>
   <a href="#monitoring"><i class="fas fa-chart-bar monitoring-icon"></i> Monitoring</a>
   <a href="#securite"><i class="fas fa-shield-alt security-icon"></i> Sécurité</a>
   <a href="#containers"><i class="fab fa-docker docker-icon"></i> Containers</a>
+  <a href="#cloud"><i class="fas fa-cloud cloud-icon"></i> Cloud & IaC</a>
+  <a href="#automation"><i class="fas fa-robot automation-icon"></i> Automatisation</a>
+  <a href="#databases"><i class="fas fa-database database-icon"></i> Bases de Données</a>
+  <a href="#lab"><i class="fas fa-flask lab-icon"></i> Logiciels du Labo</a>
   <a href="#sites-internet"><i class="fas fa-external-link-alt sites-icon"></i> Sites de Référence</a>
 </nav>
 
@@ -1867,6 +1890,744 @@ kubectl rollout status deployment/[deployment_name]</code></pre>
             <li>Scanner régulièrement les images avec Docker Bench Security</li>
         </ul>
     </div>
+
+    <!-- Cloud & Infrastructure as Code Section -->
+    <h2 id="cloud"><i class="fas fa-cloud cloud-icon"></i> Cloud & Infrastructure as Code</h2>
+
+    <h3><i class="fab fa-aws"></i> 1. AWS CLI</h3>
+    <div class="usage">
+      <strong>💡 Quand l'utiliser :</strong> Gestion d'infrastructure AWS, automatisation de déploiements<br>
+      <strong>🚨 Incident type :</strong> Instance EC2 inaccessible, problèmes IAM<br>
+      <strong>🎯 Cas concret :</strong> Migration de serveurs on-premise vers AWS
+    </div>
+    <pre><code># Configuration AWS CLI
+aws configure
+aws configure set region eu-west-1
+
+# Gestion EC2
+aws ec2 describe-instances
+aws ec2 start-instances --instance-ids i-1234567890abcdef0
+aws ec2 create-image --instance-id i-1234567890abcdef0 --name "Backup-$(date +%Y%m%d)"
+
+# Gestion S3
+aws s3 ls
+aws s3 cp fichier.txt s3://mon-bucket/
+aws s3 sync ./local-folder s3://mon-bucket/backup/
+
+# Gestion IAM
+aws iam list-users
+aws iam create-user --user-name new-user
+aws iam attach-user-policy --user-name new-user --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+
+# CloudFormation
+aws cloudformation create-stack --stack-name my-stack --template-body file://template.yaml
+aws cloudformation describe-stacks --stack-name my-stack</code></pre>
+
+    <h3><i class="fab fa-microsoft"></i> 2. Azure CLI</h3>
+    <pre><code># Connexion Azure
+az login
+az account list --output table
+
+# Gestion VM
+az vm list --output table
+az vm start --name MyVM --resource-group MyResourceGroup
+az vm create --resource-group MyRG --name MyVM --image UbuntuLTS --admin-username azureuser
+
+# Gestion Stockage
+az storage account list --resource-group MyRG
+az storage blob upload --account-name mystorage --container-name mycontainer --name blob.txt --file ./blob.txt
+
+# Azure Resource Manager
+az group create --name MyRG --location "West Europe"
+az deployment group create --resource-group MyRG --template-file template.json</code></pre>
+
+    <h3><i class="fas fa-code"></i> 3. Terraform</h3>
+    <div class="usage">
+      <strong>💡 Quand l'utiliser :</strong> Déploiement d'infrastructure multi-cloud, versionning d'infrastructure<br>
+      <strong>🚨 Incident type :</strong> Dérive de configuration, ressources orphelines<br>
+      <strong>🎯 Cas concret :</strong> Provisionnement automatique d'environnements de test
+    </div>
+    <pre><code># Initialisation
+terraform init
+terraform init -upgrade
+
+# Planification
+terraform plan -out plan.tfplan
+terraform plan -var "instance_type=t3.medium"
+
+# Application
+terraform apply
+terraform apply -auto-approve
+terraform apply plan.tfplan
+
+# État et inspection
+terraform state list
+terraform state show aws_instance.web
+terraform output
+
+# Destruction contrôlée
+terraform plan -destroy
+terraform destroy -target=aws_instance.web
+
+# Workspaces
+terraform workspace new dev
+terraform workspace select prod
+terraform workspace list</code></pre>
+
+    <!-- Automatisation & Orchestration Section -->
+    <h2 id="automation"><i class="fas fa-robot automation-icon"></i> Automatisation & Orchestration</h2>
+
+    <h3><i class="fas fa-cogs"></i> 1. Ansible</h3>
+    <div class="usage">
+      <strong>💡 Quand l'utiliser :</strong> Configuration automatique de serveurs, déploiement d'applications<br>
+      <strong>🚨 Incident type :</strong> Configuration drift, services non conformes<br>
+      <strong>🎯 Cas concret :</strong> Hardening automatique de 50 serveurs Linux
+    </div>
+    <pre><code># Test de connexion
+ansible all -m ping -i inventory.ini
+
+# Playbook simple
+ansible-playbook -i inventory.ini playbook.yml
+ansible-playbook playbook.yml --limit webservers
+ansible-playbook playbook.yml --tags "nginx,ssl"
+
+# Ad-hoc commands
+ansible webservers -m apt -a "name=nginx state=latest" -b
+ansible dbservers -m systemd -a "name=mysql state=started" -b
+ansible all -m copy -a "src=config.txt dest=/etc/backup/"
+
+# Vault pour secrets
+ansible-vault create secret.yml
+ansible-vault edit secret.yml
+ansible-playbook playbook.yml --ask-vault-pass
+
+# Galaxy roles
+ansible-galaxy role install geerlingguy.nginx
+ansible-galaxy collection install community.general</code></pre>
+
+    <h3><i class="fab fa-jenkins"></i> 2. Jenkins & CI/CD</h3>
+    <pre><code># Pipeline Jenkins déclaratif
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'ansible-playbook deploy.yml'
+            }
+        }
+    }
+}
+
+# Scripts Groovy pour administration
+println(Jenkins.instance.pluginManager.plugins)
+Jenkins.instance.nodes.each { node ->
+    println("${node.displayName}: ${node.computer.online}")
+}</code></pre>
+
+    <h3><i class="fas fa-network-wired"></i> 3. API & Webhooks</h3>
+    <pre><code># Curl pour tests API
+curl -X GET "https://api.example.com/v1/servers" -H "Authorization: Bearer $TOKEN"
+curl -X POST "https://api.example.com/v1/deploy" -H "Content-Type: application/json" -d '{"version":"1.2.3"}'
+
+# Webhook avec Python Flask
+from flask import Flask, request
+import subprocess
+
+app = Flask(__name__)
+
+@app.route('/webhook/deploy', methods=['POST'])
+def deploy_webhook():
+    if request.headers.get('X-GitHub-Event') == 'push':
+        subprocess.run(['/opt/scripts/deploy.sh'])
+        return 'Deployment triggered', 200
+    return 'Ignored', 202</code></pre>
+
+    <!-- Bases de Données Avancées Section -->
+    <h2 id="databases"><i class="fas fa-database database-icon"></i> Bases de Données Avancées</h2>
+
+    <h3><i class="fas fa-database"></i> 1. PostgreSQL Avancé</h3>
+    <div class="usage">
+      <strong>💡 Quand l'utiliser :</strong> Bases de production critiques, requêtes complexes<br>
+      <strong>🚨 Incident type :</strong> Locks bloquants, performances dégradées<br>
+      <strong>🎯 Cas concret :</strong> Optimisation de requêtes lentes sur base de production
+    </div>
+    <pre><code># Maintenance et performances
+VACUUM (VERBOSE, ANALYZE) table_name;
+REINDEX DATABASE database_name;
+ANALYZE table_name;
+
+# Surveillance avancée
+SELECT * FROM pg_stat_activity WHERE state = 'active';
+SELECT schemaname, tablename, n_dead_tup FROM pg_stat_all_tables ORDER BY n_dead_tup DESC;
+
+# Backup avancé
+pg_basebackup -D /backup/primary -h primary-host -U replicator -P -v
+pg_dump -Fc database_name > backup.dump  # Format custom compressé
+
+# Réplication
+SELECT * FROM pg_replication_slots;
+SELECT client_addr, state, sync_state FROM pg_stat_replication;
+
+# Partitioning
+CREATE TABLE measurement (
+    city_id int not null,
+    logdate date not null,
+    peaktemp int
+) PARTITION BY RANGE (logdate);</code></pre>
+
+    <h3><i class="fas fa-database"></i> 2. MySQL/MariaDB Avancé</h3>
+    <pre><code># Optimisation et tuning
+SHOW ENGINE INNODB STATUS;
+SHOW PROCESSLIST;
+EXPLAIN ANALYZE SELECT * FROM large_table WHERE condition;
+
+# Backup et réplication
+mysqldump --single-transaction --routines --triggers database_name > backup.sql
+mysqlpump --users --routines --events > full_backup.sql
+
+# Réplication MySQL
+SHOW MASTER STATUS;
+SHOW SLAVE STATUS\G
+CHANGE MASTER TO MASTER_HOST='master', MASTER_USER='repl', MASTER_PASSWORD='password';
+
+# Performance Schema
+SELECT * FROM performance_schema.events_statements_summary_by_digest ORDER BY sum_timer_wait DESC LIMIT 10;</code></pre>
+
+    <h3><i class="fas fa-bolt"></i> 3. MongoDB</h3>
+    <pre><code># Opérations basiques
+use mydb
+db.collection.find({status: "active"}).sort({created_at: -1}).limit(10)
+db.collection.createIndex({username: 1}, {unique: true})
+
+# Agrégations
+db.orders.aggregate([
+    {$match: {status: "completed"}},
+    {$group: {_id: "$customer_id", total: {$sum: "$amount"}}},
+    {$sort: {total: -1}}
+])
+
+# Backup et restauration
+mongodump --uri="mongodb://localhost:27017/mydb" --out=/backup/
+mongorestore --uri="mongodb://localhost:27017/mydb" /backup/mydb/
+
+# Performance
+db.collection.explain().find({query: "condition"})
+db.currentOp({"secs_running": {"$gte": 60}})</code></pre>
+
+    <!-- Logiciels du Labo Section -->
+    <!-- Liste de Logiciels Section -->
+    <h2 id="lab"><i class="fas fa-flask lab-icon"></i> Liste de Logiciels</h2>
+
+    <h3><i class="fas fa-network-wired"></i> 1. Émulation & Virtualisation Réseau</h3>
+    
+    <div class="usage">
+      <strong>EVE-NG</strong> - Émulation réseau professionnelle<br>
+      <strong>Usage :</strong> Simulation routers/switches multi-fournisseurs, préparation certifications<br>
+      <strong>Fort :</strong> Labs complexes, support Cisco/Juniper, communauté active
+    </div>
+    <pre><code># Installation EVE-NG
+wget -O - http://www.eve-ng.net/keys/eve-ng.gpg.key | sudo apt-key add -
+echo "deb http://www.eve-ng.net/repo xenial main" | sudo tee /etc/apt/sources.list.d/eve-ng.list
+sudo apt update && sudo apt install eve-ng
+
+# Gestion des images
+/opt/unetlab/addons/qemu/
+chown -R root:root /opt/unetlab/addons/qemu/
+/opt/unetlab/wrappers/unl_wrapper -a fixpermissions</code></pre>
+
+    <div class="usage">
+      <strong>GNS3</strong> - Émulation réseau alternative<br>
+      <strong>Usage :</strong> Prototypage topologies, intégration Docker<br>
+      <strong>Fort :</strong> Interface intuitive, multi-plateforme
+    </div>
+
+    <h3><i class="fas fa-server"></i> 2. Hyperviseurs & Virtualisation</h3>
+    
+    <div class="usage">
+      <strong>VMware ESXi</strong> - Hyperviseur enterprise<br>
+      <strong>Usage :</strong> Virtualisation de production, infrastructures critiques<br>
+      <strong>Fort :</strong> Performance, vCenter, fonctionnalités enterprise
+    </div>
+    <pre><code># Commandes ESXi
+esxcli system version get
+esxcli network ip interface list
+vim-cmd vmsvc/getallvms
+vim-cmd vmsvc/power.on 1</code></pre>
+
+    <div class="usage">
+      <strong>Proxmox VE</strong> - Virtualisation open-source<br>
+      <strong>Usage :</strong> Alternative VMware, containers LXC, laboratoires<br>
+      <strong>Fort :</strong> Gratuit, interface web, sauvegardes intégrées
+    </div>
+    <pre><code># Commandes Proxmox
+pvesh get /nodes
+qm list
+qm start 100
+vzdump 100 --storage backup-storage --mode snapshot</code></pre>
+
+    <div class="usage">
+      <strong>Hyper-V</strong> - Solution Microsoft<br>
+      <strong>Usage :</strong> Environnements Windows, intégration Active Directory<br>
+      <strong>Fort :</strong> Réplication, gestion avec System Center
+    </div>
+
+    <div class="usage">
+      <strong>OpenStack</strong> - Cloud privé open-source<br>
+      <strong>Usage :</strong> IaaS complet, cloud privé enterprise<br>
+      <strong>Fort :</strong> Contrôle total, compatible AWS API
+    </div>
+
+    <h3><i class="fas fa-desktop"></i> 3. Accès Distant & Bureau</h3>
+    
+    <div class="usage">
+      <strong>Apache Guacamole</strong> - Gateway d'accès clientless<br>
+      <strong>Usage :</strong> Centralisation RDP/SSH/VNC, accès via navigateur<br>
+      <strong>Fort :</strong> Sécurité, authentification centralisée, MFA
+    </div>
+    <pre><code># Docker Compose Guacamole
+version: '3'
+services:
+  guacamole:
+    image: guacamole/guacamole
+    ports: ["8080:8080"]
+    environment:
+      - GUACD_HOSTNAME=guacd
+      - MYSQL_HOSTNAME=mysql</code></pre>
+
+    <div class="usage">
+      <strong>Neko</strong> - Navigateur distant partagé<br>
+      <strong>Usage :</strong> Démonstrations, support technique, collaboration<br>
+      <strong>Fort :</strong> Temps réel, partage de session
+    </div>
+
+    <h3><i class="fas fa-chart-line"></i> 4. Monitoring & Observabilité</h3>
+    
+    <div class="usage">
+      <strong>Grafana</strong> - Visualisation de métriques<br>
+      <strong>Usage :</strong> Dashboards personnalisés, alerting, analyse performances<br>
+      <strong>Fort :</strong> Multi-sources, communauté, plugins
+    </div>
+    <pre><code># Installation Docker
+docker run -d -p 3000:3000 --name grafana grafana/grafana
+
+# Configuration datasource
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://prometheus:9090
+    access: proxy</code></pre>
+
+    <div class="usage">
+      <strong>Prometheus</strong> - Monitoring time-series<br>
+      <strong>Usage :</strong> Collecte métriques, monitoring cloud native<br>
+      <strong>Fort :</strong> Pull model, requêtes Puissant, intégration Kubernetes
+    </div>
+    <pre><code># Installation Prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v2.30.3/prometheus-2.30.3.linux-amd64.tar.gz
+tar xvfz prometheus-*.tar.gz
+cd prometheus-*
+./prometheus --config.file=prometheus.yml</code></pre>
+
+    <div class="usage">
+      <strong>Zabbix</strong> - Monitoring d'infrastructure<br>
+      <strong>Usage :</strong> Supervision serveurs/réseau, détection proactive<br>
+      <strong>Fort :</strong> Scalable, templates, découverte automatique
+    </div>
+
+    <div class="usage">
+      <strong>Nagios</strong> - Système d'alerting<br>
+      <strong>Usage :</strong> Vérification services, monitoring basique<br>
+      <strong>Fort :</strong> Léger, plugins personnalisables
+    </div>
+
+    <div class="usage">
+      <strong>Datadog</strong> - Monitoring SaaS unifié<br>
+      <strong>Usage :</strong> APM, logs, métriques, traces unifiés<br>
+      <strong>Fort :</strong> 600+ intégrations, machine learning
+    </div>
+
+    <div class="usage">
+      <strong>Elastic Stack (ELK)</strong> - Centralisation logs<br>
+      <strong>Usage :</strong> Analyse logs, recherche, sécurité SIEM<br>
+      <strong>Fort :</strong> Puissance de recherche, évolutivité
+    </div>
+    <pre><code># Vérification cluster Elasticsearch
+curl -X GET "localhost:9200/_cluster/health?pretty"
+curl -X GET "localhost:9200/_cat/indices?v"</code></pre>
+
+    <div class="usage">
+      <strong>Splunk</strong> - Analyse logs et sécurité<br>
+      <strong>Usage :</strong> SOC, SIEM, corrélation événements<br>
+      <strong>Fort :</strong> Recherche puissante, machine learning sécurité
+    </div>
+
+    <div class="usage">
+      <strong>Graylog</strong> - Management logs open-source<br>
+      <strong>Usage :</strong> Alternative Splunk économique, traitement pipelines<br>
+      <strong>Fort :</strong> Alertes flexibles, open-source
+    </div>
+
+    <h3><i class="fas fa-phone"></i> 5. Téléphonie & VoIP</h3>
+    
+    <div class="usage">
+      <strong>3CX</strong> - PBX software<br>
+      <strong>Usage :</strong> Centrale téléphonique IP, communications unifiées<br>
+      <strong>Fort :</strong> Interface web, intégrations, coût
+    </div>
+    <pre><code># Installation 3CX
+wget http://downloads.3cx.com/downloads/misc/debian10/3cxpbx.deb
+dpkg -i 3cxpbx.deb
+
+# Diagnostic SIP
+tcpdump -i any -n port 5060
+tail -f /var/lib/3cxpbx/Data/Logs/*.log</code></pre>
+
+    <div class="usage">
+      <strong>Cisco Call Manager</strong> - Solution enterprise<br>
+      <strong>Usage :</strong> Grandes infrastructures, intégration Cisco<br>
+      <strong>Fort :</strong> Stabilité, fonctionnalités avancées
+    </div>
+
+    <div class="usage">
+      <strong>Linphone</strong> - Client SIP open-source<br>
+      <strong>Usage :</strong> Tests VoIP, clients légers<br>
+      <strong>Fort :</strong> Multiplateforme, chiffrement
+    </div>
+
+    <h3><i class="fas fa-shield-alt"></i> 6. Sécurité & Analyse</h3>
+    
+    <div class="usage">
+      <strong>Suricata</strong> - IDS/IPS<br>
+      <strong>Usage :</strong> Détection d'intrusions, analyse réseau<br>
+      <strong>Fort :</strong> Performances, règles communautaires
+    </div>
+    <pre><code># Installation et démarrage
+apt install suricata
+suricata-update
+suricata -c /etc/suricata/suricata.yaml -i eth0
+
+# Surveillance alertes
+tail -f /var/log/suricata/fast.log
+jq '.' /var/log/suricata/eve.json | head -20</code></pre>
+
+    <div class="usage">
+      <strong>Snort</strong> - IDS historique<br>
+      <strong>Usage :</strong> Détection réseau, apprentissage sécurité<br>
+      <strong>Fort :</strong> Communauté, documentation
+    </div>
+
+    <div class="usage">
+      <strong>Wazuh</strong> - SIEM open-source et HIDS<br>
+      <strong>Usage :</strong> Détection intrusions host-based, compliance<br>
+      <strong>Fort :</strong> CIS, PCI-DSS, intégration Elasticsearch
+    </div>
+
+    <div class="usage">
+      <strong>Vault (HashiCorp)</strong> - Gestion secrets dynamique<br>
+      <strong>Usage :</strong> Secrets management, PKI dynamique<br>
+      <strong>Fort :</strong> Chiffrement as a service, rotation automatique
+    </div>
+
+    <div class="usage">
+      <strong>OpenVAS/GVM</strong> - Scan vulnérabilités avancé<br>
+      <strong>Usage :</strong> Scanning vulnérabilités réseau complet<br>
+      <strong>Fort :</strong> Base signatures étendue, reporting détaillé
+    </div>
+
+    <div class="usage">
+      <strong>Osquery</strong> - Monitoring endpoints via SQL<br>
+      <strong>Usage :</strong> Interrogation système SQL, forensic temps réel<br>
+      <strong>Fort :</strong> Détection anomalies, monitoring endpoints
+    </div>
+
+    <div class="usage">
+      <strong>Kali Linux</strong> - Distribution pentest<br>
+      <strong>Usage :</strong> Tests d'intrusion, audit sécurité<br>
+      <strong>Fort :</strong> Outils préinstallés, mise à jour
+    </div>
+    <pre><code># Métasploit
+msfconsole
+use exploit/windows/smb/ms17_010_eternalblue
+set RHOSTS 192.168.1.100
+exploit
+
+# Scan avancé
+nmap -sS -A -T4 192.168.1.0/24
+nmap -sU -p 1-65535 192.168.1.100</code></pre>
+
+    <h3><i class="fas fa-tools"></i> 7. Gestion de Parc & Services</h3>
+    
+    <div class="usage">
+      <strong>GLPI</strong> - Gestion de parc informatique<br>
+      <strong>Usage :</strong> Inventaire, ticketing, CMDB<br>
+      <strong>Fort :</strong> FusionInventory, gratuité
+    </div>
+    <pre><code># Installation GLPI
+apt install glpi
+mysql -u root -p -e "CREATE DATABASE glpi;"
+mysql -u root -p -e "GRANT ALL ON glpi.* TO 'glpi'@'localhost';"</code></pre>
+
+    <div class="usage">
+      <strong>OTRS</strong> - Helpdesk professionnel<br>
+      <strong>Usage :</strong> Gestion tickets ITIL, service desk<br>
+      <strong>Fort :</strong> Workflows, personnalisation
+    </div>
+
+    <div class="usage">
+      <strong>Jira Service Management</strong> - Service desk moderne<br>
+      <strong>Usage :</strong> Gestion services, intégration DevOps<br>
+      <strong>Fort :</strong> Interface, intégrations
+    </div>
+
+    <div class="usage">
+      <strong>Confluence</strong> - Documentation technique collaborative<br>
+      <strong>Usage :</strong> Knowledge base, documentation processus<br>
+      <strong>Fort :</strong> Intégration Jira, templates IT
+    </div>
+
+    <div class="usage">
+      <strong>BookStack</strong> - Wiki open-source simple<br>
+      <strong>Usage :</strong> Documentation interne, knowledge base<br>
+      <strong>Fort :</strong> Interface intuitive, recherche full-text
+    </div>
+
+    <div class="usage">
+      <strong>NetBox</strong> - Source of truth infrastructure<br>
+      <strong>Usage :</strong> IPAM, DCIM, documentation réseau auto-générée<br>
+      <strong>Fort :</strong> API-first, source de vérité infrastructure
+    </div>
+
+    <h3><i class="fas fa-print"></i> 8. Impression & Numérisation</h3>
+    
+    <div class="usage">
+      <strong>CUPS</strong> - Système d'impression Unix<br>
+      <strong>Usage :</strong> Gestion imprimantes, partage réseau<br>
+      <strong>Fort :</strong> Standard, support large
+    </div>
+    <pre><code># Configuration CUPS
+sudo systemctl enable cups
+sudo systemctl start cups
+# Interface web : http://localhost:631
+
+# Ajout imprimante réseau
+lpadmin -p Brother -E -v socket://192.168.1.50 -m drv:///Brother/brother-driver.ppd</code></pre>
+
+    <div class="usage">
+      <strong>SANE</strong> - Interface numérisation<br>
+      <strong>Usage :</strong> Gestion scanners, numérisation programmatique<br>
+      <strong>Fort :</strong> Support multi-marques
+    </div>
+    <pre><code># Utilisation SANE
+scanimage -L
+scanimage --format=png --output-file scan.png
+scanimage --mode Color --resolution 300 > document.pnm</code></pre>
+
+    <h3><i class="fas fa-cube"></i> 9. Conteneurisation & Orchestration</h3>
+    
+    <div class="usage">
+      <strong>Docker</strong> - Plateforme de conteneurisation<br>
+      <strong>Usage :</strong> Isolation applications, déploiement simplifié<br>
+      <strong>Fort :</strong> Écosystème, portabilité
+    </div>
+    <pre><code># Gestion containers
+docker ps -a
+docker stats
+docker inspect [container_id]
+
+# Gestion images
+docker images
+docker image prune</code></pre>
+
+    <div class="usage">
+      <strong>Kubernetes</strong> - Orchestration containers production<br>
+      <strong>Usage :</strong> Scaling auto, healing, rolling updates<br>
+      <strong>Fort :</strong> Standard industriel, écosystème immense
+    </div>
+    <pre><code># Commandes kubectl de base
+kubectl get pods -A
+kubectl describe node [node_name]
+kubectl logs [pod_name]
+kubectl apply -f deployment.yml</code></pre>
+
+    <div class="usage">
+      <strong>Ansible</strong> - Automatisation configuration<br>
+      <strong>Usage :</strong> Déploiement automatique, gestion configuration<br>
+      <strong>Fort :</strong> Agentless, idempotence
+    </div>
+    <pre><code># Commandes Ansible
+ansible all -m ping -i inventory.ini
+ansible-playbook -i inventory.ini playbook.yml
+ansible webservers -m apt -a "name=nginx state=latest" -b</code></pre>
+
+    <div class="usage">
+      <strong>Puppet</strong> - Gestion configuration déclarative<br>
+      <strong>Usage :</strong> États désirés automatisés, conformité enterprise<br>
+      <strong>Fort :</strong> Reporting, scaling enterprise
+    </div>
+
+    <div class="usage">
+      <strong>Chef</strong> - Automatisation infrastructure as code<br>
+      <strong>Usage :</strong> Approche procédurale, recettes modulaires<br>
+      <strong>Fort :</strong> Intégration cloud native
+    </div>
+
+    <div class="usage">
+      <strong>SaltStack</strong> - Orchestration temps réel<br>
+      <strong>Usage :</strong> Communication bidirectionnelle, événements temps réel<br>
+      <strong>Fort :</strong> Performance extreme
+    </div>
+
+    <div class="usage">
+      <strong>ArgoCD</strong> - GitOps Kubernetes native<br>
+      <strong>Usage :</strong> Sync automatique git→k8s, rollback<br>
+      <strong>Fort :</strong> GitOps, multi-environnements
+    </div>
+
+    <h3><i class="fas fa-user-shield"></i> 10. Authentification & MFA</h3>
+    
+    <div class="usage">
+      <strong>FreeRADIUS</strong> - Serveur d'authentification<br>
+      <strong>Usage :</strong> Centralisation auth, WiFi enterprise, VPN<br>
+      <strong>Fort :</strong> Standard, extensible
+    </div>
+    <pre><code># Installation FreeRADIUS
+apt install freeradius freeradius-utils
+# Configuration MFA dans /etc/freeradius/3.0/mods-enabled/</code></pre>
+
+    <div class="usage">
+      <strong>Google Authenticator</strong> - MFA time-based<br>
+      <strong>Usage :</strong> Double authentification SSH, applications<br>
+      <strong>Fort :</strong> Simple, largement supporté
+    </div>
+    <pre><code># Configuration PAM
+apt install libpam-google-authenticator
+google-authenticator
+# Ajouter dans /etc/pam.d/sshd:
+auth required pam_google_authenticator.so</code></pre>
+
+    <div class="usage">
+      <strong>Ivanti UEM</strong> - Gestion mobiles enterprise<br>
+      <strong>Usage :</strong> MDM, sécurité endpoints, conformité<br>
+      <strong>Fort :</strong> Fonctionnalités enterprise, support
+    </div>
+
+    <h3><i class="fas fa-save"></i> 11. Backup & Réplication</h3>
+    
+    <div class="usage">
+      <strong>Veeam Backup & Replication</strong> - Solution backup enterprise<br>
+      <strong>Usage :</strong> Instant VM recovery, réplication site à site<br>
+      <strong>Fort :</strong> Performance, storage agnostique
+    </div>
+
+    <div class="usage">
+      <strong>BorgBackup</strong> - Backup dédupliqué open-source<br>
+      <strong>Usage :</strong> Sauvegarde dédupliquée, chiffrement intégré<br>
+      <strong>Fort :</strong> Compression efficace, archives montables
+    </div>
+
+    <div class="usage">
+      <strong>Restic</strong> - Backup moderne open-source<br>
+      <strong>Usage :</strong> Sauvegarde cloud native, snapshots immuables<br>
+      <strong>Fort :</strong> Support multi-cloud, vérification intégrité
+    </div>
+
+    <h3><i class="fas fa-database"></i> 12. Stockage & SAN</h3>
+    
+    <div class="usage">
+      <strong>Ceph</strong> - Stockage distribué software-defined<br>
+      <strong>Usage :</strong> Block, object, file storage unifié<br>
+      <strong>Fort :</strong> Scaling horizontal, auto-healing
+    </div>
+
+    <div class="usage">
+      <strong>TrueNAS</strong> - NAS/SAN open-source enterprise<br>
+      <strong>Usage :</strong> Stockage ZFS, réplication snapshots<br>
+      <strong>Fort :</strong> ZFS intégration native, multi-protocoles
+    </div>
+
+    <div class="usage">
+      <strong>GlusterFS</strong> - Filesystem distribué scalable<br>
+      <strong>Usage :</strong> Volumes répliqués, stockage distribué<br>
+      <strong>Fort :</strong> Client native Linux, healing automatique
+    </div>
+
+    <h3><i class="fas fa-project-diagram"></i> 13. CI/CD & DevOps</h3>
+    
+    <div class="usage">
+      <strong>GitLab CI/CD</strong> - Suite DevOps complète<br>
+      <strong>Usage :</strong> Git repo + CI/CD intégré, container registry<br>
+      <strong>Fort :</strong> Solution tout-en-un, monitoring intégré
+    </div>
+
+    <div class="usage">
+      <strong>Jenkins X</strong> - CI/CD cloud native<br>
+      <strong>Usage :</strong> Preview environments, promotion automatique<br>
+      <strong>Fort :</strong> Intégration Kubernetes native
+    </div>
+
+    <div class="usage">
+      <strong>Ansible AWX</strong> - Interface web pour Ansible<br>
+      <strong>Usage :</strong> Scheduling playbooks, RBAC enterprise<br>
+      <strong>Fort :</strong> Dashboard reporting, interface web
+    </div>
+
+    <div class="usage">
+      <strong>Rundeck</strong> - Automatisation opérations<br>
+      <strong>Usage :</strong> Self-service IT, orchestration cross-platform<br>
+      <strong>Fort :</strong> Audit trail complet, automatisation ops
+    </div>
+
+    <h3><i class="fas fa-tachometer-alt"></i> 14. Réseau & Performance</h3>
+    
+    <div class="usage">
+      <strong>Wireshark</strong> - Analyse protocolaire deep-dive<br>
+      <strong>Usage :</strong> Décodage 3000+ protocoles, forensic réseau<br>
+      <strong>Fort :</strong> Analyse temps réel, debugging avancé
+    </div>
+
+    <div class="usage">
+      <strong>iperf3</strong> - Benchmark performance réseau<br>
+      <strong>Usage :</strong> Mesure bande passante, test UDP/TCP<br>
+      <strong>Fort :</strong> Jitter, pertes packets, testing précis
+    </div>
+
+    <div class="usage">
+      <strong>Smokeping</strong> - Monitoring latence réseau<br>
+      <strong>Usage :</strong> Surveillance tendances latence, multi-sites<br>
+      <strong>Fort :</strong> Alertes dégradation, graphes tendances
+    </div>
+
+    <h3><i class="fas fa-terminal"></i> 15. Outils de Productivité</h3>
+    
+    <div class="usage">
+      <strong>tmux</strong> - Multiplexeur terminal avancé<br>
+      <strong>Usage :</strong> Sessions persistantes, partage session<br>
+      <strong>Fort :</strong> Scripting complexe, productivité terminal
+    </div>
+    <pre><code># Commandes tmux essentielles
+tmux new -s session_name
+tmux attach -t session_name
+tmux ls
+Ctrl+b d  # Détacher session
+Ctrl+b %  # Split vertical
+Ctrl+b "  # Split horizontal</code></pre>
+
+    <div class="usage">
+      <strong>Terraform Cloud</strong> - Terraform managé entreprise<br>
+      <strong>Usage :</strong> State centralisé sécurisé, RBAC avancé<br>
+      <strong>Fort :</strong> Intégrations VCS, collaboration team
+    </div>
     
     
  <!-- Nouvelle Section Sites Internet -->
@@ -1878,6 +2639,7 @@ kubectl rollout status deployment/[deployment_name]</code></pre>
 
 <h3><i class="fas fa-terminal"></i> Commandes et Cheat Sheets</h3>
 <ul>
+    <li><a href="https://linuxize.com/#" target="_blank"><strong>linuxize</strong></a> - Linux Sysadmin and DevOps blog about articles,tutorials, server operations and security. </li>
     <li><a href="https://cheat.sh/" target="_blank"><strong>cheat.sh</strong></a> - Cheat sheets pour toutes les commandes (curl cht.sh/commande)</li>
     <li><a href="https://tldr.sh/" target="_blank"><strong>tldr</strong></a> - Simplified man pages avec des exemples concrets</li>
     <li><a href="https://ss64.com/" target="_blank"><strong>SS64</strong></a> - Référence complète des commandes Windows/Linux</li>
