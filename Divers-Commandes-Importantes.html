@@ -30,6 +30,7 @@
       --cloud-color: #ff9900;
       --automation-color: #28a745;
       --database-color: #8e44ad;
+      --aichat-color: #00b8d4;
       --lab-color: #e67e22;
       --sites-color: #9b59b6; 
     }
@@ -198,6 +199,7 @@
     .cloud-icon { color: var(--cloud-color); }
     .automation-icon { color: var(--automation-color); }
     .database-icon { color: var(--database-color); }
+    .aichat-icon { color: var(--aichat-color); }
     .lab-icon { color: var(--lab-color); }
     .sites-icon { color: var(--sites-color); }
     
@@ -263,6 +265,7 @@
   <a href="#cloud"><i class="fas fa-cloud cloud-icon"></i> Cloud & IaC</a>
   <a href="#automation"><i class="fas fa-robot automation-icon"></i> Automatisation</a>
   <a href="#databases"><i class="fas fa-database database-icon"></i> Bases de Données</a>
+  <a href="#aichat"><i class="fas fa-robot aichat-icon"></i> Aichat</a>
   <a href="#lab"><i class="fas fa-flask lab-icon"></i> Logiciels du Labo</a>
   <a href="#sites-internet"><i class="fas fa-external-link-alt sites-icon"></i> Sites de Référence</a>
 </nav>
@@ -433,6 +436,328 @@ scanimage -d "net:&lt;IP_Scanner&gt;:test:0" --format=png > fake-scan.png
 
 # Vérifier les périphériques disponibles
 scanimage -L</code></pre>
+
+    <!-- Nouvelle section Diagnostic Réseau Linux -->
+    <h2><i class="fab fa-linux linux-icon"></i> Diagnostic Réseau Linux</h2>
+    <pre><code># Vérification des interfaces réseau
+ip a
+ip -br addr show
+
+# Vérification de la table de routage
+ip route show
+ip route get 8.8.8.8
+
+# Test de connectivité de base
+ping 192.168.10.1
+ping 8.8.8.8
+ping google.com
+
+# Test DNS
+nslookup google.com
+nslookup 0.debian.pool.ntp.org
+
+# Traceroute
+traceroute -n 8.8.8.8
+
+# Statistiques des interfaces
+ip -s link show
+
+# Connexions réseau actives
+ss -tulpn
+
+# Tables ARP
+ip neigh show
+
+# Informations matérielles réseau
+lshw -class network 2>/dev/null | head -20
+
+# Pilotes réseau
+ethtool -i enp0s10 2>/dev/null
+
+# Bandwidth par interface
+cat /proc/net/dev
+
+# Qualité du signal Wi-Fi (si applicable)
+iwconfig 2>/dev/null | grep -i quality
+
+# Latence réseau
+ping -c 3 8.8.8.8
+
+# Script de diagnostic rapide
+#!/bin/bash
+echo "=== DIAGNOSTIC RÉSEAU RAPIDE ==="
+ip -br addr show
+ip route show
+ping -c 2 8.8.8.8</code></pre>
+
+    <h3><i class="fas fa-shield-alt"></i> Diagnostic Firewall Local</h3>
+    <pre><code># Vérifier les règles iptables
+sudo iptables -L -n -v
+sudo iptables -S
+
+# Vérifier nftables
+sudo nft list ruleset
+
+# Désactivation temporaire du firewall
+sudo iptables -F
+sudo iptables -X
+sudo iptables -t nat -F
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo nft flush ruleset
+
+# Test après désactivation firewall
+ping -c 3 8.8.8.8
+
+# Règles firewall
+sudo iptables -L 2>/dev/null | head -20
+
+# Ports ouverts
+sudo netstat -tulpn 2>/dev/null | head -20
+
+# Services réseau écoutants
+sudo ss -tulpn | grep LISTEN</code></pre>
+
+    <h3><i class="fas fa-network-wired"></i> Gestion NetworkManager</h3>
+    <pre><code># État des connexions NetworkManager
+nmcli connection show
+nmcli device status
+
+# Vérification détaillée d'une connexion
+nmcli connection show "Connexion Ethernet 1"
+nmcli connection show enp0s10
+
+# Modification configuration DNS
+sudo nmcli connection modify "Connexion Ethernet 1" ipv4.dns "8.8.8.8,1.1.1.1"
+sudo nmcli connection modify "Connexion Ethernet 1" ipv4.ignore-auto-dns yes
+sudo nmcli connection modify "Connexion Ethernet 1" ipv4.dns-search ""
+
+# Redémarrage connexion
+sudo nmcli connection down "Connexion Ethernet 1"
+sudo nmcli connection up "Connexion Ethernet 1"
+
+# Suppression et recréation de profil
+sudo nmcli connection delete "Connexion Ethernet 1"
+sudo nmcli connection add type ethernet ifname enp0s10 con-name enp0s10 \
+    ipv4.method auto \
+    ipv4.ignore-auto-dns yes \
+    ipv4.dns "8.8.8.8,1.1.1.1"
+
+# Vérifier l'état du service NetworkManager
+sudo systemctl status NetworkManager
+
+# Supprimer les connexions NetworkManager problématiques
+sudo nmcli connection delete "Connexion Ethernet 1"
+sudo nmcli connection delete enp0s10
+
+# Créer une nouvelle connexion propre
+sudo nmcli connection add type ethernet ifname enp0s10 con-name enp0s10 \
+ipv4.method auto \
+ipv4.dns "8.8.8.8,1.1.1.1" \
+ipv4.ignore-auto-dns yes \
+ipv4.dns-search "" \
+connection.autoconnect yes
+
+# Activer la nouvelle connexion
+sudo nmcli connection up enp0s10
+
+# Forcer la reconnaissance de l'interface
+sudo nmcli device connect enp0s10
+
+# Redémarrer NetworkManager (si nécessaire)
+sudo systemctl restart NetworkManager</code></pre>
+
+    <h3><i class="fas fa-cogs"></i> Configuration Manuelle Interfaces (sans NetworkManager)</h3>
+    <pre><code># Arrêt NetworkManager
+sudo systemctl stop NetworkManager
+sudo systemctl disable NetworkManager
+
+# Installation ifupdown
+sudo apt update
+sudo apt install ifupdown
+
+# Configuration /etc/network/interfaces
+sudo nano /etc/network/interfaces
+
+# Contenu fichier interfaces :
+source /etc/network/interfaces.d/*
+
+# Interface loopback
+auto lo
+iface lo inet loopback
+
+# Interface ethernet en DHCP
+auto enp0s10
+iface enp0s10 inet dhcp
+
+# OU configuration statique
+# auto enp0s10
+# iface enp0s10 inet static
+#     address 192.168.10.4/24
+#     gateway 192.168.10.1
+#     dns-nameservers 8.8.8.8 1.1.1.1
+
+# Configuration DNS manuelle
+sudo nano /etc/resolv.conf
+
+# Contenu resolv.conf :
+nameserver 8.8.8.8
+nameserver 1.1.1.1
+options timeout:2 attempts:1
+
+# Rendre resolv.conf immuable
+sudo chattr +i /etc/resolv.conf
+
+# Activation service networking
+sudo systemctl enable networking
+sudo systemctl restart networking
+
+# Gestion manuelle interface
+sudo ifdown enp0s10
+sudo ifup enp0s10</code></pre>
+
+    <h3><i class="fas fa-wrench"></i> Résolution Problèmes Spécifiques</h3>
+    <pre><code># Suppression route APIPA problématique
+sudo ip route del 169.254.0.0/16 dev enp0s10
+
+# Nettoyage interface en cas de conflit
+sudo ip link set enp0s10 down
+sudo ip addr flush dev enp0s10
+sudo ip route flush dev enp0s10
+
+# Renouvellement DHCP
+sudo dhclient -r enp0s10
+sudo dhclient enp0s10
+
+# Configuration IP manuelle temporaire
+sudo ip addr add 192.168.10.20/24 dev enp0s10
+sudo ip route add default via 192.168.10.1
+
+# Supprimer une IP secondaire
+sudo ip addr del 192.168.30.8/24 dev enp0s10
+
+# Appliquer Netplan
+sudo netplan generate && sudo netplan apply
+
+# Configurer IP fixe avec NetworkManager
+sudo nmcli connection modify 'enp0s10' ipv4.method manual ipv4.addresses 192.168.30.6/24 ipv4.gateway 192.168.30.1 ipv4.dns '8.8.8.8,8.8.4.4'
+
+# Configurer IP fixe avec Netplan
+sudo cat > /etc/netplan/01-network.yaml << 'EOF'
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s10:
+      dhcp4: false
+      addresses: [192.168.30.6/24]
+      gateway4: 192.168.30.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+EOF
+
+# Script de correction IP double
+#!/bin/bash
+INTERFACE=${1:-enp0s10}
+MAIN_IP=${2:-192.168.30.6}
+sudo ip addr flush dev $INTERFACE
+sudo ip addr add $MAIN_IP/24 dev $INTERFACE
+sudo systemctl restart systemd-networkd</code></pre>
+
+    <h3><i class="fas fa-redo"></i> Réinitialisation Complète</h3>
+    <pre><code># Arrêt complet services réseau
+sudo systemctl stop NetworkManager
+sudo systemctl stop networking
+sudo systemctl stop systemd-networkd
+
+# Nettoyer les configurations existantes
+sudo rm -rf /var/lib/NetworkManager/*
+
+# Nettoyer l'interface manuellement
+sudo ip link set enp0s10 down
+sudo ip addr flush dev enp0s10
+sudo ip route flush dev enp0s10
+
+# Redémarrer les services
+sudo systemctl start NetworkManager
+sudo systemctl enable NetworkManager
+
+# Laisser NetworkManager détecter automatiquement
+sudo nmcli device connect enp0s10
+
+# Configuration DNS manuelle
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf
+
+# Rendre le DNS permanent
+sudo chattr +i /etc/resolv.conf
+# Pour débloquer plus tard : sudo chattr -i /etc/resolv.conf</code></pre>
+
+    <h3><i class="fas fa-search"></i> Diagnostic Avancé</h3>
+    <pre><code># Capture paquets sortants
+sudo tcpdump -i enp0s10 host 192.168.10.4
+
+# Vérification processus réseau
+ps aux | grep -E "(dhclient|NetworkManager)"
+
+# Logs système
+sudo journalctl -u NetworkManager -f
+sudo journalctl -u networking -f
+
+# Vérification fichiers configuration
+ls -la /etc/network/interfaces.d/
+cat /etc/resolv.conf
+
+# Traceroute pour voir où ça bloque
+traceroute -n 8.8.8.8
+
+# Vérifier les processus réseau
+ss -tuln
+
+# Vérifier les logs système
+sudo journalctl -u NetworkManager -f
+
+# Vérifier les logs du noyau
+dmesg | grep -i network
+
+# Test HTTP/HTTPS
+curl -I http://google.com
+curl -I https://google.com
+
+# Test connectivité intermédiaire
+ping 192.168.10.1  # Switch L3
+ping 192.168.1.1   # pfSense
+
+# Vérification tables ARP
+arp -n
+
+# Test ports spécifiques
+nc -vz 192.168.10.1 22
+nc -vz 192.168.1.1 443
+
+# Baux DHCP
+cat /var/lib/dhcp/dhclient.*.leases 2>/dev/null | grep "fixed-address" | head -5
+
+# Vérifier la configuration Netplan
+cat /etc/netplan/*.yaml 2>/dev/null
+
+# Serveurs DNS utilisés
+systemd-resolve --status 2>/dev/null
+
+# Interfaces virtuelles
+ip link show type bridge 2>/dev/null
+
+# VLANs
+ip link show | grep "@"
+
+# Sauvegarder configuration réseau
+sudo cp /etc/netplan/*.yaml ~/backup_network/ 2>/dev/null || true
+sudo cp /etc/network/interfaces ~/backup_network/ 2>/dev/null || true
+sudo nmcli connection show > ~/backup_network/nmcli_connections.txt 2>/dev/null || true
+
+# Réseaux Docker
+docker network ls 2>/dev/null | head -10</code></pre>
 
     <!-- Nouvelle section Réseau Linux -->
     <h2><i class="fab fa-linux linux-icon"></i> Vérification réseau sous Linux</h2>
@@ -696,6 +1021,17 @@ dns-server 8.8.8.8 8.8.4.4
 clear ip dhcp binding 192.168.x.x        # Supprimer une adresse attribuée
 show ip dhcp pool                        # Afficher les adresses attribuées
 show ip source binding                   # Afficher les bindings statiques</code></pre>
+
+    <h2><i class="fas fa-network-wired cisco-icon"></i> Configuration SNMP Cisco</h2>
+    <pre><code># Activation SNMP sur Cisco IOS
+enable
+configure terminal
+snmp-server community public RO
+snmp-server community private RW
+snmp-server host [IP-du-manager] traps version 2c public
+snmp-server enable traps
+exit
+write memory</code></pre>
 
     <div class="note">
         <p><strong>Format important pour client-identifier :</strong></p>
@@ -1157,6 +1493,174 @@ if [ $MEM_FREE -lt 100 ]; then
     echo "Alerte : Mémoire faible sur $(hostname)" | mail -s "Alerte mémoire" $EMAIL
 fi</code></pre>
 
+    <h3><i class="fas fa-tools"></i> 9. Administration GLPI</h3>
+    <pre><code># Vérification configuration base de données GLPI
+cat /var/www/html/glpi/config/config_db.php
+
+# Ou avec un format plus lisible
+grep -E "(dbhost|dbuser|dbpassword|dbdefault)" /var/www/html/glpi/config/config_db.php
+
+# Version détaillée
+php -r '
+    include "/var/www/html/glpi/config/config_db.php";
+    echo "Hôte: " . $DB->dbhost . "\n";
+    echo "Base: " . $DB->dbdefault . "\n";
+    echo "Utilisateur: " . $DB->dbuser . "\n";
+    echo "Mot de passe: " . $DB->dbpassword . "\n";
+'
+
+# Connexion MySQL et exploration
+mysql -u root -p -e "SHOW DATABASES;"
+mysql -u root -p -e "USE glpi_db; SHOW TABLES;"
+
+# Voir les utilisateurs MySQL
+mysql -u root -p -e "SELECT user, host FROM mysql.user;"
+
+# Voir les privilèges de l'utilisateur GLPI
+mysql -u root -p -e "SHOW GRANTS FOR 'glpi_admin'@'localhost';"
+
+# Console GLPI
+cd /var/www/html/glpi
+php bin/console glpi:system:status
+php bin/console glpi:database:check
+
+# Donner droits super-admin
+mysql -u glpi_admin -p'34PenetrationTest' -h localhost glpi_db -e "
+UPDATE glpi_profiles_users 
+SET profiles_id = 4 
+WHERE users_id = (SELECT id FROM glpi_users WHERE name = 'glpi_admin');"
+
+# Si l'utilisateur n'a aucun profil, l'ajouter :
+mysql -u glpi_admin -p'34PenetrationTest' -h localhost glpi_db -e "
+INSERT INTO glpi_profiles_users (users_id, profiles_id, entities_id, is_recursive, is_dynamic) 
+VALUES (
+  (SELECT id FROM glpi_users WHERE name = 'glpi_admin'), 
+  4, 0, 1, 0
+);"
+
+# Vérification :
+mysql -u glpi_admin -p'34PenetrationTest' -h localhost glpi_db -e "
+SELECT u.name, p.name as profile 
+FROM glpi_users u 
+JOIN glpi_profiles_users pu ON u.id = pu.users_id 
+JOIN glpi_profiles p ON pu.profiles_id = p.id 
+WHERE u.name = 'glpi_admin';"
+
+# Chercher les fichiers de configuration
+sudo find / -name "config_db.php" 2>/dev/null
+
+# Commandes MySQL GLPI
+mysql -u root -p glpi_db << 'EOF'
+-- Désactiver vérification versions
+UPDATE glpi_configs SET value = '0' WHERE name = 'founded_new_version';
+UPDATE glpi_configs SET value = '0' WHERE name = 'checkversion';
+
+-- Réactiver vérification versions
+UPDATE glpi_configs SET value = '1' WHERE name = 'checkversion';
+UPDATE glpi_configs SET value = '' WHERE name = 'founded_new_version';
+
+-- Vérification configuration
+SELECT name, value FROM glpi_configs WHERE name IN ('founded_new_version', 'checkversion');
+
+-- Créer configuration manquante
+INSERT INTO glpi_configs (name, value, context) 
+VALUES ('checkversion', '1', 'core')
+ON DUPLICATE KEY UPDATE value = '1';
+EOF
+
+# Fuseaux horaires GLPI
+# Activation fuseaux horaires
+cd /var/www/html/glpi
+php bin/console database:enable_timezones
+
+# Vérification
+php bin/console database:check_timezones
+
+# Configuration MySQL pour fuseaux horaires
+mysql -u root -p << 'EOF'
+GRANT SELECT ON mysql.time_zone_name TO 'glpi_admin'@'localhost';
+GRANT SELECT ON mysql.time_zone TO 'glpi_admin'@'localhost';
+GRANT SELECT ON mysql.time_zone_leap_second TO 'glpi_admin'@'localhost';
+GRANT SELECT ON mysql.time_zone_transition TO 'glpi_admin'@'localhost';
+GRANT SELECT ON mysql.time_zone_transition_type TO 'glpi_admin'@'localhost';
+FLUSH PRIVILEGES;
+EOF
+
+# Chargement données fuseaux horaires
+mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
+
+# Agent GLPI Windows
+# Arrêt service GLPI Agent (Windows)
+echo "# Sur Windows (CMD admin) :"
+echo "net stop 'GLPI Agent'"
+echo "timeout /t 30"
+echo "net start 'GLPI Agent'"
+
+# Configuration agent GLPI (fichier agent.cfg)
+cat > "C:\Program Files\GLPI-Agent\agent.cfg" << 'EOF'
+# Désactiver scans réseau
+modules = inventory,deploy,collect
+no-task = netdiscovery,netinventory
+
+[netdiscovery]
+enabled = 0
+
+[netinventory]
+enabled = 0
+
+[network]
+delay = 0
+no-task = 1
+EOF
+
+# Réinitialisation GLPI
+# Réinitialisation via console
+cd /var/www/html/glpi
+php bin/console glpi:system:clear_cache
+php bin/console glpi:database:configure \
+    --db-host=localhost \
+    --db-name=glpi_db \
+    --db-user=glpi_admin \
+    --db-password=34PenetrationTest \
+    --reconfigure
+
+# Réinstallation sans perte données
+php bin/console glpi:database:install \
+    --db-host=localhost \
+    --db-name=glpi_db \
+    --db-user=glpi_admin \
+    --db-password=34PenetrationTest \
+    --force
+
+# Sauvegardes GLPI
+# Sauvegarde base données
+BACKUP_DIR="/root/glpi_backup_$(date +%Y%m%d_%H%M%S)"
+mkdir -p $BACKUP_DIR
+mysqldump -u root -p glpi_db > "$BACKUP_DIR/glpi_db_complete.sql"
+mysqldump -u root -p --no-create-info glpi_db > "$BACKUP_DIR/glpi_db_data_only.sql"
+mysqldump -u root -p --no-data glpi_db > "$BACKUP_DIR/glpi_db_structure_only.sql"
+
+# Sauvegarde fichiers configuration
+cp /var/www/html/glpi/config/config_db.php "$BACKUP_DIR/"
+cp /var/www/html/glpi/config/local_define.php "$BACKUP_DIR/" 2>/dev/null || true
+
+# Sauvegarde fichiers GLPI
+tar -czf "$BACKUP_DIR/glpi_files.tar.gz" -C /var/www/html/glpi/files . 2>/dev/null || true
+
+# Vérifications GLPI
+# Statut services
+systemctl status snmpd
+systemctl status apache2
+systemctl status mysql
+
+# Test GLPI
+curl -I http://localhost/glpi
+php bin/console glpi:system:status
+
+# Logs
+tail -f /var/log/syslog | grep snmp
+tail -f /var/log/apache2/error.log</code></pre>
+
     <!-- Network Section -->
     <h2 id="reseau"><i class="fas fa-network-wired network-icon"></i> Commandes Réseau PowerShell (Windows)</h2>
 
@@ -1260,7 +1764,16 @@ network:
       gateway4: 192.168.1.1
       nameservers:
         addresses: [8.8.8.8, 8.8.4.4]
-sudo netplan apply</code></pre>
+sudo netplan apply
+
+# Vérification des interfaces
+ip a
+ip -br addr show
+ip link show
+
+# Tables de routage
+ip route show
+ip route get 8.8.8.8</code></pre>
 
     <h3><i class="fas fa-search"></i> 2. Diagnostic réseau</h3>
     <pre><code># Test de connectivité
@@ -1279,11 +1792,119 @@ sudo tcpdump -i eth0 -n 'port 80'
 sudo tshark -i eth0 -f "tcp port 22"  # Version avancée (Wireshark CLI)
 
 # Test de débit (installer speedtest-cli)
-speedtest-cli --bytes</code></pre>
+speedtest-cli --bytes
 
-    <h3><i class="fas fa-shield-alt"></i> 3. Pare-feu avancé (iptables/nftables)</h3>
+# Connexions réseau actives
+ss -tulpn
+netstat -tulpn</code></pre>
+
+    <h3><i class="fas fa-chart-bar"></i> 3. Monitoring SNMP</h3>
+    <pre><code># Installation SNMP sur Linux
+sudo apt-get update
+sudo apt-get install snmpd snmp
+
+# Configuration SNMPD
+sudo cat > /etc/snmp/snmpd.conf << 'EOF'
+agentAddress udp:161
+rocommunity public 0.0.0.0/0
+rwcommunity private 0.0.0.0/0
+sysLocation "EVE-NG Lab"
+sysContact "admin@eve-ng.net"
+EOF
+
+# Redémarrage service SNMP
+sudo systemctl restart snmpd
+sudo systemctl enable snmpd
+
+# Test SNMP
+snmpwalk -v2c -c public localhost system
+snmpwalk -v2c -c public [IP-EVE-NG] system
+
+# Configuration SNMP détaillée pour GLPI
+sudo cat > /etc/snmp/snmpd.conf << 'EOF'
+# EVE-NG SNMP Minimal Config
+agentAddress udp:161
+
+# Communities avec restrictions réseau
+rocommunity public 127.0.0.1
+rocommunity public 192.168.0.0/16
+rocommunity public 10.0.0.0/8
+
+# Informations système
+sysLocation "EVE-NG Lab"
+sysContact "admin@eve-ng.net"
+sysName "eve-ng"
+
+# Options de sécurité
+com2sec notConfigUser  default       public
+group   notConfigGroup v1           notConfigUser
+group   notConfigGroup v2c           notConfigUser
+view    systemview    included   .1.3.6.1.2.1.1
+view    systemview    included   .1.3.6.1.2.1.25.1.1
+access  notConfigGroup ""      any       noauth    exact  systemview none none
+EOF
+
+# Purge SNMP
+# Arrêt service
+sudo systemctl stop snmpd
+
+# Réinitialisation configuration
+sudo rm -f /etc/snmp/snmpd.conf
+
+# Nouvelle configuration propre
+sudo cat > /etc/snmp/snmpd.conf << 'EOF'
+# SNMPd minimal configuration for EVE-NG
+rocommunity public 127.0.0.1
+rocommunity public 192.168.0.0/16
+sysLocation "EVE-NG Laboratory"
+sysContact "admin@eve-ng.net"
+EOF
+
+# Redémarrage
+sudo systemctl start snmpd
+
+# Diagnostic réseau SNMP
+# Test connectivité
+ping -c 3 192.168.30.6
+telnet 192.168.30.6 161
+
+# Vérification ports ouverts
+netstat -tulpn | grep 161
+ss -tulpn | grep 161
+
+# Test firewall
+sudo ufw status
+sudo ufw allow from 192.168.30.0/24 to any port 161</code></pre>
+
+    <h3><i class="fas fa-network-wired"></i> 4. Gestion NetworkManager</h3>
+    <pre><code># État des connexions NetworkManager
+nmcli connection show
+nmcli device status
+
+# Vérification détaillée d'une connexion
+nmcli connection show "Connexion Ethernet 1"
+nmcli connection show enp0s10
+
+# Modification configuration DNS
+sudo nmcli connection modify "Connexion Ethernet 1" ipv4.dns "8.8.8.8,1.1.1.1"
+sudo nmcli connection modify "Connexion Ethernet 1" ipv4.ignore-auto-dns yes
+
+# Redémarrage connexion
+sudo nmcli connection down "Connexion Ethernet 1"
+sudo nmcli connection up "Connexion Ethernet 1"
+
+# Suppression et recréation de profil
+sudo nmcli connection delete "Connexion Ethernet 1"
+sudo nmcli connection add type ethernet ifname enp0s10 con-name enp0s10 \
+    ipv4.method auto \
+    ipv4.ignore-auto-dns yes \
+    ipv4.dns "8.8.8.8,1.1.1.1"</code></pre>
+
+    <h3><i class="fas fa-shield-alt"></i> 5. Pare-feu avancé (iptables/nftables)</h3>
     <pre><code># Lister les règles iptables
 sudo iptables -L -v -n --line-numbers
+sudo iptables -S
+
 
 # Autoriser le trafic HTTP/HTTPS
 sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
@@ -1295,12 +1916,24 @@ sudo iptables -A INPUT -s 192.168.100.23 -j DROP
 # Sauvegarder les règles (Debian/Ubuntu)
 sudo iptables-save > /etc/iptables.rules
 
+# Désactivation temporaire du firewall
+sudo iptables -F
+sudo iptables -X
+sudo iptables -t nat -F
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo nft flush ruleset
+
 # nftables (nouvelle génération)
 sudo nft add table inet filter
 sudo nft add chain inet filter input { type filter hook input priority 0 \; }
-sudo nft add rule inet filter input tcp dport 22 accept</code></pre>
+sudo nft add rule inet filter input tcp dport 22 accept
 
-    <h3><i class="fas fa-route"></i> 4. Routage avancé</h3>
+# Vérification nftables
+sudo nft list ruleset</code></pre>
+
+    <h3><i class="fas fa-route"></i> 6. Routage avancé</h3>
     <pre><code># Afficher la table de routage
 ip route show
 route -n  # Alternative
@@ -1316,7 +1949,7 @@ sudo sysctl -w net.ipv4.ip_forward=1
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p</code></pre>
 
-    <h3><i class="fas fa-lock"></i> 5. VPN et tunnels</h3>
+    <h3><i class="fas fa-lock"></i> 7. VPN et tunnels</h3>
     <pre><code># OpenVPN (client)
 sudo openvpn --config client.ovpn
 
@@ -1332,7 +1965,7 @@ sudo ip tunnel add gre1 mode gre remote 203.0.113.2 local 198.51.100.1 ttl 255
 sudo ip link set gre1 up
 sudo ip addr add 10.0.0.1/30 dev gre1</code></pre>
 
-    <h3><i class="fas fa-tools"></i> 6. Outils réseau avancés</h3>
+    <h3><i class="fas fa-tools"></i> 8. Outils réseau avancés</h3>
     <pre><code># Analyse de bande passante (nload)
 sudo nload eth0
 
@@ -1349,7 +1982,7 @@ httperf --server example.com --port 80 --uri / --num-conn 100
 mtr -n --report google.com</code></pre>
 
     <!-- Nouvelle section TShark -->
-    <h3><i class="fas fa-search"></i> 7. Analyse de paquets avec TShark</h3>
+    <h3><i class="fas fa-search"></i> 9. Analyse de paquets avec TShark</h3>
     <pre><code># Installation
 sudo apt install tshark                       # Sur Debian/Ubuntu
 
@@ -1366,7 +1999,7 @@ tshark -r capture.pcap                        # Lire un fichier .pcap
 tshark -r capture.pcap -Y "dns"               # Filtrer les paquets (DNS seulement)
 tshark -r capture.pcap -qz io,phs             # Afficher les statistiques</code></pre>
 
-    <h3><i class="fas fa-code"></i> 8. Scripts réseau utiles</h3>
+    <h3><i class="fas fa-code"></i> 10. Scripts réseau utiles</h3>
     <pre><code>#!/bin/bash
 # Script de surveillance réseau
 INTERFACE="eth0"
@@ -1731,6 +2364,87 @@ vmkping google.com                            # Tester la connectivité réseau
 # Administration système
 reboot                                        # Redémarrer l'hôte
 poweroff                                      # Éteindre l'hôte</code></pre>
+
+
+<!-- AICHAT Section -->
+<h2 id="aichat"><i class="fas fa-robot aichat-icon"></i> AICHAT - Interface en Ligne de Commande</h2>
+
+<h3><i class="fas fa-terminal"></i> Commandes de base</h3>
+<pre><code># Question simple à un modèle
+aichat -m openai:deepseek "Explique brièvement la différence entre TCP et UDP."
+
+# Sans streaming pour un affichage instantané
+aichat -m openai:deepseek -S "Explique brièvement la différence entre TCP et UDP."
+
+# Utiliser un fichier comme contexte
+aichat -f mon_document.pdf -m openai:deepseek "Résume ce document."
+
+# Démarrer le serveur local
+aichat --serve 0.0.0.0:8080
+
+# Question simple à un modèle
+aichat -m openai:deepseek "Explique brièvement la différence entre TCP et UDP."
+
+# Même chose, sans streaming pour un affichage instantané
+aichat -m openai:deepseek -S "Explique brièvement la différence entre TCP et UDP."
+
+# Lister les modèles disponibles
+aichat --list-models
+
+# Synchroniser les modèles depuis le dépôt officiel
+aichat --sync-models
+
+# Utiliser un fichier comme contexte
+aichat -f mon_document.pdf -m openai:deepseek "Résume ce document."
+
+# Démarrer le serveur local
+aichat --serve 0.0.0.0:8080</code></pre>
+
+<h3><i class="fas fa-cogs"></i> Options principales</h3>
+<pre><code># Gestion des modèles
+aichat --list-models                    # Lister les modèles disponibles
+aichat --sync-models                    # Synchroniser les modèles
+
+# Gestion des sessions
+aichat --list-sessions                  # Lister toutes les sessions
+aichat -s, --session [SESSION]          # Démarrer ou rejoindre une session
+
+# Rôles et agents
+aichat --list-roles                     # Lister tous les rôles
+aichat --list-agents                    # Lister tous les agents
+
+# Fonctionnalités avancées
+aichat -e, --execute                    # Exécuter des commandes naturelles
+aichat -c, --code                       # Afficher uniquement le code généré
+aichat --rag <RAG>                      # Démarrer un RAG
+
+# Options principales complètes
+| Option                    | Description                                                          |
+| ------------------------- | -------------------------------------------------------------------- |
+| `-m, --model <MODEL>`     | Sélectionner un modèle. Exemple : `openai:deepseek`                  |
+| `--prompt <PROMPT>`       | Utiliser un **prompt système** spécifique                            |
+| `-r, --role <ROLE>`       | Sélectionner un rôle préconfiguré                                    |
+| `-s, --session [SESSION]` | Démarrer ou rejoindre une session                                    |
+| `--empty-session`         | Forcer une session vide                                              |
+| `--save-session`          | Sauvegarder la conversation dans la session                          |
+| `-a, --agent <AGENT>`     | Démarrer un agent                                                    |
+| `--rag <RAG>`             | Démarrer un RAG (Retrieval-Augmented Generation)                     |
+| `-e, --execute`           | Exécuter des commandes naturelles                                    |
+| `-c, --code`              | Afficher uniquement le code généré                                   |
+| `-f, --file <FILE>`       | Inclure fichiers, dossiers ou URLs                                   |
+| `-S, --no-stream`         | **Désactiver l'affichage progressif** (plus rapide dans le terminal) |
+| `--dry-run`               | Afficher la requête sans l'envoyer                                   |
+| `--info`                  | Afficher les informations du modèle ou session                       |
+| `--sync-models`           | Synchroniser les modèles avec le dépôt officiel                      |
+| `--list-models`           | Lister tous les modèles disponibles                                  |
+| `--list-roles`            | Lister tous les rôles                                                |
+| `--list-sessions`         | Lister toutes les sessions                                           |
+| `--list-agents`           | Lister tous les agents                                               |
+| `--list-rags`             | Lister tous les RAGs                                                 |
+| `--list-macros`           | Lister tous les macros                                               |
+| `--serve [<ADDRESS>]`     | Démarrer le serveur API/WebApp                                       |
+| `-h, --help`              | Afficher l'aide                                                      |
+| `-V, --version`           | Afficher la version                                                  |</code></pre>
 
 <!-- Sauvegarde Section -->
 <h2 id="backup"><i class="fas fa-save backup-icon"></i> Sauvegarde et Restauration</h2>
@@ -2634,7 +3348,7 @@ Ctrl+b "  # Split horizontal</code></pre>
 <h2 id="sites-internet"><i class="fas fa-external-link-alt sites-icon"></i> Sites de Référence et Cheat Sheets</h2>
 
 <div class="note">
-    <p><strong>📚 Ressources en ligne pour approfondir les connaissances</strong></p>
+    <p><strong>📚 Ressources en ligne pour approfondir vos connaissances</strong></p>
 </div>
 
 <h3><i class="fas fa-terminal"></i> Commandes et Cheat Sheets</h3>
@@ -2832,4 +3546,4 @@ Ctrl+b "  # Split horizontal</code></pre>
   </script>
 </body>
 </html>
-
+[file content end]
